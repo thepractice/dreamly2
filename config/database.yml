@@ -7,6 +7,7 @@ development:
   adapter: postgresql
   host: localhost
   username: edward
+  password: hs1
   database: jhaddb
   pool: 5
   timeout: 5000
@@ -18,6 +19,7 @@ test:
   adapter: postgresql
   host: localhost
   username: edward
+  password: hs1
   database: jhad_test_db
   pool: 5
   timeout: 5000
