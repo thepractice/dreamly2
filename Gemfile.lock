@@ -27,6 +27,8 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.2)
     atomic (1.1.16)
+    bootstrap-sass (2.3.2.0)
+      sass (~> 3.2)
     builder (3.1.4)
     capybara (2.2.1)
       mime-types (>= 1.16)
@@ -49,10 +51,9 @@ GEM
     ffi (1.9.3)
     hike (1.2.3)
     i18n (0.6.9)
-    jbuilder (1.5.3)
+    jbuilder (1.0.2)
       activesupport (>= 3.0.0)
-      multi_json (>= 1.2.0)
-    jquery-rails (3.1.0)
+    jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
@@ -105,10 +106,9 @@ GEM
       rspec-mocks (~> 2.14.0)
     rubyzip (1.1.2)
     sass (3.2.18)
-    sass-rails (4.0.2)
+    sass-rails (4.0.1)
       railties (>= 4.0.0, < 5.0)
-      sass (~> 3.2.0)
-      sprockets (~> 2.8, <= 2.11.0)
+      sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
     sdoc (0.4.0)
       json (~> 1.8)
@@ -134,12 +134,12 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (2.2.1)
+    turbolinks (1.1.1)
       coffee-rails
     tzinfo (0.3.39)
-    uglifier (2.5.0)
+    uglifier (2.1.1)
       execjs (>= 0.3.0)
-      json (>= 1.8.0)
+      multi_json (~> 1.0, >= 1.0.2)
     websocket (1.0.7)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -148,16 +148,18 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bootstrap-sass (= 2.3.2.0)
   capybara
-  coffee-rails (~> 4.0.0)
-  jbuilder (~> 1.2)
-  jquery-rails
+  coffee-rails (= 4.0.1)
+  jbuilder (= 1.0.2)
+  jquery-rails (= 3.0.4)
   pg
   rails (= 4.0.4)
   rails_12factor
   rspec-rails
-  sass-rails (~> 4.0.2)
+  sass-rails (= 4.0.1)
   sdoc
   selenium-webdriver
-  turbolinks
-  uglifier (>= 1.3.0)
+  sprockets (= 2.11.0)
+  turbolinks (= 1.1.1)
+  uglifier (= 2.1.1)
