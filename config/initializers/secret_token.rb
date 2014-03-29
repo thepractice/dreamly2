@@ -9,4 +9,19 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Jhad::Application.config.secret_key_base = 'e7a4f681b72e89617d4ce946ed07d86cfddc124c3b38bf696cc1400179d5979a75b71653fb0e094a3b5b034030ffb8075bc3c1f066effd72ec414ca7cc24c7c6'
+require 'securerandom'
+
+def secure_token
+	token_file = Rails.root.join('.secret')
+	if File.exist?(token_file)
+		# Use the existing token.
+		File.read(token_file).chomp
+	else
+		# Generate a new token and store it in the token_file.
+		token = SecureRandom.hex(64)
+		File.write(token_file, token)
+		token
+	end
+end
+
+Jhad::Application.config.secret_key_base = secure_token
