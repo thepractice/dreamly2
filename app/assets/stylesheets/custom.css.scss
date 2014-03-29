@@ -1,19 +1,39 @@
 @import "bootstrap";
 
+/* mixins, variables, etc. */
+$lightBlue: #00CCFF;
+
+/* universal */
+
+body{
+  padding-top: 60px;
+}
+
 /* header */
 
 #logo {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
-  color: #00CCFF;
+  color: $lightBlue;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
   line-hight: 1;
   &:hover {
-    color: #0066FF;
+    color: $blue;
     text-decoration: none;
+  }
+}
+
+/* footer */
+
+footer ul {
+  float: right;
+  list-style: none;
+  li {
+    float: left;
+    margin-left: 10px;
   }
 }
