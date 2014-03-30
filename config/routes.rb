@@ -1,5 +1,5 @@
 Jhad::Application.routes.draw do
-  devise_for :users
+  devise_for :users, path_names: { sign_in: "login", sign_out: "logout" }
   root 'static_pages#home'
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'
