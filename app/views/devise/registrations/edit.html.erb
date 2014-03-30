@@ -19,8 +19,11 @@
   <div><%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
 
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %></div>
+  <!-- Don't display current_password field for OmniAuth users -->
+  <% if f.object.encrypted_password.present? %>
+    <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+      <%= f.password_field :current_password, autocomplete: "off" %></div>
+  <% end %>
 
   <div><%= f.submit "Update" %></div>
 <% end %>

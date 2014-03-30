@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
 
   validates :username, presence: true, uniqueness: { case_sensitive: false }
 
+  # Method for Devise to use either username or email to login.
+  # This is the correct method you override with the code below:
+  # def self.find_for_database_authentication(warden_conditions)
+  # end
   def self.find_first_by_auth_conditions(warden_conditions)
   	conditions = warden_conditions.dup
   	if login = conditions.delete(:login)
@@ -20,7 +24,48 @@ class User < ActiveRecord::Base
   	end
   end
 
-  # This is the correct method you override with the code above
-  # def self.find_for_database_authentication(warden_conditions)
-  # end
+  # Method for finding user from OmniAuth callback or creating that user.
+  def self.from_omniauth(auth)
+    where(auth.slice(:provider, :uid)).first_or_create do |user|
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.username = auth.info.nickname
+    end
+  end
+
+  # Override Devise user class method. To handle OmniAuth callback failures, showing error
+  # messages. Set the callback attributes back to user model to be validated at signup form.
+  def self.new_with_session(params, session)
+    if session["devise.user_attributes"]
+      # create new user record based on OmniAuth callback details
+      new(session["devise.user_attributes"], without_protection: true) do |user|
+        # Set attributes again via params hash, which is attributes send by user through form
+        user.attributes = params
+        # Validate user to ensure display of validation errors
+        user.valid?
+      end
+    else
+      # Fall back to normal Devise behavior--creating a new user instance
+      super
+    end
+  end
+
+  # Override method on user model so that users using OmniAuth don't require password.
+  def password_required?
+    # Fall back to default behavior and ensure provider is blank.
+    super && provider.blank?
+  end
+
+  def email_required?
+    super && provider.blank?
+  end
+
+  # Override method so that OmniAuth users (without passwords) can update their info w/o passwords.
+  def update_with_password(params, *options)
+    if encrypted_password.blank?
+      update_attributes(params, *options)
+    else
+      super
+    end
+  end
 end
