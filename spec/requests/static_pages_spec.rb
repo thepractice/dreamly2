@@ -4,47 +4,55 @@ describe "StaticPages" do
 
 	subject { page }
 
-	let(:base_title) { "Just Had a Dream" }
+	shared_examples_for 'all static pages' do
+		it { should have_selector('h1', text: heading) }
+		it { should have_title(full_title(page_title)) }
+	end
+
 
 	describe "Home page" do
 		before { visit root_path }
+		let(:heading) { 'Just Had a Dream' }
+		let(:page_title) { '' }
 
-		it { should have_title("#{base_title}") }
-		it { should have_content('home page') }
+		it_should_behave_like 'all static pages'
 	end
 
 	describe "Help page" do
 		before { visit help_path }
+		let(:heading) { 'Help' }
+		let(:page_title) { 'Help' }
 
-		it { should have_title("#{base_title} | Help") }
-		it { should have_content('help') }
+		it_should_behave_like 'all static pages'
 	end
 
 	describe "About page" do
 		before { visit about_path }
+		let(:heading) { 'About' }
+		let(:page_title) { 'About' }
 
-		it { should have_title("#{base_title} | About") }
-		it { should have_content('About') }
+		it_should_behave_like 'all static pages'
 	end
 
 	describe "Contact page" do
 		before { visit contact_path }
+		let(:heading) { 'Contact' }
+		let(:page_title) { 'Contact' }
 
-		it { should have_title("#{base_title} | Contact") }
-		it { should have_content('Contact') }
+		it_should_behave_like 'all static pages'
 	end
 
 	it "should have the right links in the layout" do
 		visit root_path
 		click_link "Help"
-		expect(page).to have_title("#{base_title} | Help")
+		expect(page).to have_title(full_title('Help'))
 		click_link "About"
-		expect(page).to have_title("#{base_title} | About")
+		expect(page).to have_title(full_title('About'))
 		click_link "Home"
-		expect(page).to have_title("#{base_title}")
+		expect(page).to have_title(full_title(''))
 		click_link "Contact"
-		expect(page).to have_title("#{base_title} | Contact")
+		expect(page).to have_title(full_title('Contact'))
 		click_link "Just Had a Dream"
-		expect(page).to have_title("#{base_title}")
+		expect(page).to have_title(full_title(''))
 	end
 end
