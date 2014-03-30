@@ -4,9 +4,18 @@
 			<%= link_to "Just Had a Dream", root_path, id: "logo" %>
 			<nav>
 				<ul class="nav pull-right">
-					<li><%= link_to "Home",		 root_path %></li>
-					<li><%= link_to "Help",		 help_path %></li>
-					<li><%= link_to "Sign in", '#' %></li>
+					<% if user_signed_in? %>
+						<li>Logged in as <strong><%= current_user.email %></strong></li>
+						<li><%= link_to "Home",		 root_path %></li>
+						<li><%= link_to "Help",		 help_path %></li>
+						<li><%= link_to "Edit profile", edit_user_registration_path %></li>
+						<li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+					<% else %>
+						<li><%= link_to "Home",		 root_path %></li>
+						<li><%= link_to "Help",		 help_path %></li>
+						<li><%= link_to "Sign up", new_user_registration_path %></li>
+						<li><%= link_to "Login", new_user_session_path %></li>
+					<% end %>
 				</ul>
 			</nav>
 		</div>
