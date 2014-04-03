@@ -4,7 +4,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 		# To see request hash, use 'render :text => "<pre>#{request.env["omniauth.auth"].to_yaml}</pre>"''
 		user = User.from_omniauth(request.env["omniauth.auth"])
 		if user.persisted?
-			flash.notice = "Signed in!"
+			flash[:success] = "Signed in!"
 			sign_in_and_redirect user
 		else
 			# Use session to persist user attributes when validation fails, in order to show error messages.
