@@ -12,7 +12,8 @@
 			<ol class="dreams">
 				<%= render @dreams %>
 			</ol>
-			<%= will_paginate @dreams %>
+			<!-- renderer parameter is needed by will_paginate-boostrap gem -->
+			<%= will_paginate @dreams, renderer: BootstrapPagination::Rails %>
 		<% end %>
 	</div>
 </div>

@@ -10,7 +10,8 @@ gem 'sprockets', '2.11.0'
 gem 'devise'
 gem 'omniauth-twitter'
 gem 'will_paginate'
-gem 'bootstrap-will_paginate'
+#gem 'bootstrap-will_paginate'
+gem 'will_paginate-bootstrap'
 gem 'faker'
 
 
