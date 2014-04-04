@@ -1,5 +1,18 @@
 <% provide(:title, @user.username) %>
-<h1>
-	<%= gravatar_for @user %>
-	<%= @user.username %>
-</h1>
+<div class="row">
+	<aside class ="col-xs-4">
+		<h1>
+			<%= gravatar_for @user %>
+			<%= @user.username %>
+		</h1>
+	</aside>
+	<div class="col-xs-8">
+		<% if @user.dreams.any? %>
+			<h3>Dreams (<%= @user.dreams.count %>)</h3>
+			<ol class="dreams">
+				<%= render @dreams %>
+			</ol>
+			<%= will_paginate @dreams %>
+		<% end %>
+	</div>
+</div>

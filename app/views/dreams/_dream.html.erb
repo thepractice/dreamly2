@@ -1,0 +1,7 @@
+<li>
+	<span class="title"><%= dream.title %></span>
+	<span class="body"><%= dream.body %></span>
+	<span class="timestamp">
+		Dreamed <%= time_ago_in_words(dream.created_at) %> ago.
+	</span>
+</li>

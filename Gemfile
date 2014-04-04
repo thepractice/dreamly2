@@ -9,6 +9,9 @@ gem 'bootstrap-sass'#, '2.3.2.0'
 gem 'sprockets', '2.11.0'
 gem 'devise'
 gem 'omniauth-twitter'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
+gem 'faker'
 
 
 group :development do
@@ -18,6 +21,7 @@ end
 group :test do
 	gem 'selenium-webdriver'
 	gem 'capybara'
+	gem 'factory_girl_rails'
 end
 
 gem 'sass-rails'
