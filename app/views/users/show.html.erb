@@ -9,7 +9,7 @@
 	<div class="col-xs-8">
 		<% if @user.dreams.any? %>
 			<h3>Dreams (<%= @user.dreams.count %>)</h3>
-			<ol class="dreams">
+			<ol class="list-unstyled dreams">
 				<%= render @dreams %>
 			</ol>
 			<!-- renderer parameter is needed by will_paginate-boostrap gem -->
