@@ -1,0 +1,7 @@
+<% provide(:title, @dream.title) %>
+
+<span class="title"><h4><%= @dream.title %></h4></span>
+<span class="body"><%= @dream.body %></span>
+<span class="timestamp">
+	Dreamed <%= time_ago_in_words(@dream.created_at) %> ago.
+</span>

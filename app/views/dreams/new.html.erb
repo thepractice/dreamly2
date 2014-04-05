@@ -1,0 +1,15 @@
+<% provide(:title, 'New dream') %>
+<h1>New dream</h1>
+
+<div class="row">
+	<%= form_for(@dream) do |f| %>
+
+		<%= f.label :title %><br />
+		<%= f.text_field :title %><br />
+
+		<%= f.label :body %><br />
+		<%= f.text_area :body %><br />
+
+		<%= f.submit "Post dream", class: "btn btn-large btn-primary" %>
+	<% end %>
+</div>

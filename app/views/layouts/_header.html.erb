@@ -9,6 +9,7 @@
 					<li><%= link_to "Help",		 help_path %></li>
 					<li><%= link_to "Profile", current_user %></li>
 					<li><%= link_to "Edit profile", edit_user_registration_path %></li>
+					<li><%= link_to "Post dream", new_dream_path %></li>
 					<li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
 				<% else %>
 					<li><%= link_to "Home",		 root_path %></li>
