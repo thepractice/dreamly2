@@ -1,4 +1,5 @@
 class DreamsController < ApplicationController
+	before_filter :authenticate_user!	# Method provided by Devise
 
 	def index
 	end

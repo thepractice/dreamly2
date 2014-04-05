@@ -2,7 +2,9 @@
 <h1>New dream</h1>
 
 <div class="row">
-	<%= form_for(@dream) do |f| %>
+		<%= form_for(@dream) do |f| %>
+
+		<%= render 'shared/error_messages', object: f.object %>
 
 		<%= f.label :title %><br />
 		<%= f.text_field :title %><br />
