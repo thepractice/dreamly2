@@ -14,17 +14,8 @@ body{
 
 #logo {
   float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: $lightBlue;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-  line-hight: 1;
-  &:hover {
-    color: blue;
-    text-decoration: none;
+  img {
+    width: 350px;
   }
 }
 
@@ -37,6 +28,13 @@ footer ul {
     float: left;
     margin-left: 10px;
   }
+}
+
+/* forms */
+
+textarea {
+  height: 300px;
+  width: 300px;
 }
 
 /* miscellaneous */

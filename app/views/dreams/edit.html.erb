@@ -1,0 +1,7 @@
+<% provide(:title, "Edit dream") %>
+
+<h1>Edit dream</h1>
+<%= form_for(@dream) do |f| %>
+	<%= render 'fields', f: f %>
+	<%= f.submit "Save", class: "btn btn-large btn-primary" %>
+<% end %>

@@ -1,5 +1,5 @@
 class DreamsController < ApplicationController
-	before_filter :authenticate_user!	# Method provided by Devise
+	before_filter :authenticate_user!, except: [:show, :index]	# Method provided by Devise
 
 	def index
 	end
@@ -21,6 +21,21 @@ class DreamsController < ApplicationController
 			render 'dreams/new'
 		end
 	end
+
+	def edit
+		@dream = Dream.find(params[:id])
+	end
+
+	def update
+		@dream = Dream.find(params[:id])
+		if @dream.update_attributes(dream_params)
+			flash[:success] = "Changes saved"
+			redirect_to @dream
+		else
+			render 'edit'
+		end
+	end
+
 
 	def destroy
 	end
