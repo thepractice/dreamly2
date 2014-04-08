@@ -13,6 +13,7 @@ gem 'will_paginate'
 #gem 'bootstrap-will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'faker'
+gem 'bootstrap-datepicker-rails'
 
 
 group :development do
