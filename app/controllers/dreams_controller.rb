@@ -46,7 +46,7 @@ class DreamsController < ApplicationController
 	private
 
 		def dream_params
-			params.require(:dream).permit(:title, :body)
+			params.require(:dream).permit(:title, :body, :dreamed_on)
 		end
 
 		def correct_user

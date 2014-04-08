@@ -3,7 +3,8 @@
 <span class="title"><h4><%= @dream.title %></h4></span>
 <span class="body"><%= @dream.body %></span>
 <span class="timestamp">
-	Dreamed <%= time_ago_in_words(@dream.created_at) %> ago.
+	Dreamed <%= time_ago_in_words(@dream.dreamed_on) %> ago.
+	Dreamed on <%= @dream.dreamed_on %> .
 </span>
 <% if current_user == @dream.user %>
 	<%= link_to "Edit", edit_dream_path(@dream.id) %>
