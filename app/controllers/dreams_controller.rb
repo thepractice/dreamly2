@@ -1,5 +1,6 @@
 class DreamsController < ApplicationController
 	before_filter :authenticate_user!, except: [:show, :index]	# Method provided by Devise
+	before_filter :correct_user, only: [:edit, :update, :destroy]
 
 	def index
 	end
@@ -38,11 +39,18 @@ class DreamsController < ApplicationController
 
 
 	def destroy
+		@dream.destroy
+		redirect_to root_url
 	end
 
 	private
 
 		def dream_params
 			params.require(:dream).permit(:title, :body)
+		end
+
+		def correct_user
+			@dream = current_user.dreams.find_by(id: params[:id])
+			redirect_to root_url if @dream.nil?
 		end
 end

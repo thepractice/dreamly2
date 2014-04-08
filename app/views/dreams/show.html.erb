@@ -7,4 +7,5 @@
 </span>
 <% if current_user == @dream.user %>
 	<%= link_to "Edit", edit_dream_path(@dream.id) %>
+	<%= link_to "Delete", @dream, method: :delete, data: { confirm: "Are you sure?" } %>
 <% end %> 
