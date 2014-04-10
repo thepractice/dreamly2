@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  serialize :word_freq, Hash
+
   has_many :dreams, dependent: :destroy
 
   # Include default devise modules. Others available are:
