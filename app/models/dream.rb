@@ -14,6 +14,9 @@ class Dream < ActiveRecord::Base
 			freqs = Hash.new(0)											# Instantiate new hash to hold unique word frequencies
 			words.each { |word| freqs[word] += 1 }	# Iterate through raw words array, if freqs[word] == nil, create this
 																							# key-value pair with value of 1, else increment value by 1.
+			freqs = freqs.sort_by { |x, y| y }			# Sort by value (count)
+			freqs.reverse!													# Put in descending order
+
 			user_words = self.user.word_freq
 
 			freqs.each do |word, frequency|		
@@ -22,13 +25,15 @@ class Dream < ActiveRecord::Base
 				word_record.global_count += frequency
 				word_record.save
 
-				# Add unique word ids/frequencies to User word_freq hash. Currently hacky.
+				# Add unique word ids/frequencies to User word_freq hash. Currently hacky: default value of hash should be 0, not nil.
 				if user_words[word_record.id] == nil
 					user_words[word_record.id] = frequency
 				else
 					user_words[word_record.id] += frequency
 				end
 			end
+			user_words = user_words.sort_by { |x, y| y }
+			user_words.reverse!
 			self.user.save
 		end
 end
