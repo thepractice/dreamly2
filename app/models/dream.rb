@@ -4,7 +4,7 @@ class Dream < ActiveRecord::Base
 	validates :body, presence: true
 	validates :user_id, presence: true
 
-	after_save :gather_words
+#	after_save :gather_words
 
 	protected
 
