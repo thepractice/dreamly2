@@ -163,7 +163,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (2.2.1)
+    turbolinks (1.1.1)
       coffee-rails
     tzinfo (0.3.39)
     uglifier (2.5.0)
@@ -185,22 +185,22 @@ DEPENDENCIES
   bootstrap-datepicker-rails
   bootstrap-sass
   capybara
-  coffee-rails
+  coffee-rails (= 4.0.1)
   devise
   factory_girl_rails
   faker
-  jbuilder
-  jquery-rails
+  jbuilder (= 2.0.5)
+  jquery-rails (= 3.1.0)
   omniauth-twitter
   pg
   rails (= 4.0.4)
   rails_12factor
   rspec-rails
-  sass-rails
+  sass-rails (= 4.0.1)
   sdoc
   selenium-webdriver
   sprockets (= 2.11.0)
-  turbolinks
-  uglifier
+  turbolinks (= 1.1.1)
+  uglifier (= 2.5.0)
   will_paginate
   will_paginate-bootstrap
