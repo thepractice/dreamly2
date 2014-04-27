@@ -5,6 +5,9 @@
 			<%= gravatar_for @user %>
 			<%= @user.username %>
 		</h1>
+		<%= @first_word.name %>
+		<%= @first_word_dreams %>
+		<%= @first_word_first_assoc.name %>
 	</aside>
 	<div class="col-xs-8">
 		<% if @user.dreams.any? %>

@@ -1,4 +1,6 @@
 class Dream < ActiveRecord::Base
+	serialize :word_freq, Hash
+
 	belongs_to :user
 	default_scope -> { order('dreamed_on DESC') }
 	validates :body, presence: true
@@ -15,7 +17,7 @@ class Dream < ActiveRecord::Base
 			words.each { |word| freqs[word] += 1 }	# Iterate through raw words array, if freqs[word] == nil, create this
 																							# key-value pair with value of 1, else increment value by 1.
 			freqs = freqs.sort_by { |x, y| y }			# Sort by value (count)
-			freqs.reverse!													# Put in descending order
+			freqs.reverse!													# put in descending order
 
 			user_words = self.user.word_freq
 
@@ -23,7 +25,11 @@ class Dream < ActiveRecord::Base
 				# Add unique words/frequencies to global Word table.										
 				word_record = Word.find_or_create_by(name: word)
 				word_record.global_count += frequency
+				word_record.dreams.push(self.id)	# Add dream_id to Word.dreams array
 				word_record.save
+
+				# Add word id/frequency to Dream Word_freq hash.
+				self.word_freq[word_record.id] = frequency
 
 				# Add unique word ids/frequencies to User word_freq hash. Currently hacky: default value of hash should be 0, not nil.
 				if user_words[word_record.id] == nil
@@ -32,8 +38,9 @@ class Dream < ActiveRecord::Base
 					user_words[word_record.id] += frequency
 				end
 			end
-			user_words = user_words.sort_by { |x, y| y }
-			user_words.reverse!
-			self.user.save
+			user_words = Hash[user_words.sort_by { |x, y| y }.reverse]
+			self.user.update_columns(word_freq: user_words)
+		#	self.user.save   	# save User to save User word_freq hash
+			self.update_columns(word_freq: self.word_freq)		# save Dream word_freq hash
 		end
 end
