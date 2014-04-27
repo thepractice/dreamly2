@@ -84,6 +84,7 @@ GEM
     multi_json (1.9.2)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    non-stupid-digest-assets (1.0.4)
     oauth (0.4.7)
     omniauth (1.2.1)
       hashie (>= 1.2, < 3)
@@ -191,6 +192,7 @@ DEPENDENCIES
   faker
   jbuilder (= 2.0.5)
   jquery-rails (= 3.1.0)
+  non-stupid-digest-assets
   omniauth-twitter
   pg
   rails (= 4.0.4)
