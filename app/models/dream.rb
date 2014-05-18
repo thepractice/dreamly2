@@ -7,6 +7,7 @@ class Dream < ActiveRecord::Base
 	validates :user_id, presence: true
 
 	after_save :gather_words
+	after_save :update_graph
 
 	protected
 
@@ -42,5 +43,78 @@ class Dream < ActiveRecord::Base
 			self.user.update_columns(word_freq: user_words)
 		#	self.user.save   	# save User to save User word_freq hash
 			self.update_columns(word_freq: self.word_freq)		# save Dream word_freq hash
+		end
+
+		def update_graph
+	#		nodes = "["
+	#		5.times do |n|
+	#			nodes += "{'word_id':#{self.user.word_freq.keys[n]},'value':#{self.user.word_freq.values[n]}}"
+	#			nodes += "," unless n == 4
+	#		end
+	#		nodes += "]"
+
+			nodes = Array.new
+			min_words = [self.user.word_freq.length, 5].min
+			min_words.times do |n|
+				nodes.push(self.user.word_freq.keys[n])
+			end
+
+			links = Array.new
+
+
+
+			min_words.times do |n|
+
+				word_object_dreams = Array.new
+				word_object_assocs = Hash.new(0)
+
+				word_object_id = self.user.word_freq.keys[n]
+				word_object = Word.find(word_object_id)
+				# Set array with dream_ids of user which contain word_object
+				word_object.dreams.each do |dream_id|
+					if Dream.find(dream_id).user_id == self.user.id
+						word_object_dreams.push(dream_id)
+					end
+				end
+
+				word_object_dreams.each do |dream_id|														# Iterate through each dream
+					Dream.find(dream_id).word_freq.each do |word_id, frequency|		# Iterate through each unique word
+						if word_id != word_object_id
+							word_object_assocs[word_id] += frequency									# Add word count to word_object_assocs hash
+						end
+					end
+				end
+
+				word_object_assocs = Hash[word_object_assocs.sort_by{ |k, v| v }.reverse]
+				min_assocs = [word_object_assocs.length, 2].min
+				min_assocs.times do |i|
+					if nodes.include? word_object_assocs.keys[i]					# if first association is already a node
+						links.push([nodes.index(word_object_id), nodes.index(word_object_assocs.keys[i])])				# write a link
+					else
+						nodes.push(word_object_assocs.keys[i])
+						links.push([nodes.index(word_object_id), nodes.index(word_object_assocs.keys[i])])
+					end
+				end
+
+		#		word_object_dreams.clear
+		#		word_object_assocs.clear
+			end
+
+			node_text = "["
+			nodes.each do |word_id|
+				node_text += "{\"name\":\"#{Word.find(word_id).name}\",\"value\":#{self.user.word_freq[word_id]}},"
+			end
+			node_text = node_text[0..-2]				# remove extra comma
+			node_text += "]"
+
+			link_text = "["
+			links.each do |link|
+				link_text += "{\"source\":#{link[0]},\"target\":#{link[1]}},"
+			end
+			link_text = link_text[0..-2]
+			link_text += "]"
+
+			graph_text = "{\"nodes\":#{node_text},\"links\":#{link_text}}"
+			self.user.update_columns(graph: graph_text)
 		end
 end

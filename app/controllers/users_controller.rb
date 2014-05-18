@@ -32,8 +32,10 @@ class UsersController < ApplicationController
 
 		@first_word_first_assoc_id = @first_word_assocs.keys[0]
 		@first_word_first_assoc = Word.find(@first_word_first_assoc_id)
+	end
 
-				
+	def graph
+		@user = User.find(params[:id])
 	end
 
 end
