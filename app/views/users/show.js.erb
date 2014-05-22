@@ -1,0 +1,8 @@
+// infinite scrolling
+
+$('#user-dreams').append('<%= j render(@dreams) %>'); // escape with 'j'
+<% if @dreams.next_page %>
+	$('.pagination').replaceWith('<%= j will_paginate(@dreams) %>');
+<% else %>
+	$('.pagination').remove();
+<% end %>

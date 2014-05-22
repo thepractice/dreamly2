@@ -5,14 +5,11 @@
 			<%= gravatar_for @user %>
 			<%= @user.username %>
 		</h1>
-		<%= @first_word.name %>
-		<%= @first_word_dreams %>
-		<%= @first_word_first_assoc.name %>
 	</aside>
 	<div class="col-xs-8">
 		<% if @user.dreams.any? %>
 			<h3>Dreams (<%= @user.dreams.count %>)</h3>
-			<ol class="list-unstyled dreams">
+			<ol class="list-unstyled dreams" id ="user-dreams">
 				<%= render @dreams %>
 			</ol>
 			<!-- renderer parameter is needed by will_paginate-boostrap gem -->
