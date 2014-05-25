@@ -11,9 +11,10 @@ jQuery ->
 	  	if url && $(window).scrollTop() > $(document).height() - $(window).height() - 100
 	  		# Since this replaces whole pagination with this text, it prevents loading of too many records.
 	  		# This line is immediately followed by this getScript() which triggers another operation on .pagination
-	     	$('.pagination').text('Fetching more products...')
+	     	$('.pagination').text('Loading...')
 	     	# Triggers the js.erb file
 	      $.getScript(url)
 	    $(window).scroll
 
+	# Datepicker
 	$('#dream_dreamed_on2').datepicker
