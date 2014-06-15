@@ -1,6 +1,6 @@
 <li>
 	<span class="title"><h4><%= link_to dream.title, dream %></h4></span>
-	<span class="body"><%= dream.body %></span>
+	<span class="body"><%= simple_format(truncate(dream.body, length: 500, separator: ' ')) %></span>
 	<span class="timestamp">
 		Dreamed <%= time_ago_in_words(dream.dreamed_on) %> ago.
 	</span>

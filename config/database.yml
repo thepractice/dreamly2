@@ -8,7 +8,7 @@ development:
   host: localhost
   username: edward
   password: hs1
-  database: jhaddb
+  database: jhaddb1
   pool: 5
   timeout: 5000
 

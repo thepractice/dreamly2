@@ -1,15 +1,12 @@
-<% provide(:title, "#{@user.username} word associations") %>
-<h1><%= @user.username %> word associations</h1>
-<p><%= @user.graph %></p>
-
-<body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
-var width = 960,
-    height = 500
+var width = 250,
+    height = 250,
+    r = 2
 
-var svg = d3.select("body").append("svg")
+//var svg = d3.select("body").append("svg")
+var svg = d3.select("#profile-graph").append("svg")
     .attr("width", width)
     .attr("height", height);
 
@@ -26,12 +23,15 @@ for(var i = 0; i < ed_nodes.length; i++) {
 	total_value += ed_nodes[i].value;
 }
 
-function node_radius(d) { return (d.value / total_value)*100 };
+//function node_radius(d) { return (d.value / total_value)*100 };
+function node_radius(d) { return (d.value / total_value) *60 + 10 };
+
+var k = Math.sqrt(ed_nodes.length / (width * height ));
 
 var force = d3.layout.force()
-    .gravity(.05)
+    .gravity(100 * k)
  /*   .distance(100) */
-    .charge(-100)
+    .charge(-10 / k)
     .size([width, height])
     .linkDistance(200)
     .nodes(ed_nodes)
@@ -65,41 +65,14 @@ var force = d3.layout.force()
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
 
-    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+   node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+// Bounding Box solution
+ //node.attr("cx", function(d) { return d.x = Math.max(r, Math.min(width - r, d.x)); })
+ //       .attr("cy", function(d) { return d.y = Math.max(r, Math.min(height - r, d.y)); });
+
+
 
 });
-
-  /*
-var ed_nodes_string2 = "[
-    {
-        'name': 'Creighton Hospital'
-    },
-    {
-        'name': 'Heart Hospital'
-    },
-    {
-        'name': 'Marshall Regional Medical Center'
-    }
-]";
-
-
-var ed_nodes_string = "[{\"name\":\"Hospital\"},{\"name\":\"Tank\"}]";
-
-var ed_nodes = JSON.parse(ed_nodes_string);
-
-var ed_links = [
-    {
-        source: 0,
-        target: 1
-    } 
-]
-*/
-/*  node.append("image")
-      .attr("xlink:href", "https://github.com/favicon.ico")
-      .attr("x", -8)
-      .attr("y", -8)
-      .attr("width", 16)
-      .attr("height", 16); */
-
 </script>
 

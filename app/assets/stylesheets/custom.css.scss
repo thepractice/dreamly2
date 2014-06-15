@@ -1,4 +1,5 @@
 @import "bootstrap";
+@import url(http://fonts.googleapis.com/css?family=Ubuntu);
 
 /* mixins, variables, etc. */
 $lightBlue: #00CCFF;
@@ -12,11 +13,95 @@ body{
 
 /* header */
 
-#logo {
+.navbar-default {
+  background-color: white;
+}
+
+#site_header {
+  font-size: 25px;
+  font-family: 'Ubuntu';
+  font-weight: bold;
+  line-height: 50px;
+  vertical-align: middle;
   float: left;
-  img {
-    width: 350px;
+}
+
+#cloud_header {
+  display: block;
+  width: 50px;
+  line-height: 53px;
+  margin: 0 auto;
+  vertical-align: middle;
+}
+
+.navbar-btn {
+  font-size: 25px;
+  color: #428bca;
+  margin-top: 0;
+  margin-bottom: 0;
+  border: none;
+}
+
+/* Profile */
+
+#profile-left-sidebar {
+  width: 263px;
+}
+
+#dashboard{
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  float: left;
+}
+
+#dashboard-avatar{
+  float: left;
+  img{
+    border-radius: 10px;
   }
+}
+
+#dashboard-usernames{
+  float: left;
+  padding-left: 5px;
+}
+
+#dashboard-usernames-name a{
+  color: black;
+  font-size: 20px;
+}
+
+#dashboard-usernames-handle a{
+  color: #999999;
+  font-size: 16px;
+}
+
+#dashboard-stats{
+  padding-top: 10px;
+  clear: both;
+  .stat-header{
+    color: #999999;
+    font-size: 15px;
+  }
+  .stat-number{
+    color: #428bca;
+    font-size: 18px;
+  }
+}
+
+#dashboard-stats-left{
+  float: left;
+  width: 50%;
+}
+
+#profile-graph {
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 10px;
+  float: left;
+  margin-top: 15px;
 }
 
 /* footer */
@@ -60,4 +145,16 @@ textarea {
 }
 .timestamp {
   color: $lightGray;
+}
+
+/* Graph */
+
+.link {
+  stroke: #ccc;
+}
+
+.node circle {
+  fill: white;
+  stroke: #fff;
+  stroke-width: 1.5px;
 }

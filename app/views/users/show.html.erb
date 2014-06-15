@@ -1,12 +1,37 @@
 <% provide(:title, @user.username) %>
+
 <div class="row">
-	<aside class ="col-xs-4">
-		<h1>
-			<%= gravatar_for @user %>
-			<%= @user.username %>
-		</h1>
-	</aside>
-	<div class="col-xs-8">
+	<div class ="col-xs-3">
+		<div id="profile-left-sidebar" data-spy="affix">
+			<div id="dashboard">
+				<div id="dashboard-avatar">
+					<%= gravatar_for @user %>
+				</div>
+				<div id="dashboard-usernames">
+					<div id="dashboard-usernames-name">
+						<%= link_to @user.username, @user %>
+					</div>
+					<div id = "dashboard-usernames-handle">
+						<%= link_to "@filler", @user %>
+					</div>
+				</div> 
+				<div id="dashboard-stats">
+					<div id ="dashboard-stats-left">
+						<span class="stat-header">DREAMS</span> <br />
+						<span class="stat-number"><%= @user.dreams.count %></span>
+					</div>
+					<div id ="dashboard-stats-right">
+						<span class="stat-header">FOLLOWING</span> <br />
+						<span class="stat-number">11</span>
+					</div>
+				</div>
+			</div>
+			<div id="profile-graph">
+			</div>
+			<%= render 'users/graph' %>
+		</div>
+	</div>
+	<div class="col-xs-9">
 		<% if @user.dreams.any? %>
 			<h3>Dreams (<%= @user.dreams.count %>)</h3>
 			<ol class="list-unstyled dreams" id ="user-dreams">
