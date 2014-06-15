@@ -3,7 +3,7 @@
 <div class="row">
 	<div class ="col-xs-3">
 		<div id="profile-left-sidebar" data-spy="affix">
-			<div id="dashboard">
+			<div id="dashboard" class="white-background">
 				<div id="dashboard-avatar">
 					<%= gravatar_for @user %>
 				</div>
@@ -26,14 +26,14 @@
 					</div>
 				</div>
 			</div>
-			<div id="profile-graph">
+			<div id="profile-graph" class="white-background">
 			</div>
 			<%= render 'users/graph' %>
 		</div>
 	</div>
 	<div class="col-xs-9">
 		<% if @user.dreams.any? %>
-			<h3>Dreams (<%= @user.dreams.count %>)</h3>
+			<span class="content-title"><h3>Dreams</h3></span>
 			<ol class="list-unstyled dreams" id ="user-dreams">
 				<%= render @dreams %>
 			</ol>

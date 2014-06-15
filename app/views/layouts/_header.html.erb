@@ -2,7 +2,9 @@
 	<div class="container">
 		<!-- <%= link_to image_tag("logo.png", alt: "Just Had a Dream"), root_path, id: "logo" %> -->
 		<div id="site_header">
-			<%= link_to "just had a dream", root_path %>
+			<%= link_to(root_path) do %>
+				<span>just had a dream</span>
+			<% end %>
 		</div>
 		<nav>
 			<ul class="nav navbar-nav navbar-right">
@@ -12,7 +14,10 @@
 					<div class="btn-group">
 						<button type="button" class="btn btn-default navbar-btn btn-lg">
 							<%= link_to(new_dream_path) do %>
-								<span class="glyphicon glyphicon-plus"></span>
+								<div id="add-dream-plus">
+									<span class="glyphicon glyphicon-plus"></span>
+								</div>
+								<div id="add-dream-button">dream</div>
 							<% end %>
 						</button>
 						<div class="btn-group">

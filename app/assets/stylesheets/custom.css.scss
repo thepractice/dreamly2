@@ -9,6 +9,11 @@ $lightGray: #999999;
 
 body{
   padding-top: 60px;
+  background-color: #BFDFEE;
+}
+
+.white-background{
+  background: white;
 }
 
 /* header */
@@ -24,7 +29,16 @@ body{
   line-height: 50px;
   vertical-align: middle;
   float: left;
+  a:hover {
+    text-decoration: none;
+    color: #428bca;
+  }
 }
+
+ #site_header a:hover {
+    text-decoration: none;
+    color: #428bca;
+  }
 
 #cloud_header {
   display: block;
@@ -40,6 +54,21 @@ body{
   margin-top: 0;
   margin-bottom: 0;
   border: none;
+  a:hover{
+    text-decoration: none;
+  }
+}
+
+#add-dream-plus {
+  float: left;
+}
+
+#add-dream-button {
+  float: left;
+  padding-left: 5px;
+  font-size: 20px;
+  line-height: 30px;
+  vertical-align: middle;
 }
 
 /* Profile */
@@ -50,9 +79,10 @@ body{
 
 #dashboard{
   width: 100%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 10px;
   padding: 10px;
+  margin-top: 5px;
   float: left;
 }
 
@@ -98,7 +128,7 @@ body{
 
 #profile-graph {
   width: 100%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 10px;
   float: left;
   margin-top: 15px;
@@ -129,7 +159,48 @@ textarea {
   float: left;
 }
 
-/* microposts */
+/* dreams */
+
+.dream {
+  /* border: 1px solid black; */
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.dream-left{
+  float: left;
+  width: 50px;
+  padding-top: 6px;
+  text-align: center;
+  font-size: 18px;
+  color: #999999;
+}
+
+.dream-right{
+  margin-left: 50px;
+  p {
+    color: #5F5F5F
+  }
+}
+
+.dream-title {
+  a {
+    color: black;
+  }
+  h4{
+    margin-bottom: 2px;
+  }
+}
+
+.dreamer1{
+  color: #428bca;
+  font-weight: bold;
+}
+
+.dreamer2{
+  color: #428bca;
+}
 
 .dreams {
   list-style: none;
@@ -137,14 +208,10 @@ textarea {
 
   li {
     padding: 0 0;
-    border-top: 1px solid #e8e8e8;
   }
 }
 .body {
   display: block;
-}
-.timestamp {
-  color: $lightGray;
 }
 
 /* Graph */
@@ -157,4 +224,14 @@ textarea {
   fill: white;
   stroke: #fff;
   stroke-width: 1.5px;
+}
+
+/* Typography */
+
+body{
+  font-family: 'Ubuntu';
+}
+
+.content-title h3{
+  margin-top: 5px;
 }
