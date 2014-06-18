@@ -13,7 +13,7 @@
 					<!-- <li><%= link_to "Post dream", new_dream_path %></li> -->
 					<div class="btn-group">
 						<button type="button" class="btn btn-default navbar-btn btn-lg">
-							<%= link_to(new_dream_path) do %>
+							<%= link_to(new_dream_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do %>
 								<div id="add-dream-plus">
 									<span class="glyphicon glyphicon-plus"></span>
 								</div>
@@ -48,4 +48,6 @@
 			<%= image_tag("cloud.png") %>
 		</div>
 	</div>
+	
+
 </header>

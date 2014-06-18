@@ -11,6 +11,10 @@ class DreamsController < ApplicationController
 
 	def new
 		@dream = current_user.dreams.build
+		respond_to do |format|
+			format.html
+			format.js
+		end
 	end
 
 	def create

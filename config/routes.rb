@@ -9,6 +9,8 @@ Jhad::Application.routes.draw do
   match '/contact', to: 'static_pages#contact', via: 'get'
   match '/graph', to: 'static_pages#graph', via: 'get'
 
+  get 'dreams/new' => 'dreams#new', :as => :new
+
   get ':controller(/:action(/:id))'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

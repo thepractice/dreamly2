@@ -16,4 +16,5 @@
 //= require_tree .
 //= require bootstrap/dropdown
 //= require bootstrap/affix
+//= require bootstrap/modal
 //= require bootstrap-datepicker/core
