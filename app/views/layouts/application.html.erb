@@ -13,6 +13,7 @@
 			<% flash.each do |name, msg| %>
 				<%= content_tag :div, msg, class: "alert alert-#{name}" %>
 			<% end %>
+			<!-- Hidden div which serves as modal popup -->
 			<div id="modal-window" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
 			<%= yield %>
 			<%= render 'layouts/footer' %>
