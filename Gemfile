@@ -15,6 +15,7 @@ gem 'will_paginate-bootstrap'
 gem 'faker'
 gem 'bootstrap-datepicker-rails'
 gem 'non-stupid-digest-assets'
+gem 'simple_form'
 
 
 group :development do

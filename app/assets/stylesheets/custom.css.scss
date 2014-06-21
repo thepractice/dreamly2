@@ -152,6 +152,10 @@ textarea {
   width: 300px;
 }
 
+.datepicker {
+  z-index: 1151 !important;
+}
+
 /* miscellaneous */
 
 .debug_dump {

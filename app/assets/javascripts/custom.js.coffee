@@ -17,4 +17,6 @@ jQuery ->
 	    $(window).scroll
 
 	# Datepicker
-	$('#dream_dreamed_on2').datepicker
+	$('#dream_dreamed_on').datepicker
+
+	$('[data-behaviour~=datepicker]').datepicker

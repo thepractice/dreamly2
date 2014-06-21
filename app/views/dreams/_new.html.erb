@@ -2,10 +2,29 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">New dream</h4>
       </div>
       <div class="modal-body">
-        ...
+        <div class="row">
+          <%= form_for(@dream) do |f| %>
+            <%= render 'shared/error_messages', object: f.object %>
+
+            <%= f.label :dreamed_on %><br />
+            <%= f.text_field :dreamed_on, "data-provide" => "datepicker",
+                                    "data-date-autoclose" => true,
+                                    "data-date-today-btn" => "linked",
+                                    "data-date-today-highlight" => true,
+                                    "data-date-format" => "yyyy-mm-dd",
+                                    value: Time.now.strftime('%Y-%m-%d') %><br >
+
+            <%= f.label :title %><br />
+            <%= f.text_field :title %><br />
+
+            <%= f.label :body %><br />
+            <%= f.text_area :body %><br />
+            <%= f.submit "Post dream", class: "btn btn-large btn-primary" %>
+          <% end %>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
