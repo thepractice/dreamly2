@@ -1,7 +1,7 @@
 <% provide(:title, @dream.title) %>
 
-<span class="title"><h4><%= @dream.title %></h4></span>
-<span class="body"><%= @dream.body %></span>
+<!-- <span class="title"><h4><%= @dream.title %></h4></span>
+<span class="body"><%= simple_format(@dream.body) %></span>
 <span class="timestamp">
 	Dreamed <%= time_ago_in_words(@dream.dreamed_on) %> ago.
 	Dreamed on <%= @dream.dreamed_on %> .
@@ -9,4 +9,21 @@
 <% if current_user == @dream.user %>
 	<%= link_to "Edit", edit_dream_path(@dream.id) %>
 	<%= link_to "Delete", @dream, method: :delete, data: { confirm: "Are you sure?" } %>
-<% end %> 
+<% end %>  -->
+
+	<div class="dream white-background">
+		<div class="dream-left">
+			<span><%= @dream.dreamed_on.strftime("%^b") %></span><br />
+			<span><%= @dream.dreamed_on.strftime("%d") %></span>
+		</div>
+		<div class="dream-right">
+			<span class="dream-title"><h4><%= @dream.title %></h4></span>
+			<span class="dreamer1"><%= @dream.user.username %></span>
+			<span class="dreamer2">@filler</span>
+			<span class="body"><%= simple_format(@dream.body) %></span>
+			<% if current_user == @dream.user %>
+				<%= link_to "Edit", edit_dream_path(@dream.id) %>
+				<%= link_to "Delete", @dream, method: :delete, data: { confirm: "Are you sure?" } %>
+			<% end %> 
+		</div>
+	</div>

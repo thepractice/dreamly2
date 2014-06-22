@@ -13,4 +13,5 @@ class StaticPagesController < ApplicationController
 
   def graph
   end
+
 end

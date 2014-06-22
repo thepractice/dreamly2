@@ -23,7 +23,7 @@ class DreamsController < ApplicationController
 			flash[:success] = "Dream saved."
 			redirect_to @dream
 		else
-			render 'dreams/new'
+			render 'dreams/_new'
 		end
 	end
 
