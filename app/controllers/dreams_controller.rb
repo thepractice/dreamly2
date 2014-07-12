@@ -19,12 +19,28 @@ class DreamsController < ApplicationController
 
 	def create
 		@dream = current_user.dreams.build(dream_params)
+
+
+		respond_to do |format|
+			if @dream.save
+				#flash[:success] = "Dream saved."
+				format.html { redirect_to @dream, notice: "Dream saved." }
+				format.js {}
+				format.json { render json: @dream, status: :created, location: @dream }
+			else
+				format.html { render 'dreams/new' }
+				format.json { render json: @dream.errors.full_messages, status: :unprocessable_entity }
+			end
+		end
+
+=begin
 		if @dream.save
 			flash[:success] = "Dream saved."
 			redirect_to @dream
 		else
 			render 'dreams/_new'
 		end
+=end		
 	end
 
 	def edit

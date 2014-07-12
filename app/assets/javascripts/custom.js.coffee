@@ -1,6 +1,7 @@
 jQuery ->
 
 	# Infinite scroll
+
 	# It doesn't listen for scroll unless there is pagination class
 	if $('.pagination').length
 	  $(window).scroll ->
@@ -16,7 +17,23 @@ jQuery ->
 	      $.getScript(url)
 	    $(window).scroll
 
+
 	# Datepicker
+
 	$('#dream_dreamed_on').datepicker
 
 	$('[data-behaviour~=datepicker]').datepicker
+
+
+	# Ajax dream form
+
+#$("form.new_dream").on "ajax:success", (event, data, status, xhr) ->
+#  $("form.new_dream")[0].reset()
+#  $('#new-dream-modal').modal('hide')
+
+	$("#new_dream").on "ajax:success", (event, data, status, xhr) ->
+		$("#new-dream-modal").append xhr.responseText
+
+
+	$("#new_dream").on "ajax:error", (event, data, status, error) ->
+		$("#new_dream").append "<p>ERROR</p>"
