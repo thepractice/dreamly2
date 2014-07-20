@@ -23,10 +23,13 @@ class DreamsController < ApplicationController
 
 		respond_to do |format|
 			if @dream.save
-				#flash[:success] = "Dream saved."
+				flash[:success] = "Dream saved."
 				format.html { redirect_to @dream, notice: "Dream saved." }
-				format.js {}
+				#format.js {}
+				format.js { render js: "window.location.href = ('#{help_path}');"}
 				format.json { render json: @dream, status: :created, location: @dream }
+				#format.json { render json: "window.location.pathname='#{help_path}'"}
+				#redirect_to @dream, format: 'json'
 			else
 				format.html { render 'dreams/new' }
 				format.json { render json: @dream.errors.full_messages, status: :unprocessable_entity }

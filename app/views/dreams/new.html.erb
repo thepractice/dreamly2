@@ -30,5 +30,19 @@
 		<%= f.input :body %>
 		<%= f.button :submit %>
   <% end %>
+
+ <%= simple_form_for(Dream.new, remote: true, html: {"data-type" => :json, class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
+            <div id="dream_error_explanation" style="display:none;"></div>
+            <%= f.input :dreamed_on, as: :string, input_html: { "data-provide" => "datepicker",
+                                                              "data-date-autoclose" => true,
+                                                              "data-date-today-btn" => "linked",
+                                                              "data-date-today-highlight" => true,
+                                                              "data-date-format" => "yyyy-mm-dd",
+                                                              value: Time.now.strftime('%Y-%m-%d') } %>
+            <%= f.input :title %>
+            <%= f.input :body, input_html: { id: 'dream-body-textarea' } %>
+            <%= f.button :submit %>
+          <% end %>
+
 </div>
 

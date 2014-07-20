@@ -2,14 +2,15 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu);
 
 /* mixins, variables, etc. */
-$lightBlue: #00CCFF;
+$lightBlue: #BFDFEE;
+$darkBlue: #428bca;
 $lightGray: #999999;
 
 /* universal */
 
 body{
   padding-top: 60px;
-  background-color: #BFDFEE;
+  background-color: $lightBlue;
 }
 
 .white-background{
@@ -31,13 +32,13 @@ body{
   float: left;
   a:hover {
     text-decoration: none;
-    color: #428bca;
+    color: $darkBlue;
   }
 }
 
  #site_header a:hover {
     text-decoration: none;
-    color: #428bca;
+    color: $darkBlue;
   }
 
 #cloud_header {
@@ -147,13 +148,32 @@ footer ul {
 
 /* forms */
 
-textarea {
+#dream-body-textarea {
   height: 300px;
-  width: 300px;
 }
 
 .datepicker {
   z-index: 1151 !important;
+}
+
+.modal-header {
+  background: white;
+  color: $darkBlue;
+  padding-left: 35px;
+}
+
+.modal-body {
+  background: $lightBlue;
+}
+
+#new_dream {
+  label {
+    font-size: 16px;
+    line-height: 16px;
+  }
+ .btn {
+  float: right;
+  }
 }
 
 
