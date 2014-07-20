@@ -45,3 +45,6 @@ $ ()->
 			$('#dream_error_explanation').append('<li>' + e + '</li>')
 		$('#dream_error_explanation').append('</ul>')
 		$('#dream_error_explanation').show()
+
+	$('#modal-window').on 'hidden.bs.modal', (e) ->
+		$("#dream_error_explanation").hide()
