@@ -9,7 +9,10 @@
 
           <%= simple_form_for(Dream.new, remote: true, html: {"data-type" => :json, class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
       
-            <div id="dream_error_explanation" class="alert alert-danger" style="display:none;"></div>
+            <div id="dream_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
+              <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <div id="dream_error_explanation"></div>
+            </div>
             <%= f.input :dreamed_on, as: :string, input_html: { "data-provide" => "datepicker",
                                                               "data-date-autoclose" => true,
                                                               "data-date-today-btn" => "linked",

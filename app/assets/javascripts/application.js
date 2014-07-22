@@ -17,4 +17,5 @@
 //= require bootstrap/dropdown
 //= require bootstrap/affix
 //= require bootstrap/modal
+//= require bootstrap/alert
 //= require bootstrap-datepicker/core

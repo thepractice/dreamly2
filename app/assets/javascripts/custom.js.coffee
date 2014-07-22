@@ -37,14 +37,19 @@ $ ()->
 		errorcount = errors.length
 		$('#dream_error_explanation').empty()
 		if errorcount > 1
-			$('#dream_error_explanation').append('<div class="alert alert-error">The form contains ' + errorcount + ' errors.</div>')
+			$('#dream_error_explanation').append('The form contains ' + errorcount + ' errors.')
 		else
-			$('#dream_error_explanation').append('<div class="alert alert-error">The form contains 1 error</div>')
+			$('#dream_error_explanation').append('The form contains 1 error')
 		$('#error_explanation').append('<ul>')
 		for e in errors
 			$('#dream_error_explanation').append('<li>' + e + '</li>')
 		$('#dream_error_explanation').append('</ul>')
-		$('#dream_error_explanation').show()
+		$('#dream_error_explanation_wrapper').show()
+		console.log('gotcha3')
 
 	$('#modal-window').on 'hidden.bs.modal', (e) ->
-		$("#dream_error_explanation").hide()
+		$("#dream_error_explanation_wrapper").hide()
+
+	# For hiding an element with data-hide="alert"
+	$("[data-hide]").on "click", (event) ->
+		$("." + $(this).attr("data-hide")).hide()
