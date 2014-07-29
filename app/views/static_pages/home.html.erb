@@ -1,7 +1,28 @@
-<div class="center jumbotron">
+<div class="row">
+	<div id="home-top-panel" class="text-center">
+		<div id="home-header">just had a dream</div>	
+		<div id="home-byline">Your dream journal app</div>
+		<div id="home-byline2">free | private | social</div>
+		<%= link_to(new_registration_path(resource_name), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-signup'}) do %>
+			<button type="button" id="signup-button" class="btn btn-primary btn-lg">
+				<span>Sign up!</span>
+			</button>
+		<% end %>
 
-	<h1>Welcome to Just Had a Dream</h1>
-	<h2>This is the home page for justhadadream.com.</h2>
+	</div>
 
-	<%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-large btn-primary" %>
+	<div id="home-panel2">
+		<div id="home-panel2-inner">
+			<div id="panel2-1" class="col-md-3 col-md-offset-2">
+				<h3>Automatic word association</h2>
+				<p>Discover hidden trends, patterns and associations in your unconscious mind.</p>
+			</div>	
+			<div id="panel2-2" class="col-md-3 col-md-offset-2">
+				<h3>Smartphone friendly</h2>
+				<p>Journal your dreams without getting up from your bed! Just had a dream was designed to be used with your smartphone - no need to download an 'app'.</p>
+				<%= image_tag("iphone.png", alt: "Mobile friendly") %>
+			</div>
+			<%= render 'shared/graph' %>
+		</div>	
+	</div>
 </div>

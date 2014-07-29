@@ -6,34 +6,72 @@ var width = 250,
     r = 2;
 
 //var svg = d3.select("body").append("svg")
-var svg = d3.select("#profile-graph").append("svg")
+var svg = d3.select("#panel2-1").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-var graph_string = "<%= @user.graph %>";
-var graph_string = graph_string.replace(/&quot;/ig,'"');
-var graph_json = JSON.parse(graph_string);
+var ed_nodes = [
+    {
+        'name': 'love',
+        'size': 30
+    },
+    {
+        'name': 'beauty',
+        'size': 30
+    },
+    {
+        'name': 'dark',
+        'size': 20
+    },
+    {
+        'name': 'freedom',
+        'size': 20
+    },
+    {
+        'name': 'dragon',
+        'size': 12
+    },
+    {
+        'name': 'blue',
+        'size': 12
+    }
+];
 
-var ed_nodes = graph_json.nodes;
-var ed_links = graph_json.links;
-
-var total_value = 0;
-
-for(var i = 0; i < ed_nodes.length; i++) {
-	total_value += ed_nodes[i].value;
-}
+var ed_links = [
+    {
+        source: 0,
+        target: 1
+    },
+    {
+        source: 1,
+        target: 2
+    },
+    {
+        source: 1,
+        target: 5
+    },
+    {
+        source: 3,
+        target: 4
+    },
+    {
+        source: 0,
+        target: 2
+    },
+];
 
 //function node_radius(d) { return (d.value / total_value)*100 };
-function node_radius(d) { return (d.value / total_value) *60 + 10 };
+function node_radius(d) { return d.size };
+function text_offset(d) { return - d.size };
 
 var k = Math.sqrt(ed_nodes.length / (width * height ));
 
 var force = d3.layout.force()
-    .gravity(100 * k)
+    .gravity(150 * k)
  /*   .distance(100) */
-    .charge(-10 / k)
+    .charge(-40 / k)
     .size([width, height])
-    .linkDistance(200)
+    .linkDistance(100)
     .nodes(ed_nodes)
     .links(ed_links)
     .start();
@@ -54,7 +92,7 @@ var force = d3.layout.force()
   	.attr("opacity", 1);
 
   node.append("text")
-      .attr("dx", -12)
+      .attr("dx", text_offset)
       .attr("dy", ".35em")
       .attr("font-size", node_radius)
       .text(function(d) { return d.name });
@@ -65,7 +103,7 @@ var force = d3.layout.force()
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
 
-   node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
 // Bounding Box solution
  //node.attr("cx", function(d) { return d.x = Math.max(r, Math.min(width - r, d.x)); })
@@ -73,6 +111,7 @@ var force = d3.layout.force()
 
 
 
-});
+  });
+
 </script>
 

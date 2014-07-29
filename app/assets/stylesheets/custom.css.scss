@@ -1,10 +1,12 @@
 @import "bootstrap";
-@import url(http://fonts.googleapis.com/css?family=Ubuntu);
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700);
 
 /* mixins, variables, etc. */
 $lightBlue: #BFDFEE;
-$darkBlue: #428bca;
+$darkBlue: #286bcc;
 $lightGray: #999999;
+$darkGray: #858585;
+$lightYellow: #fffa9f;
 
 /* universal */
 
@@ -21,12 +23,13 @@ body{
 
 .navbar-default {
   background-color: white;
+  border-bottom: 1px solid $darkGray;
 }
 
 #site_header {
   font-size: 25px;
   font-family: 'Ubuntu';
-  font-weight: bold;
+  font-weight: 700;
   line-height: 50px;
   vertical-align: middle;
   float: left;
@@ -70,6 +73,78 @@ body{
   font-size: 20px;
   line-height: 30px;
   vertical-align: middle;
+}
+
+#signin-button {
+  border-radius: 0;
+  font-size: 15px;
+  a {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+/* Landing page */
+
+#home-top-panel {
+  background: white;
+  margin-top: -7px;
+  height: 228px;
+}
+
+#home-header {
+  padding-top: 20px;
+  color: $darkBlue;
+  font-size: 50px;
+  font-weight: 700;
+}
+
+#home-byline {
+  padding-top: 5px;
+  color: $darkGray;
+  font-size: 28px;
+}
+
+#home-byline2 {
+  padding-top: 30px;
+  color: $lightGray;
+  font-size: 21px;
+  padding-bottom: 5px;
+}
+
+#signup-button {
+  padding-left: 50px;
+  padding-right: 50px;
+  font-size: 26px;
+  background: -webkit-linear-gradient(#7ea6e0, $darkBlue); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#7ea6e0, $darkBlue); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#7ea6e0, $darkBlue); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#7ea6e0, $darkBlue); /* Standard syntax */
+}
+
+#signup-button:hover {
+  background: -webkit-linear-gradient($darkBlue, #1C4B8F); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient($darkBlue, #1C4B8F); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient($darkBlue, #1C4B8F); /* For Firefox 3.6 to 15 */
+  background: linear-gradient($darkBlue, #1C4B8F); /* Standard syntax */
+}
+
+#home-panel2 {
+  background: $lightYellow;
+  height: 600px;
+}
+
+#home-panel2-inner {
+  padding-top: 40px;
+}
+
+#panel2-1 {
+  background: white;
+}
+
+#panel2-2 {
+  background: white;
+  padding-bottom: 10px;
 }
 
 /* Profile */
