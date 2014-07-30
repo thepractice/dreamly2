@@ -92,8 +92,10 @@ var force = d3.layout.force()
   	.attr("opacity", 1);
 
   node.append("text")
-      .attr("dx", text_offset)
+      .attr("dx", 0)
       .attr("dy", ".35em")
+      .attr("text-anchor", "middle")
+      .attr("fill", "#875756")
       .attr("font-size", node_radius)
       .text(function(d) { return d.name });
 
