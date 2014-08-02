@@ -1,4 +1,4 @@
-<header class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">
 		<!-- <%= link_to image_tag("logo.png", alt: "Just Had a Dream"), root_path, id: "logo" %> -->
 		<div id="site_header">
@@ -12,13 +12,11 @@
 					<!-- <li>Logged in as <strong><%= current_user.username %></strong></li> -->
 					<!-- <li><%= link_to "Post dream", new_dream_path %></li> -->
 					
-					<%= link_to(new_dream_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window'}) do %>
-						<button type="button" class="btn btn-default navbar-btn btn-lg">
+					<%= link_to(new_dream_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', :class => 'btn btn-default navbar-btn btn-lg'}) do %>
 							<div id="add-dream-plus">
 								<span class="glyphicon glyphicon-plus"></span>
 							</div>
 							<div id="add-dream-button">dream</div>
-						</button>
 					<% end %>
 					
 					<div class="btn-group">
@@ -34,15 +32,13 @@
 					    <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
 						</ul>
 					</div>
-				<% else %>
 
+				<% else %>
 					
-					<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login'}) do %>
-						<button type="button" id="signin-button" class="btn btn-primary btn-lg">
+					<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login', :class => "btn btn-primary btn-lg", :id => "signin-button"}) do %>
 						<span class="glyphicon glyphicon-user"></span>
 						&nbsp;
-						<span>Sign in</span>
-						</button>
+						Sign in
 					<% end %>
 					
 					<div class="btn-group">
@@ -72,4 +68,4 @@
 	</div>
 	
 
-</header>
+</nav>

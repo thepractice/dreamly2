@@ -1,3 +1,4 @@
+@import "bootstrap-sprockets";
 @import "bootstrap";
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700);
 
@@ -86,6 +87,8 @@ body{
   }
 }
 
+
+
 /* Landing page */
 
 #home-top-panel {
@@ -112,9 +115,13 @@ body{
   color: $lightGray;
   font-size: 21px;
   padding-bottom: 5px;
+  a:hover {
+    text-decoration: none;
+  }
 }
 
 #signup-button {
+
   padding-left: 50px;
   padding-right: 50px;
   font-size: 26px;
@@ -293,6 +300,18 @@ footer {
   }
 }
 
+/* Modals */
+
+.modal-open .navbar-fixed-top, 
+.modal-open .navbar-fixed-bottom 
+{
+  padding-right: 15px;
+}
+
+body {
+    overflow-y: scroll;
+}
+
 
 /* miscellaneous */
 
@@ -382,4 +401,10 @@ body{
 
 .content-title h3{
   margin-top: 5px;
+}
+
+/* Links */
+
+a:hover {
+  text-decoration: none;
 }

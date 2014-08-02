@@ -2,7 +2,9 @@
 	<div id="home-top-panel" class="text-center">
 		<div id="home-header">just had a dream</div>	
 		<div id="home-byline">Your dream journal app</div>
-		<div id="home-byline2">free | private | social</div>
+		<div id="home-byline2">
+			<%= link_to "free | private | social", about_path %>
+		</div>
 		<%= link_to(new_registration_path(resource_name), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-signup'}) do %>
 			<button type="button" id="signup-button" class="btn btn-primary btn-lg">
 				<span>Sign up!</span>
