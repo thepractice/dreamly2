@@ -25,7 +25,8 @@ body{
 
 .navbar-default {
   background-color: white;
-  border-bottom: 1px solid $darkGray;
+  border: 0;
+  box-shadow: 0 2px 4px -2px rgba(51,51,51,0.25);
 }
 
 #site_header {
@@ -63,25 +64,9 @@ body{
   }
 }
 
-#add-dream-plus {
-  float: left;
-}
-
 #add-dream-button {
-  float: left;
-  padding-left: 5px;
-  font-size: 20px;
-  line-height: 30px;
-  vertical-align: middle;
-}
+  font-size: 19px;
 
-#signin-button {
-  border-radius: 0;
-  font-size: 15px;
-  a {
-    color: white;
-    text-decoration: none;
-  }
 }
 
 
@@ -90,7 +75,7 @@ body{
 
 #home-top-panel {
   background: $lightYellow;
-  margin-top: -6px;
+  margin-top: -7px;
   height: 228px;
 }
 
@@ -150,6 +135,7 @@ body{
 .white-panel {
   background: white;
   box-shadow: 2px 2px 20px rgba(0, 0, 0, .2);
+  border-radius: 10px;
   p {
     color: $darkGray2;
   }  
@@ -191,7 +177,7 @@ body{
   width: 263px;
 }
 
-#dashboard{
+.dashboard{
   width: 100%;
   /* border: 1px solid black; */
   border-radius: 10px;
@@ -200,29 +186,31 @@ body{
   float: left;
 }
 
-#dashboard-avatar{
+.dashboard-avatar{
   float: left;
   img{
     border-radius: 10px;
   }
 }
 
-#dashboard-usernames{
+.dashboard-usernames{
   float: left;
   padding-left: 5px;
+  max-width: 180px;
+  max-height: 50px;
 }
 
-#dashboard-usernames-name a{
+.dashboard-usernames-name a{
   color: black;
   font-size: 20px;
 }
 
-#dashboard-usernames-handle a{
+.dashboard-usernames-handle a{
   color: #999999;
   font-size: 16px;
 }
 
-#dashboard-stats{
+.dashboard-stats{
   padding-top: 10px;
   clear: both;
   .stat-header{
@@ -235,7 +223,7 @@ body{
   }
 }
 
-#dashboard-stats-left{
+.dashboard-stats-left{
   float: left;
   width: 50%;
 }
@@ -248,13 +236,47 @@ body{
   margin-top: 15px;
 }
 
-.first-new-dream {
+.panel-default > .panel-heading {
+  background-color: white;
+  border-color: #dddddd;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.panel-title {
+  color: $darkBlue;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.panel-footer {
   background: white;
-  border-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#first-dream {
   margin-top: 5px;
-  h3{
-    margin: 0;
-    padding: 10px;
+}
+
+#links-panel {
+  float: left;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+/* User Index */
+
+#users-dashboard {
+  width: 280px;
+  margin-right: 5px;
+  margin-top: 0;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  a {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -294,6 +316,7 @@ label {
 
 #dream-body-textarea {
   height: 300px;
+  width: 100%;
 }
 
 .datepicker {
@@ -309,7 +332,7 @@ label {
   color: $darkBlue;
   h3 {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 700;
   }
 }
 
@@ -432,7 +455,7 @@ body {
 
 .dreamer1{
   color: #428bca;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .dreamer2{
@@ -475,7 +498,7 @@ body{
   font-family: 'Ubuntu';
 }
 
-.content-title h3{
+.content-title {
   margin-top: 5px;
 }
 
@@ -488,12 +511,16 @@ a:hover {
 /* Buttons */
 
 .btn-square {
-  padding: 10px 16px;
+
   font-size: 17px;
   line-height: 1.33;
   border-radius: 0;
   color: white;
   text-decoration: none;
+}
+
+#signin-button {
+  font-size: 15px;
 }
 
 .btn-gray {
@@ -506,10 +533,44 @@ a:hover {
 
 .btn-login {
   min-width: 160px;
+  padding: 10px 16px;
 }
 
 .btn:hover {
   color: white;
+}
+
+.btn-alt:hover {
+  border-radius: 0;
+}
+
+.btn-alt:hover {
+  background: $mediumBlue;
+  color: white;
+  border-radius: 0;
+}
+
+.btn-alt:active, .btn-alt:focus {
+  background: white;
+  color: $mediumBlue;
+  border-radius: 0;
+}
+
+.open > .btn-default.dropdown-toggle {
+  background-color: white;
+  color: $mediumBlue;
+  border-radius: 0;
+}
+
+.dropdown-menu {
+  margin: 0;
+  border-top: none;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+
+  color: #262626;
+  background-color: $lightYellow;
 }
 
 .btn .fa {

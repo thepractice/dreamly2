@@ -3,47 +3,53 @@
 <div class="row">
 	<div class ="col-xs-3">
 		<div id="profile-left-sidebar" data-spy="affix">
-			<div id="dashboard" class="white-panel">
-				<div id="dashboard-avatar">
+			<div class="dashboard white-panel">
+				<div class="dashboard-avatar">
 					<%= gravatar_for @user %>
 				</div>
-				<div id="dashboard-usernames">
-					<div id="dashboard-usernames-name">
+				<div class="dashboard-usernames">
+					<div class="dashboard-usernames-name">
 						<%= link_to @user.name, @user %>
 					</div>
-					<div id = "dashboard-usernames-handle">
+					<div class="dashboard-usernames-handle">
 						<%= link_to "@#{@user.username}", @user %>
 					</div>
 				</div> 
-				<div id="dashboard-stats">
-					<div id ="dashboard-stats-left">
+				<div class="dashboard-stats">
+					<div class="dashboard-stats-left">
 						<span class="stat-header">DREAMS</span> <br />
 						<span class="stat-number"><%= @user.dreams.count %></span>
 					</div>
 <!--
-					<div id ="dashboard-stats-right">
+					<div class="dashboard-stats-right">
 						<span class="stat-header">FOLLOWING</span> <br />
 						<span class="stat-number">11</span>
 					</div>
 -->
 				</div>
+
 			</div>
 			<% if @user.dreams.any? %>
 				<div id="profile-graph" class="white-panel">
 				</div>
 				<%= render 'users/graph' %>
 			<% end %>
+			<div id="links-panel" class="white-panel">
+				<%= link_to "Home", root_path %>
+				<%= link_to "About", about_path %>
+				<%= link_to "Contact", contact_path %>
+			</div>
 		</div>
 	</div>
 	<div class="col-xs-9">
 		<% if @user.dreams.any? %>
-			<span class="content-title"><h3>Dreams</h3></span>
+			<h3 class="content-title">Dreams</h3>
 			<ol class="list-unstyled dreams" id ="user-dreams">
 				<%= render @dreams %>
 			</ol>
 			<!-- renderer parameter is needed by will_paginate-boostrap gem -->
 			<%= will_paginate @dreams, renderer: BootstrapPagination::Rails %>
-		<% else %>
+		<% elsif current_user == @user %>
 			<%= render 'dreams/firstnew' %>
 		<% end %>
 	</div>

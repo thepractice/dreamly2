@@ -2,9 +2,16 @@
 	<div class="container">
 		<!-- <%= link_to image_tag("logo.png", alt: "Just Had a Dream"), root_path, id: "logo" %> -->
 		<div id="site_header">
-			<%= link_to(root_path) do %>
-				<span>just had a dream</span>
+			<% if user_signed_in? %>
+				<%= link_to(current_user) do %>
+					<span>just had a dream</span>
+				<% end %>
+			<% else %>
+				<%= link_to(root_path) do %>
+					<span>just had a dream</span>
+				<% end %>
 			<% end %>
+				
 		</div>
 		<nav>
 			<ul class="nav navbar-nav navbar-right">
@@ -12,15 +19,14 @@
 					<!-- <li>Logged in as <strong><%= current_user.username %></strong></li> -->
 					<!-- <li><%= link_to "Post dream", new_dream_path %></li> -->
 					
-					<%= link_to(new_dream_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', :class => 'btn btn-default navbar-btn btn-lg'}) do %>
-							<div id="add-dream-plus">
-								<span class="glyphicon glyphicon-plus"></span>
-							</div>
-							<div id="add-dream-button">dream</div>
+					<%= link_to(new_dream_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', :class => 'btn btn-primary btn-square', :id => "add-dream-button"}) do %>
+						<span class="glyphicon glyphicon-plus"></span>
+						&nbsp;
+						dream
 					<% end %>
 					
 					<div class="btn-group">
-						<button type="button" class="btn btn-default navbar-btn btn-lg dropdown-toggle" data-toggle="dropdown">
+						<button type="button" class="btn btn-default navbar-btn btn-lg btn-alt dropdown-toggle" data-toggle="dropdown">
 							<span class="glyphicon glyphicon-align-justify"></span>
 						</button>
 						<ul class="dropdown-menu" role="menu">
@@ -35,14 +41,14 @@
 
 				<% else %>
 					
-					<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login', :class => "btn btn-primary btn-lg", :id => "signin-button"}) do %>
+					<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login', :class => "btn btn-primary btn-square", :id => "signin-button"}) do %>
 						<span class="glyphicon glyphicon-user"></span>
 						&nbsp;
 						Sign in
 					<% end %>
 					
 					<div class="btn-group">
-						<button type="button" class="btn btn-default navbar-btn btn-lg dropdown-toggle" data-toggle="dropdown">
+						<button type="button" class="btn btn-default navbar-btn btn-lg btn-alt dropdown-toggle" data-toggle="dropdown">
 							<span class="glyphicon glyphicon-align-justify"></span>
 						</button>
 						<ul class="dropdown-menu" role="menu">

@@ -1,5 +1,8 @@
-<div class="first-new-dream">
-<h3>Post your first dream!</h3>
+<div class="panel panel-default white-panel" id="first-dream">
+  <div class="panel-heading">
+    <h3 class="panel-title">Post your first dream!</h3>
+  </div>
+  <div class="panel-body">
   <%= simple_form_for(Dream.new, remote: true, html: {"data-type" => :json, class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
 
     <div id="dream_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
@@ -14,6 +17,11 @@
                                                       value: Time.now.strftime('%Y-%m-%d') } %>
     <%= f.input :title, placeholder: '(Optional)' %>
     <%= f.input :body, label: 'Dream', placeholder: 'Tell your story.', required: false, input_html: { id: "dream-body-textarea" } %>
-    <%= f.submit "Post dream", class: "btn btn-large btn-primary" %>
+  </div>
+  <div class="panel-footer">
+    <button type="submit" class="btn btn-primary btn-square">
+      <%= icon('paper-plane') %>Post dream
+    </button>
   <% end %>
+  </div>
 </div>

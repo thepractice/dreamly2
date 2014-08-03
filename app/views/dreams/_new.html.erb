@@ -1,31 +1,37 @@
  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <%= icon('times') %>
+        </button>
         <h3 class="modal-title" id="myModalLabel">New dream</h4>
       </div>
       <div class="modal-body">
-        <div class="row">
 
-          <%= simple_form_for(Dream.new, remote: true, html: {"data-type" => :json, class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
-      
-            <div id="dream_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
-              <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-              <div id="dream_error_explanation"></div>
-            </div>
-            <%= f.input :dreamed_on, as: :string, input_html: { "data-provide" => "datepicker",
-                                                              "data-date-autoclose" => true,
-                                                              "data-date-today-btn" => "linked",
-                                                              "data-date-today-highlight" => true,
-                                                              "data-date-format" => "yyyy-mm-dd",
-                                                              value: Time.now.strftime('%Y-%m-%d') } %>
-            <%= f.input :title, placeholder: '(Optional)' %>
-            <%= f.input :body, label: 'Dream', placeholder: 'Tell your story.', required: false, input_html: { id: "dream-body-textarea" } %>
-            <%= f.submit "Post dream", class: "btn btn-large btn-primary" %>
-          <% end %>
+        <%= simple_form_for(Dream.new, remote: true, html: {"data-type" => :json, class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
+    
+          <div id="dream_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
+            <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <div id="dream_error_explanation"></div>
+          </div>
+          <%= f.input :dreamed_on, as: :string, input_html: { "data-provide" => "datepicker",
+                                                            "data-date-autoclose" => true,
+                                                            "data-date-today-btn" => "linked",
+                                                            "data-date-today-highlight" => true,
+                                                            "data-date-format" => "yyyy-mm-dd",
+                                                            value: Time.now.strftime('%Y-%m-%d') } %>
+          <%= f.input :title, placeholder: '(Optional)' %>
+          <%= f.input :body, label: 'Dream', placeholder: 'Tell your story.', required: false, input_html: { id: "dream-body-textarea" } %>
+
+        </div>
+        <div class="modal-footer">
+
+          <button type="submit" class="btn btn-primary btn-square">
+            <%= icon('paper-plane') %>Post dream
+          </button>
+        <% end %>
      
 
         </div>
-      </div>
     </div>
   </div>
