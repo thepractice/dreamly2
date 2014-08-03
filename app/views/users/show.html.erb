@@ -3,16 +3,16 @@
 <div class="row">
 	<div class ="col-xs-3">
 		<div id="profile-left-sidebar" data-spy="affix">
-			<div id="dashboard" class="white-background">
+			<div id="dashboard" class="white-panel">
 				<div id="dashboard-avatar">
 					<%= gravatar_for @user %>
 				</div>
 				<div id="dashboard-usernames">
 					<div id="dashboard-usernames-name">
-						<%= link_to @user.username, @user %>
+						<%= link_to @user.name, @user %>
 					</div>
 					<div id = "dashboard-usernames-handle">
-						<%= link_to "@filler", @user %>
+						<%= link_to "@#{@user.username}", @user %>
 					</div>
 				</div> 
 				<div id="dashboard-stats">
@@ -20,15 +20,19 @@
 						<span class="stat-header">DREAMS</span> <br />
 						<span class="stat-number"><%= @user.dreams.count %></span>
 					</div>
+<!--
 					<div id ="dashboard-stats-right">
 						<span class="stat-header">FOLLOWING</span> <br />
 						<span class="stat-number">11</span>
 					</div>
+-->
 				</div>
 			</div>
-			<div id="profile-graph" class="white-background">
-			</div>
-			<%= render 'users/graph' %>
+			<% if @user.dreams.any? %>
+				<div id="profile-graph" class="white-panel">
+				</div>
+				<%= render 'users/graph' %>
+			<% end %>
 		</div>
 	</div>
 	<div class="col-xs-9">
@@ -39,6 +43,8 @@
 			</ol>
 			<!-- renderer parameter is needed by will_paginate-boostrap gem -->
 			<%= will_paginate @dreams, renderer: BootstrapPagination::Rails %>
+		<% else %>
+			<%= render 'dreams/firstnew' %>
 		<% end %>
 	</div>
 </div>

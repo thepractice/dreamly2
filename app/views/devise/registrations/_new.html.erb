@@ -1,28 +1,30 @@
  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <%= icon('times') %>
+        </button>
         <h3 class="modal-title" id="myModalLabel">Create new account</h4>
       </div>
       <div class="modal-body">
-        <div class="row">
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), remote: true, html: {"data-type" => :json, class: 'form-horizontal row', id: 'signup_form'}, wrapper: :horizontal_form) do |f| %>
+    
+          <div id="signup_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
+            <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <div id="signup_error_explanation"></div>
+          </div>
+          <%= devise_error_messages! %>
+          <%= f.input :name, required: false, hint: 'The long version of your name.' %>
+          <%= f.input :email, hint: 'Your email will never be shown to the public.' %>
+          <%= f.input :username, required: false, hint: "Your @username must be unique and have no spaces." %>
+          <%= f.input :password, hint: "Must be at least 8 characters." %>    
 
-          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), remote: true, html: {"data-type" => :json, class: 'form-horizontal', id: 'signup_form'}, wrapper: :horizontal_form) do |f| %>
-      
-            <div id="signup_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
-              <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-              <div id="signup_error_explanation"></div>
-            </div>
-            <%= devise_error_messages! %>
-            <%= f.input :email %>
-            <%= f.input :username %>
-            <%= f.input :password %>
-            <%= f.input :password_confirmation %>
-            <%= f.submit "Sign up", class: "btn btn-large btn-primary" %>
-          <% end %>
-     
-
-        </div>
       </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-square">
+          Create new account
+        </button>
+      </div>
+        <% end %>
     </div>
   </div>

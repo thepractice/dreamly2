@@ -7,49 +7,49 @@
         <h3 class="modal-title" id="myModalLabel">Sign in</h4>
       </div>
       <div class="modal-body">
-        <div class="row">
 
-           <div id="oauth-links">
-            <%= link_to('#', :class => "btn btn-square btn-login", :id => "google-login") do %>
-              <%= icon('google') %>with Google
-            <% end %>
-            <%= link_to('#', :class => "btn btn-square btn-login", :id => "facebook-login") do %>
-              <%= icon('facebook') %>with Facebook
-            <% end %>         
-            <%= link_to(omniauth_authorize_path(resource_name, :twitter), :class => "btn btn-square btn-login", :id => "twitter-login") do %>
-              <%= icon('twitter') %>with Twitter
-            <% end %>
-            <%= link_to('#', :class => "btn btn-square btn-login", :id => "yahoo-login") do %>
-              <%= icon('yahoo') %>with Yahoo
+        <div id="oauth-links">
+          <%= link_to('#', :class => "btn btn-square btn-login", :id => "google-login") do %>
+            <%= icon('google') %>with Google
+          <% end %>
+          <%= link_to('#', :class => "btn btn-square btn-login", :id => "facebook-login") do %>
+            <%= icon('facebook') %>with Facebook
+          <% end %>         
+          <%= link_to(omniauth_authorize_path(resource_name, :twitter), :class => "btn btn-square btn-login", :id => "twitter-login") do %>
+            <%= icon('twitter') %>with Twitter
+          <% end %>
+          <%= link_to('#', :class => "btn btn-square btn-login", :id => "yahoo-login") do %>
+            <%= icon('yahoo') %>with Yahoo
+          <% end %>
+        </div>
+        <h4 style="text-align:center; margin-bottom:20px; margin-top: 20px;">Or</h4>
+
+
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), remote: true, html: {"data-type" => :json, class: 'form-horizontal row'}, wrapper: :horizontal_form) do |f| %>
+    
+          <div id="login_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
+            <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <div id="login_error_explanation"></div>
+          </div>
+          <%= f.input :login, label: 'User', placeholder: 'email or username' %>
+
+          <div class="form-group string optional user_password"><label class="string optional col-sm-2 control-label" for="user_password">Password</label><div class="col-sm-10"><input class="password optional form-control" id="user_password" name="user[password]" type="password">&nbsp;&nbsp;<%= link_to "I forgot my password", new_password_path(resource_name) %></div></div>
+          
+      </div>
+
+          <div class="modal-footer">             
+            <button type="submit" class="btn btn-primary btn-square">
+              <%= icon('unlock') %>Sign in
+            </button>
+
+            <%= link_to(new_registration_path(resource_name), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-signup', class: "btn btn-square btn-gray", id: "signup_button" }) do %>
+                Create new account
             <% end %>
           </div>
-          <h4 style="text-align:center; margin-bottom:20px; margin-top: 20px;">Or</h4>
 
-
-          <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), remote: true, html: {"data-type" => :json, class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
-      
-            <div id="login_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
-              <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-              <div id="login_error_explanation"></div>
-            </div>
-            <%= f.input :login, label: 'User', placeholder: 'email or username' %>
-
-            <div class="form-group string optional user_password"><label class="string optional col-sm-2 control-label" for="user_password">Password</label><div class="col-sm-10"><input class="password optional form-control" id="user_password" name="user[password]" type="password">&nbsp;&nbsp;<%= link_to "I forgot my password", new_password_path(resource_name) %></div></div>
-            
-            <div class="modal-footer">             
-              <button type="submit" class="btn btn-primary btn-square">
-                <%= icon('unlock') %>Sign in
-              </button>
-
-              <%= link_to(new_registration_path(resource_name), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-signup', class: "btn btn-square btn-gray", id: "signup_button" }) do %>
-                  Create new account
-              <% end %>
-            </div>
-
-          <% end %>
+        <% end %>
      
 
-        </div>
-      </div>
+      
     </div>
   </div>

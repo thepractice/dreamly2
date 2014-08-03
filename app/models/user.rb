@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   attr_accessor :login
 
   validates :username, presence: true, uniqueness: { case_sensitive: false }
+  validates :name, presence: true
 
   # Method for Devise to use either username or email to login.
   # This is the correct method you override with the code below:

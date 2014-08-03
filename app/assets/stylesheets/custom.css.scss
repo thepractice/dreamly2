@@ -21,10 +21,6 @@ body{
   background-color: $lightBlue;
 }
 
-.white-background{
-  background: white;
-}
-
 /* header */
 
 .navbar-default {
@@ -252,10 +248,21 @@ body{
   margin-top: 15px;
 }
 
+.first-new-dream {
+  background: white;
+  border-radius: 10px;
+  margin-top: 5px;
+  h3{
+    margin: 0;
+    padding: 10px;
+  }
+}
+
 /* footer */
 
 footer {
   height: 50px;
+  clear: both;
   margin-top: -10px;
   padding-top: 12px;
   background: white;
@@ -281,6 +288,10 @@ label {
   font-weight: 400;
 }
 
+.help-block {
+  margin: 0;
+}
+
 #dream-body-textarea {
   height: 300px;
 }
@@ -294,7 +305,7 @@ label {
 }
 
 .modal-header {
-  padding: 5px 15px 5px 15px;
+  padding: 7px 15px 5px 15px;
   color: $darkBlue;
   h3 {
     font-size: 20px;
@@ -314,10 +325,6 @@ label {
  .btn {
   float: right;
   }
-}
-
-#oauth-links {
-  padding-left: 15px;
 }
 
 #twitter-login{
@@ -348,7 +355,6 @@ label {
 
 .modal-footer {
   text-align: left;
-  padding-bottom: 0;
 }
 
 .modal-open .navbar-fixed-top, 
@@ -483,7 +489,7 @@ a:hover {
 
 .btn-square {
   padding: 10px 16px;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1.33;
   border-radius: 0;
   color: white;
@@ -499,7 +505,7 @@ a:hover {
 }
 
 .btn-login {
-  min-width: 168px;
+  min-width: 160px;
 }
 
 .btn:hover {
