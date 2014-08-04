@@ -1,26 +1,28 @@
-<div id="users-dashboard" class="dashboard white-panel">
-	<div class="dashboard-avatar">
-		<%= gravatar_for user %>
-	</div>
-	<div class="dashboard-usernames">
-		<div class="dashboard-usernames-name">
-			<%= link_to user.name, user %>
+<%= link_to(user) do %>
+	<div id="users-dashboard" class="dashboard white-panel highlighter">
+		<div class="dashboard-avatar">
+			<%= gravatar_for user %>
 		</div>
-		<div class="dashboard-usernames-handle">
-			<%= link_to "@#{user.username}", user %>
+		<div class="dashboard-usernames">
+			<div class="dashboard-usernames-name">
+				<%= user.name %>
+			</div>
+			<div class="dashboard-usernames-handle">
+				@<%= user.username %>
+			</div>
+		</div> 
+		<div class="dashboard-stats">
+			<div class="dashboard-stats-left">
+				<span class="stat-header">DREAMS</span> <br />
+				<span class="stat-number"><%= user.dreams.count %></span>
+			</div>
+	<!--
+			<div class="dashboard-stats-right">
+				<span class="stat-header">FOLLOWING</span> <br />
+				<span class="stat-number">11</span>
+			</div>
+	-->
 		</div>
-	</div> 
-	<div class="dashboard-stats">
-		<div class="dashboard-stats-left">
-			<span class="stat-header">DREAMS</span> <br />
-			<span class="stat-number"><%= user.dreams.count %></span>
-		</div>
-<!--
-		<div class="dashboard-stats-right">
-			<span class="stat-header">FOLLOWING</span> <br />
-			<span class="stat-number">11</span>
-		</div>
--->
-	</div>
 
-</div>
+	</div>
+<% end %>

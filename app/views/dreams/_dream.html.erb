@@ -1,14 +1,22 @@
-<li>
-	<div class="dream white-panel">
+<%= link_to dream do %>
+	<% if dream.impression > 0 %>
+		<div class="dream white-panel highlighter dream2">
+	<% else %>
+		<div class="dream white-panel highlighter">
+	<% end %>
+
 		<div class="dream-left">
 			<span><%= dream.dreamed_on.strftime("%^b") %></span><br />
-			<span><%= dream.dreamed_on.strftime("%d") %></span>
+			<span><%= dream.dreamed_on.strftime("%d") %></span><br/>
+			<% if dream.impression > 0 %>
+				<%= icon('star') %>
+			<% end %>
 		</div>
 		<div class="dream-right">
-			<span class="dream-title"><h4><%= link_to dream.title, dream %></h4></span>
-			<span class="dreamer1"><%= dream.user.username %></span>
-			<span class="dreamer2">@filler</span>
+			<span class="dream-title"><h4><%= dream.title %></h4></span>
+			<span class="dreamer1"><%= dream.user.name %></span>
+			<span class="dreamer2">@<%= dream.user.username %></span>
 			<span class="body"><%= simple_format(truncate(dream.body, length: 500, separator: ' ')) %></span>
 		</div>
 	</div>
-</li>
+<% end %>

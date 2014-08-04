@@ -11,15 +11,15 @@
 	<%= link_to "Delete", @dream, method: :delete, data: { confirm: "Are you sure?" } %>
 <% end %>  -->
 
-	<div class="dream white-panel">
+	<div class="dream white-panel" id="indiv-dream">
 		<div class="dream-left">
 			<span><%= @dream.dreamed_on.strftime("%^b") %></span><br />
 			<span><%= @dream.dreamed_on.strftime("%d") %></span>
 		</div>
 		<div class="dream-right">
 			<span class="dream-title"><h4><%= @dream.title %></h4></span>
-			<span class="dreamer1"><%= @dream.user.username %></span>
-			<span class="dreamer2">@filler</span>
+			<span class="dreamer1"><%= link_to @dream.user.name, @dream.user %></span>
+			<span class="dreamer2"><%= link_to "@#{@dream.user.username}", @dream.user %></span>
 			<span class="body"><%= simple_format(@dream.body) %></span>
 			<% if current_user == @dream.user %>
 				<%= link_to "Edit", edit_dream_path(@dream.id) %>

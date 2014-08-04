@@ -9,10 +9,10 @@
 				</div>
 				<div class="dashboard-usernames">
 					<div class="dashboard-usernames-name">
-						<%= link_to @user.name, @user %>
+						<%= @user.name %>
 					</div>
 					<div class="dashboard-usernames-handle">
-						<%= link_to "@#{@user.username}", @user %>
+						@<%= @user.username %>
 					</div>
 				</div> 
 				<div class="dashboard-stats">

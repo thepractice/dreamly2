@@ -3,7 +3,7 @@ class Dream < ActiveRecord::Base
 	include ActionView::Helpers::TextHelper
 	include ActionView::Helpers::SanitizeHelper
 
-	belongs_to :user
+	belongs_to :user, counter_cache: :dream_count
 	default_scope -> { order('dreamed_on DESC') }
 	validates :body, presence: true
 	validates :user_id, presence: true

@@ -1,13 +1,12 @@
 <% provide(:title, 'Users') %>
 
-<div class="row">
-	<h3 class="content-title">Users</h3>
 
-	<div class="users" id="user-list">
-		<%= render @users %>
-	</div>
+<h3 class="content-title">Users</h3>
 
-	<div id="infinite-scrolling">
-		<%= will_paginate @users, renderer: BootstrapPagination::Rails %>
-	</div>
+<div class="users" id="user-list">
+	<%= render @users %>
+</div>
+
+<div id="infinite-scrolling">
+	<%= will_paginate @users, renderer: BootstrapPagination::Rails %>
 </div>
