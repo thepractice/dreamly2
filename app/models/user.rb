@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
         user.username = auth.info.nickname
         user.name = auth.info.name
       elsif user.provider =='facebook'
-        user.username = auth.info.first_name
+        user.username = auth.info.name
         user.name = auth.info.name
       end
     end
