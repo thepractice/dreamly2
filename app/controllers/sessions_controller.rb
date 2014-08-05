@@ -2,6 +2,7 @@ class SessionsController < Devise::SessionsController
   def create
     resource = warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
     sign_in_and_redirect(resource_name, resource)
+
   end
  
   def sign_in_and_redirect(resource_or_scope, resource=nil)
@@ -9,6 +10,7 @@ class SessionsController < Devise::SessionsController
     resource ||= resource_or_scope
     sign_in(scope, resource) unless warden.user(scope) == resource
     flash[:success] = "Logged in"
+#    redirect_to after_sign_in_path_for(resource)
     return render :json => {:success => true, :current_user_id => current_user.id}
   end
  

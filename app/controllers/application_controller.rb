@@ -5,6 +5,12 @@ class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
+
+  # Override devise method to get omniauth logins to redirect to user page.
+  def after_sign_in_path_for(resource)
+    current_user
+  end
+
   protected
 
   	def configure_permitted_parameters

@@ -12,7 +12,7 @@
           <%= link_to('#', :class => "btn btn-square btn-login", :id => "google-login") do %>
             <%= icon('google') %>with Google
           <% end %>
-          <%= link_to('#', :class => "btn btn-square btn-login", :id => "facebook-login") do %>
+          <%= link_to(user_omniauth_authorize_path(:facebook), :class => "btn btn-square btn-login", :id => "facebook-login") do %>
             <%= icon('facebook') %>with Facebook
           <% end %>         
           <%= link_to(omniauth_authorize_path(resource_name, :twitter), :class => "btn btn-square btn-login", :id => "twitter-login") do %>

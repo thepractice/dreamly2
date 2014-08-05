@@ -2,6 +2,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 	
 	def all
 		# To see request hash, use 'render :text => "<pre>#{request.env["omniauth.auth"].to_yaml}</pre>"''
+		#render :text => "<pre>#{request.env["omniauth.auth"].to_yaml}</pre>"
 		user = User.from_omniauth(request.env["omniauth.auth"])
 		if user.persisted?
 			flash[:success] = "Signed in!"
@@ -14,5 +15,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 		end
 	end
 
+
 	alias_method :twitter, :all 		# Use the :all method when trying to use :twitter method
+	alias_method :facebook, :all 
+
 end

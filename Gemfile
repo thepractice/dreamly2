@@ -18,6 +18,7 @@ gem 'non-stupid-digest-assets'
 gem 'simple_form', '~> 3.1.0.rc1'
 gem 'autoprefixer-rails'
 gem 'font-awesome-sass'
+gem 'omniauth-facebook'
 
 
 group :development do
