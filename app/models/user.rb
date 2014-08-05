@@ -34,8 +34,13 @@ class User < ActiveRecord::Base
     where(auth.slice(:provider, :uid)).first_or_create do |user|
       user.provider = auth.provider
       user.uid = auth.uid
-      user.username = auth.info.nickname
-      user.name = auth.info.name
+      if user.provider == 'twitter'
+        user.username = auth.info.nickname
+        user.name = auth.info.name
+      elsif user.provider =='facebook'
+        user.username = auth.info.first_name
+        user.name = auth.info.name
+      end
     end
   end
 
