@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
       if user.provider == 'twitter'
         user.username = auth.info.nickname
         user.name = auth.info.name
-      elsif user.provider =='facebook'
+      else
         user.username = auth.info.name
         user.name = auth.info.name
       end

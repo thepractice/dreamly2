@@ -9,7 +9,7 @@
       <div class="modal-body">
 
         <div id="oauth-links">
-          <%= link_to('#', :class => "btn btn-square btn-login", :id => "google-login") do %>
+          <%= link_to(omniauth_authorize_path(resource_name, :google_oauth2), :class => "btn btn-square btn-login", :id => "google-login") do %>
             <%= icon('google') %>with Google
           <% end %>
           <%= link_to(user_omniauth_authorize_path(:facebook), :class => "btn btn-square btn-login", :id => "facebook-login") do %>
