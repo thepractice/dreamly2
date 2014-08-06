@@ -31,5 +31,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 	alias_method :twitter, :all 		# Use the :all method when trying to use :twitter method
 	alias_method :facebook, :all
 	alias_method :google_oauth2, :all
+	alias_method :yahoo, :all
 
 end

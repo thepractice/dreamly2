@@ -20,6 +20,7 @@ gem 'autoprefixer-rails'
 gem 'font-awesome-sass'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-yahoo'
 
 
 group :development do

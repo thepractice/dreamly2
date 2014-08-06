@@ -18,7 +18,7 @@
           <%= link_to(omniauth_authorize_path(resource_name, :twitter), :class => "btn btn-square btn-login", :id => "twitter-login") do %>
             <%= icon('twitter') %>with Twitter
           <% end %>
-          <%= link_to('#', :class => "btn btn-square btn-login", :id => "yahoo-login") do %>
+          <%= link_to(omniauth_authorize_path(resource_name, :yahoo), :class => "btn btn-square btn-login", :id => "yahoo-login") do %>
             <%= icon('yahoo') %>with Yahoo
           <% end %>
         </div>
