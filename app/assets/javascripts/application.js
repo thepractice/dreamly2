@@ -18,5 +18,7 @@
 //= require bootstrap/affix
 //= require bootstrap/modal
 //= require bootstrap/alert
+//= require bootstrap/button
 //= require bootstrap-datepicker/core
 //= require bootstrap-sprockets
+//= require bootstrap-slider

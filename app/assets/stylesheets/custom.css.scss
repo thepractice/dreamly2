@@ -1,5 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "bootstrap-slider";
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700);
 
 /* mixins, variables, etc. */
@@ -45,7 +46,7 @@ body{
   }
 }
 
-#cloud_header {
+.cloud_header {
   display: block;
   width: 50px;
   line-height: 53px;
@@ -322,8 +323,75 @@ label {
   width: 100%;
 }
 
+#dream-title-textarea {
+  width: 100%;
+}
+
 .datepicker {
   z-index: 1151 !important;
+}
+
+#dreamed-on-input {
+  display: inline;
+  width: 150px;
+}
+
+.slider-track {
+  background: $lightBlue;
+}
+
+.slider.slider-horizontal {
+  width: 210px !important;
+  height: 20px;
+}
+
+.slider.slider-horizontal .slider-track {
+  height: 20px;
+  width: 100%;
+  margin-top: -5px;
+  top: 50%;
+  left: 0;
+}
+
+.slider.slider-horizontal .slider-handle {
+  margin-top: -5px;
+  margin-left: -15px;
+  height: 30px;
+  width: 30px;
+  opacity: 0.7;
+  background: $darkBlue;
+}
+
+#impression-slider .slider-selection {
+  background: $mediumBlue;
+}
+
+#impression-slider-value {
+  margin-left: 15px;
+}
+
+.input-group-addon, .input-group-btn {
+  width: auto;
+  background: white;
+  color: $mediumBlue;
+}
+
+.dream_dreamed_on {
+  .btn-toggle {
+    float: right;
+  }
+  .input-group {
+ #   display: inline;
+    .input-group-addon {
+ #     display: inline;
+    }
+  }
+}
+
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle {
+  color: $offBlack;
+  background-color: $lightBlue;
+  border-color: #adadad;
 }
 
 .modal-content {
@@ -348,9 +416,7 @@ label {
     font-size: 16px;
     line-height: 16px;
   }
- .btn {
-  float: right;
-  }
+
 }
 
 #twitter-login{
@@ -414,6 +480,10 @@ body {
     overflow-y: scroll;
 }
 
+#oauth-redo-form {
+  margin-top: 5px;
+}
+
 
 /* miscellaneous */
 
@@ -431,9 +501,6 @@ body {
   transition: background 0.25s;
 }
 
-.dream2 {
-  background: #F8CFCD;
-}
 
 
 .highlighter {
@@ -462,6 +529,9 @@ body {
   text-align: center;
   font-size: 18px;
   color: #999999;
+  .year {
+    font-size: 14px;
+  }
 }
 
 .dream-right{
@@ -471,12 +541,47 @@ body {
   }
 }
 
+
+
+.dream-right-top1 {
+  display: inline-block;
+}
+
+.dream-right-top2 {
+  float: right;
+  margin-top: 5px;
+  font-size: 18px;
+  padding-right: 10px;
+}
+
+.big-dream {
+  display: inline-block;
+  background: $lightRed;
+  padding: 10px;
+  color: $offBlack;
+  border-radius: 7px;
+  margin-right: 7px;
+}
+
+.huge-dream {
+  display: inline-block;
+  background: $lightRed;
+  padding: 10px;
+  color: $offBlack;
+  border-radius: 7px;
+  margin-right: 7px;
+}
+
+
 .dream-title {
   color: $offBlack;
   h4{
     margin-bottom: 2px;
+
   }
 }
+
+
 
 .dreamer1{
   color: #428bca;

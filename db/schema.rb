@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140805025434) do
+ActiveRecord::Schema.define(version: 20140810203756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,8 @@ ActiveRecord::Schema.define(version: 20140805025434) do
     t.datetime "updated_at"
     t.date     "dreamed_on"
     t.text     "word_freq"
-    t.integer  "impression", default: 0
+    t.integer  "impression", default: 1
+    t.boolean  "private",    default: false
   end
 
   create_table "users", force: true do |t|

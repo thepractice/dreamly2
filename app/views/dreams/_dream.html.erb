@@ -1,21 +1,41 @@
 <%= link_to dream do %>
-	<% if dream.impression > 0 %>
-		<div class="dream white-panel highlighter dream2">
-	<% else %>
+
 		<div class="dream white-panel highlighter">
-	<% end %>
+
 
 		<div class="dream-left">
 			<span><%= dream.dreamed_on.strftime("%^b") %></span><br />
 			<span><%= dream.dreamed_on.strftime("%d") %></span><br/>
-			<% if dream.impression > 0 %>
-				<%= icon('star') %>
+			<% if dream.dreamed_on.year != Time.now.year %>
+				<span class="year"><%= dream.dreamed_on.strftime("%Y") %></span>
 			<% end %>
 		</div>
 		<div class="dream-right">
-			<span class="dream-title"><h4><%= dream.title %></h4></span>
-			<span class="dreamer1"><%= dream.user.name %></span>
-			<span class="dreamer2">@<%= dream.user.username %></span>
+			<div class="dream-right-top">
+				<div class="dream-right-top1">
+					<span class="dream-title"><h4><%= dream.title %></h4></span>
+
+					<span class="dreamer1"><%= dream.user.name %></span>
+					<span class="dreamer2">@<%= dream.user.username %></span>
+				</div>
+				<div class="dream-right-top2">
+					<% if dream.impression == 2 %>
+						<div class="big-dream">
+							Big <%= icon('star') %>
+						</div>
+					<% elsif dream.impression == 3 %>
+						<div class="huge-dream">
+							Huge <%= icon('star') %>
+						</div>
+					<% end %>
+
+					<% if dream.private %>
+						<%= icon('lock') %>
+					<% else %>
+						<%= icon('unlock') %>
+					<% end %>
+				</div>
+			</div>
 			<span class="body"><%= simple_format(truncate(dream.body, length: 500, separator: ' ')) %></span>
 		</div>
 	</div>

@@ -8,10 +8,16 @@ class Dream < ActiveRecord::Base
 	validates :body, presence: true
 	validates :user_id, presence: true
 
+	before_save :init_data
 	after_save :gather_words
 	after_save :update_graph
 
 	protected
+
+		def init_data
+			self.dreamed_on ||= Date.today if new_record?
+		end
+
 
 		def gather_words
 
@@ -20,7 +26,7 @@ class Dream < ActiveRecord::Base
 			body = self.body
 			words = body.split(/\W+/)								# Split dream body into array of words
 
-			if self.title == nil										# Sets title if no title.
+			if self.title.blank?										# Sets title if no title.
 				self.title = sanitize(self.body, tags: []).truncate(20, separator: ' ', omission: '')
 				self.update_columns(title: self.title)
 			end

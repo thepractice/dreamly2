@@ -18,11 +18,19 @@ jQuery ->
 			$(window).scroll
 
 
-	# Datepicker
+	# Impression Slider
 
-	$('#dream_dreamed_on').datepicker
+	$("#impression").slider()
+	$("#impression").on "slide", (slideEvt) ->
+		label = "Normal"
+		if slideEvt.value == 2
+			label = "Big"
+		if slideEvt.value == 3
+			label = "Huge"
+		$("#impression-slider-value").text label
+		return
 
-	$('[data-behaviour~=datepicker]').datepicker
+
 
 
 	# Ajax dream form

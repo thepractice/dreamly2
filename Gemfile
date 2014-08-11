@@ -21,6 +21,7 @@ gem 'font-awesome-sass'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-yahoo'
+gem 'bootstrap-slider-rails'
 
 
 group :development do

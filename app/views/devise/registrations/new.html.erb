@@ -1,24 +1,27 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
-
-  <div><%= f.label :username %><br />
-  <%= f.text_field :username %></div>
-
-  <!-- Don't display password fields for OmniAuth users -->
-  <% if f.object.password_required? %>
-    <div><%= f.label :password %><br />
-      <%= f.password_field :password, autocomplete: "off" %></div>
-
-    <div><%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+<div class="panel panel-default white-panel" id="oauth-redo-form">
+  <div class="panel-heading">
+    <h3 class="panel-title">Create new account</h3>
+  </div>
+  <div class="panel-body">
+ 
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), remote: true, html: {"data-type" => :json, class: 'form-horizontal row', id: 'signup_form'}, wrapper: :horizontal_form) do |f| %>
+    
+      <div id="signup_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
+        <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <div id="signup_error_explanation"></div>
+      </div>
+      <%= devise_error_messages! %>
+      <%= f.input :name, required: false, hint: 'The long version of your name.' %>
+      <%= f.input :email, hint: 'Your email will never be shown to the public.' %>
+      <%= f.input :username, required: false, hint: "Your @username must be unique and have no spaces." %>
+      <% if f.object.password_required? %>
+        <%= f.input :password, hint: "Must be at least 8 characters." %>    
+      <% end %>
+  </div>
+  <div class="panel-footer">
+    <button type="submit" class="btn btn-primary btn-lg btn-square">
+      Create new account
+    </button>
   <% end %>
-
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  </div>
+</div>
