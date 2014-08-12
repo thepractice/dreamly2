@@ -52,11 +52,16 @@ class DreamsController < ApplicationController
 
 	def update
 		@dream = Dream.find(params[:id])
-		if @dream.update_attributes(dream_params)
-			flash[:success] = "Changes saved"
-			redirect_to @dream
-		else
-			render 'edit'
+
+		respond_to do |format|
+			if @dream.update_attributes(dream_params)
+				flash[:success] = "Changes saved"
+				format.html { redirect_to @dream }
+				format.json { render json: @dream, location: @dream }
+			else
+				format.html { render 'edit' }
+				format.json { render json: @dream.errors.full_messages, status: :unprocessable_entity }
+			end
 		end
 	end
 

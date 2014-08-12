@@ -370,6 +370,14 @@ label {
   margin-left: 15px;
 }
 
+#impression-slider2 .slider-selection {
+  background: $mediumBlue;
+}
+
+#impression-slider-value2 {
+  margin-left: 15px;
+}
+
 .input-group-addon, .input-group-btn {
   width: auto;
   background: white;
@@ -557,19 +565,21 @@ body {
 .big-dream {
   display: inline-block;
   background: $lightRed;
-  padding: 10px;
-  color: $offBlack;
+  padding: 5px 15px 5px 15px;
+  color: white;
   border-radius: 7px;
   margin-right: 7px;
+  font-size: 16px;
 }
 
 .huge-dream {
   display: inline-block;
   background: $lightRed;
-  padding: 10px;
-  color: $offBlack;
+  padding: 5px 15px 5px 15px;
+  color: white;
   border-radius: 7px;
   margin-right: 7px;
+  font-size: 16px;
 }
 
 

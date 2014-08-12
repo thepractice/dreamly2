@@ -30,6 +30,16 @@ jQuery ->
 		$("#impression-slider-value").text label
 		return
 
+	$("#impression2").slider()
+	$("#impression2").on "slide", (slideEvt) ->
+		label = "Normal"
+		if slideEvt.value == 2
+			label = "Big"
+		if slideEvt.value == 3
+			label = "Huge"
+		$("#impression-slider-value2").text label
+		return
+
 
 
 
@@ -55,6 +65,30 @@ $ ()->
 		$('#dream_error_explanation_wrapper').show()
 
 	$('#modal-window').on 'hidden.bs.modal', (e) ->
+		$("#dream_error_explanation_wrapper").hide()
+
+
+# Ajax edit dream form
+
+	$("form#edit-dream-form").on "ajax:success", (event, data, status, xhr) ->
+	#	$('#modal-window-edit-dream').modal('hide')
+		window.location.pathname = "/dreams/#{data.id}"
+
+	$("form#edit-dream-form").on "ajax:error", (event, xhr, status, error) ->
+		errors = jQuery.parseJSON(xhr.responseText)
+		errorcount = errors.length
+		$('#dream_error_explanation').empty()
+		if errorcount > 1
+			$('#dream_error_explanation').append('The form contains ' + errorcount + ' errors.')
+		else
+			$('#dream_error_explanation').append('The form contains 1 error')
+		$('#error_explanation').append('<ul>')
+		for e in errors
+			$('#dream_error_explanation').append('<li>' + e + '</li>')
+		$('#dream_error_explanation').append('</ul>')
+		$('#dream_error_explanation_wrapper').show()
+
+	$('#modal-window-edit-dream').on 'hidden.bs.modal', (e) ->
 		$("#dream_error_explanation_wrapper").hide()
 
 # Ajax Signin form

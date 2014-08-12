@@ -18,3 +18,14 @@
 	<%= f.text_area :body %><br />
 	<%= f.submit "Save", class: "btn btn-large btn-primary" %>
 <% end %>
+
+
+ <%= simple_form_for(@dream) do |f| %>
+    
+<%= f.input :dreamed_on %>
+
+          <%= f.input :title %>
+          <%= f.input :body %>
+
+     <%= f.submit %>
+        <% end %>

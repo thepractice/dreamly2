@@ -10,7 +10,8 @@ Jhad::Application.routes.draw do
   match '/graph', to: 'static_pages#graph', via: 'get'
   match '/test', to: 'static_pages#test', via: 'get'
 
-  get 'dreams/new' => 'dreams#new', :as => :new     # For mew dream modal
+  get 'dreams/new' => 'dreams#new', :as => :new     # For new dream modal
+ # get 'dreams/edit' => 'dreams#edit', :as => :edit     # For edit dream modal
 
   get ':controller(/:action(/:id))'
   # The priority is based upon order of creation: first created -> highest priority.

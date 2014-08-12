@@ -1,29 +1,56 @@
+<% if (@dream.private == false) || (current_user == @dream.user) %>
+
 <% provide(:title, @dream.title) %>
-
-<!-- <span class="title"><h4><%= @dream.title %></h4></span>
-<span class="body"><%= simple_format(@dream.body) %></span>
-<span class="timestamp">
-	Dreamed <%= time_ago_in_words(@dream.dreamed_on) %> ago.
-	Dreamed on <%= @dream.dreamed_on %> .
-</span>
-<% if current_user == @dream.user %>
-	<%= link_to "Edit", edit_dream_path(@dream.id) %>
-	<%= link_to "Delete", @dream, method: :delete, data: { confirm: "Are you sure?" } %>
-<% end %>  -->
-
-	<div class="dream white-panel" id="indiv-dream">
-		<div class="dream-left">
-			<span><%= @dream.dreamed_on.strftime("%^b") %></span><br />
-			<span><%= @dream.dreamed_on.strftime("%d") %></span>
-		</div>
-		<div class="dream-right">
-			<span class="dream-title"><h4><%= @dream.title %></h4></span>
-			<span class="dreamer1"><%= link_to @dream.user.name, @dream.user %></span>
-			<span class="dreamer2"><%= link_to "@#{@dream.user.username}", @dream.user %></span>
-			<span class="body"><%= simple_format(@dream.body) %></span>
-			<% if current_user == @dream.user %>
-				<%= link_to "Edit", edit_dream_path(@dream.id) %>
-				<%= link_to "Delete", @dream, method: :delete, data: { confirm: "Are you sure?" } %>
-			<% end %> 
-		</div>
+<div class="dream white-panel" id="indiv-dream">
+	<div class="dream-left">
+		<span><%= @dream.dreamed_on.strftime("%^b") %></span><br />
+		<span><%= @dream.dreamed_on.strftime("%d") %></span><br/>
+		<% if @dream.dreamed_on.year != Time.now.year %>
+			<span class="year"><%= @dream.dreamed_on.strftime("%Y") %></span>
+		<% end %>
 	</div>
+	<div class="dream-right">
+		<div class="dream-right-top">
+			<div class="dream-right-top1">
+				<span class="dream-title"><h4><%= @dream.title %></h4></span>
+
+				<span class="dreamer1"><%= @dream.user.name %></span>
+				<span class="dreamer2">@<%= @dream.user.username %></span>
+			</div>
+			<div class="dream-right-top2">
+				<% if @dream.impression == 2 %>
+					<div class="big-dream">
+						Big <%= icon('star') %>
+					</div>
+				<% elsif @dream.impression == 3 %>
+					<div class="huge-dream">
+						Huge <%= icon('star') %>
+					</div>
+				<% end %>
+
+				<% if @dream.private %>
+					<%= icon('lock') %>
+				<% else %>
+					<%= icon('unlock') %>
+				<% end %>
+			</div>
+		</div>
+		<span class="body"><%= simple_format(@dream.body) %></span>
+		<% if current_user == @dream.user %>
+			<%= link_to "Edit", edit_dream_path(@dream.id) %>
+			<%= link_to(edit_dream_path(@dream.id), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-edit-dream', :class => 'btn btn-primary btn-square', :id => "edit-dream-button"}) do %>
+				<%= icon('pencil-square-o') %>
+				Edit
+			<% end %>			
+			<%= link_to "Delete", @dream, method: :delete, data: { confirm: "Are you sure?" } %>
+		<% end %> 
+	</div>
+</div>
+<% else %>
+	<p>You don't have permission to view this page.</p>
+<% end %>
+
+<!-- Hidden Modal -->
+<div id="modal-window-edit-dream" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<%= render 'dreams/edit' %>
+</div>	
