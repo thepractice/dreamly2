@@ -43,11 +43,11 @@ jQuery ->
 
 
 
-	# Ajax dream form
+# Ajax dream form
 
-$ ()->
 	$("form#new_dream").on "ajax:success", (event, data, status, xhr) ->
 	#	$('#modal-window').modal('hide')
+		alert('signin success')
 		window.location.pathname = "/dreams/#{data.id}"
 
 	$("form#new_dream").on "ajax:error", (event, xhr, status, error) ->

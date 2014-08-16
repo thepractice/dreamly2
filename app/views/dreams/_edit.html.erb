@@ -8,7 +8,7 @@
       </div>
       <div class="modal-body">
 
-        <%= simple_form_for(@dream, remote: true, html: {"data-type" => :json, class: 'form-horizontal', id: 'edit-dream-form'}, wrapper: :horizontal_form) do |f| %>
+        <%= simple_form_for(dream_resource, remote: true, html: {"data-type" => :json, class: 'form-horizontal', id: 'edit-dream-form'}, wrapper: :horizontal_form) do |f| %>
     
           <div id="dream_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
             <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -20,13 +20,13 @@
             <label class="string optional col-sm-2 control-label" for="dream_dreamed_on">Dreamed on</label>
             <div class="col-sm-5">
               <div class="input-group date" data-provide="datepicker" data-date-autoclose="true" data-date-format="M d, yyyy" data-date-today-btn="linked" data-date-today-highlight="true">
-                <%= tag("input", class: "string optional form-control", id: "dreamed-on-input", name: "dream[dreamed_on]", type: "text", value: @dream.dreamed_on.strftime("%b %d, %Y")) %>
+                <%= tag("input", class: "string optional form-control", id: "dreamed-on-input", name: "dream[dreamed_on]", type: "text", value: dream_resource.dreamed_on.strftime("%b %d, %Y")) %>
                 <span class="input-group-addon"><%= icon('calendar', '', class: 'fa-lg') %></span>
               </div>
             </div>
             <div class="col-sm-5">
               <div class="btn-group btn-toggle" data-toggle="buttons">
-                <% if @dream.private %>
+                <% if dream_resource.private %>
                   <label class="btn btn-default">
                     <input type="radio" name="dream[private]" value="false"> Public
                   </label>
@@ -49,11 +49,11 @@
           <div class="form-group string optional dream_impression">
             <label class="string optional col-sm-2 control-label" for="dream_impression">Impact</label>
             <div class="col-sm-10">
-              <input id="impression2" name="dream[impression]" data-slider-id='impression-slider' type="text" data-slider-min="1" data-slider-max="3" data-slider-step="1" data-slider-value="<%= @dream.impression %>" data-slider-tooltip="hide"/>
+              <input id="impression2" name="dream[impression]" data-slider-id='impression-slider' type="text" data-slider-min="1" data-slider-max="3" data-slider-step="1" data-slider-value="<%= dream_resource.impression %>" data-slider-tooltip="hide"/>
               <span id="impression-slider-value2">
-                <% if @dream.impression == 1 %>
+                <% if dream_resource.impression == 1 %>
                   Normal
-                <% elsif @dream.impression == 2 %>
+                <% elsif dream_resource.impression == 2 %>
                   Big
                 <% else %>
                   Huge

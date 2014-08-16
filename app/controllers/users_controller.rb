@@ -7,6 +7,10 @@ class UsersController < ApplicationController
 	def show
 		@user = User.find(params[:id])
 		@dreams = @user.dreams.paginate(page: params[:page])
+		if params[:impression].present?
+			@dreams = @user.dreams.impression(params[:impression]).paginate(page: params[:page])
+		end
+
 
 		# Word association logic
 #		@first_word_id = @user.word_freq.keys[0]

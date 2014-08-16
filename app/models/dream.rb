@@ -8,6 +8,8 @@ class Dream < ActiveRecord::Base
 	validates :body, presence: true
 	validates :user_id, presence: true
 
+	scope :impression, -> (min_impression) { where("impression >= ?", min_impression) }
+
 	before_save :init_data
 	after_save :gather_words
 	after_save :update_graph

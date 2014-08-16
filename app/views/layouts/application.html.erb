@@ -22,7 +22,9 @@
 			<div id="modal-window" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<%= render 'dreams/new' %>
 			</div>
-		
+			<div id="modal-window-edit-dream" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<%= render 'dreams/edit' %>
+			</div>			
 			<div id="modal-window-login" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<%= render 'devise/sessions/new' %>
 			</div>
@@ -30,9 +32,9 @@
 				<%= render 'devise/registrations/new' %>
 			</div>
 			<%= yield %>
-	<!--		
+	
 			<%= debug(params) if Rails.env.development? %>
-	-->		
+	
 		</div>
 	</body>
 </html>

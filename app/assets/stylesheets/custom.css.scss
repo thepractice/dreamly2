@@ -638,7 +638,16 @@ body{
 }
 
 .content-title {
-  margin-top: 5px;
+
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 10px
+}
+
+.nav-pills-inline {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 20px;
 }
 
 /* Links */
