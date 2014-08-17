@@ -40,6 +40,16 @@ jQuery ->
 		$("#impression-slider-value2").text label
 		return
 
+	$("#impression3").slider()
+	$("#impression3").on "slide", (slideEvt) ->
+		label = "Normal"
+		if slideEvt.value == 2
+			label = "Big"
+		if slideEvt.value == 3
+			label = "Huge"
+		$("#impression-slider-value3").text label
+		return
+
 
 
 

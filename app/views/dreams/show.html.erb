@@ -13,9 +13,10 @@
 		<div class="dream-right-top">
 			<div class="dream-right-top1">
 				<span class="dream-title"><h4><%= @dream.title %></h4></span>
-
-				<span class="dreamer1"><%= @dream.user.name %></span>
-				<span class="dreamer2">@<%= @dream.user.username %></span>
+				<%= link_to @dream.user do %>
+					<span class="dreamer1"><%= @dream.user.name %></span>
+					<span class="dreamer2">@<%= @dream.user.username %></span>
+				<% end %>
 			</div>
 			<div class="dream-right-top2">
 				<% if @dream.impression == 2 %>
@@ -37,12 +38,14 @@
 		</div>
 		<span class="body"><%= simple_format(@dream.body) %></span>
 		<% if current_user == @dream.user %>
-			<%= link_to "Edit", edit_dream_path(@dream.id) %>
 			<%= link_to(edit_dream_path(@dream.id), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-edit-dream', :class => 'btn btn-primary btn-square', :id => "edit-dream-button"}) do %>
 				<%= icon('pencil-square-o') %>
 				Edit
-			<% end %>			
-			<%= link_to "Delete", @dream, method: :delete, data: { confirm: "Are you sure?" } %>
+			<% end %>
+			<%= link_to(@dream, method: :delete, data: { confirm: "Are you sure?" }, :class => 'btn btn-danger btn-square', :id => "delete-dream-button") do %>
+				<%= icon('trash-o') %>
+				Delete
+			<% end %>				
 		<% end %> 
 	</div>
 </div>

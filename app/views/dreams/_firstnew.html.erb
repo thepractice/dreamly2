@@ -3,20 +3,51 @@
     <h3 class="panel-title">Post your first dream!</h3>
   </div>
   <div class="panel-body">
-  <%= simple_form_for(Dream.new, remote: true, html: {"data-type" => :json, class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
+        <%= simple_form_for(Dream.new, remote: true, html: {"data-type" => :json, class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
+    
+          <div id="dream_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
+            <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <div id="dream_error_explanation"></div>
+          </div>
+                                     
 
-    <div id="dream_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
-      <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <div id="dream_error_explanation"></div>
-    </div>
-    <%= f.input :dreamed_on, as: :string, input_html: { "data-provide" => "datepicker",
-                                                      "data-date-autoclose" => true,
-                                                      "data-date-today-btn" => "linked",
-                                                      "data-date-today-highlight" => true,
-                                                      "data-date-format" => "yyyy-mm-dd",
-                                                      value: Time.now.strftime('%Y-%m-%d') } %>
-    <%= f.input :title, placeholder: '(Optional)' %>
-    <%= f.input :body, label: 'Dream', placeholder: 'Tell your story.', required: false, input_html: { id: "dream-body-textarea" } %>
+          <div class="form-group string optional dream_dreamed_on">
+            <label class="string optional col-sm-2 control-label" for="dream_dreamed_on">Dreamed on</label>
+            <div class="col-sm-5">
+              <div class="input-group date" data-provide="datepicker" data-date-autoclose="true" data-date-format="M d, yyyy" data-date-today-btn="linked" data-date-today-highlight="true">
+                <%= tag("input", class: "string optional form-control", id: "dreamed-on-input", name: "dream[dreamed_on]", type: "text", placeholder: 'Today') %>
+                <span class="input-group-addon"><%= icon('calendar', '', class: 'fa-lg') %></span>
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="btn-group btn-toggle" data-toggle="buttons">
+                <label class="btn btn-default active">
+                  <input type="radio" name="dream[private]" value="false" checked> Public
+                </label>
+                <label class="btn btn-default">
+                  <input type="radio" name="dream[private]" value="true"> Private
+                </label>
+              </div>
+            </div>
+            
+          </div>
+
+          <div class="form-group string optional dream_impression">
+            <label class="string optional col-sm-2 control-label" for="dream_impression">Impact</label>
+            <div class="col-sm-10">
+              <input id="impression3" name="dream[impression]" data-slider-id='impression-slider' type="text" data-slider-min="1" data-slider-max="3" data-slider-step="1" data-slider-value="1" data-slider-tooltip="hide" value="1"/>
+              <span id="impression-slider-value3">Normal</span>
+            </div>
+          </div>
+                                    
+
+       
+
+
+
+          <%= f.input :title, placeholder: '(Optional)', input_html: { id: "dream-title-textarea" } %>
+          <%= f.input :body, label: 'Dream', placeholder: 'Tell your story.', required: false, input_html: { id: "dream-body-textarea" } %>
+
   </div>
   <div class="panel-footer">
     <button type="submit" class="btn btn-primary btn-square">
