@@ -21,7 +21,6 @@ jQuery ->
 
 	$("form#new_dream").on "ajax:success", (event, data, status, xhr) ->
 	#	$('#modal-window').modal('hide')
-		alert('signin success')
 		window.location.pathname = "/dreams/#{data.id}"
 
 	$("form#new_dream").on "ajax:error", (event, xhr, status, error) ->
@@ -68,7 +67,6 @@ jQuery ->
 # Ajax Signin form
 
 	$("form#new_user").on "ajax:success", (event, data, status, xhr) ->
-		#alert('signin success')
 		current_user_id = xhr.responseJSON.current_user_id
 		window.location.pathname = "/users/#{current_user_id}"
 

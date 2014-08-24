@@ -3,6 +3,10 @@ class DreamsController < ApplicationController
 	before_filter :correct_user, only: [:edit, :update, :destroy]
 
 	def index
+		@dreams = Dream.paginate(page: params[:page], per_page: 40).where(private: false)
+		if params[:impression].present?
+			@dreams = Dream.impression(params[:impression]).paginate(page: params[:page]).where(private: false)
+		end
 	end
 
 	def show
