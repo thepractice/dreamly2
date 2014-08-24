@@ -10,9 +10,12 @@ class Dream < ActiveRecord::Base
 
 	scope :impression, -> (min_impression) { where("impression >= ?", min_impression) }
 
+	before_update :reverse_dream
 	before_save :init_data
 	after_save :gather_words
 	after_save :update_graph
+	before_destroy :reverse_dream
+	before_destroy :update_graph
 
 	protected
 
@@ -56,13 +59,23 @@ class Dream < ActiveRecord::Base
 				self.word_freq[word_record.id] = frequency
 
 				# Add unique word ids/frequencies to User word_freq hash. Currently hacky: default value of hash should be 0, not nil.
+			#	if user_words[word_record.id] == nil
+			#		user_words[word_record.id] = frequency
+			#	else
+			#		user_words[word_record.id] += frequency
+			#	end
+
+				# Add unique word ids/frequencies to User word_freq hash. Currently hacky: default value of hash should be 0, not nil.
 				if user_words[word_record.id] == nil
-					user_words[word_record.id] = frequency
+					user_words[word_record.id] = { freq: frequency, dream_ids: [self.id] }
 				else
-					user_words[word_record.id] += frequency
+					user_words[word_record.id][:freq] += frequency
+					user_words[word_record.id][:dream_ids].push(self.id)
 				end
+
+
 			end
-			user_words = Hash[user_words.sort_by { |x, y| y }.reverse]
+			user_words = Hash[user_words.sort_by { |k, v| v[:freq] }.reverse]
 			self.user.update_columns(word_freq: user_words)
 		#	self.user.save   	# save User to save User word_freq hash
 			self.update_columns(word_freq: self.word_freq)		# save Dream word_freq hash
@@ -76,6 +89,7 @@ class Dream < ActiveRecord::Base
 	#		end
 	#		nodes += "]"
 
+			# Load the nodes array with ids of most frequent words.
 			nodes = Array.new
 			min_words = [self.user.word_freq.length, 5].min
 			min_words.times do |n|
@@ -88,17 +102,21 @@ class Dream < ActiveRecord::Base
 
 			min_words.times do |n|
 
-				word_object_dreams = Array.new
+
 				word_object_assocs = Hash.new(0)
 
 				word_object_id = self.user.word_freq.keys[n]
 				word_object = Word.find(word_object_id)
+				word_object_dreams = self.user.word_freq[word_object_id][:dream_ids]
+
 				# Set array with dream_ids of user which contain word_object
-				word_object.dreams.each do |dream_id|
-					if Dream.find(dream_id).user_id == self.user.id
-						word_object_dreams.push(dream_id)
-					end
-				end
+		#		word_object.dreams.each do |dream_id|
+		#			if Dream.find(dream_id).user_id == self.user.id
+		#				word_object_dreams.push(dream_id)
+		#			end
+		#		end
+
+	
 
 				word_object_dreams.each do |dream_id|														# Iterate through each dream
 					Dream.find(dream_id).word_freq.each do |word_id, frequency|		# Iterate through each unique word
@@ -125,19 +143,52 @@ class Dream < ActiveRecord::Base
 
 			node_text = "["
 			nodes.each do |word_id|
-				node_text += "{\"name\":\"#{Word.find(word_id).name}\",\"value\":#{self.user.word_freq[word_id]}},"
+				node_text += "{\"name\":\"#{Word.find(word_id).name}\",\"value\":#{self.user.word_freq[word_id][:freq]}},"
 			end
-			node_text = node_text[0..-2]				# remove extra comma
+			node_text = node_text[0..-2] unless nodes.empty?				# remove extra comma
 			node_text += "]"
 
 			link_text = "["
 			links.each do |link|
 				link_text += "{\"source\":#{link[0]},\"target\":#{link[1]}},"
 			end
-			link_text = link_text[0..-2]
+			link_text = link_text[0..-2] unless links.empty?		# remove extra comma
 			link_text += "]"
 
 			graph_text = "{\"nodes\":#{node_text},\"links\":#{link_text}}"
 			self.user.update_columns(graph: graph_text)
 		end
+
+		def reverse_dream
+
+			user_words = self.user.word_freq
+
+			# Iterate through dream word frequency hash
+			self.word_freq.each do |word_id, freq|
+				word_record = Word.find(word_id)
+				word_record.global_count -= freq 		# Decrement word record global count
+				word_record.dreams.delete(self.id)	# Remove dream id from word_record dream array
+
+				user_words[word_record.id][:freq] -= freq 							# Decrement User word_freq count
+				user_words[word_record.id][:dream_ids].delete(self.id)	# Remove dream_id from User word_freq hash
+
+				if user_words[word_record.id][:freq] == 0		# if User word_freq = 0, delete the listing from hash
+					user_words.delete(word_record.id)
+				end
+
+				self.user.update_columns(word_freq: user_words)			# Save User word_freq hash
+
+				if word_record.global_count == 0		# if word record global count = 0, delete the word record
+					word_record.destroy
+				else
+					word_record.save
+				end
+								
+			end
+
+			self.word_freq.clear			# Clear the Dream word_freq hash
+
+		end
+
+
 end
