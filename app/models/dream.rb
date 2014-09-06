@@ -251,15 +251,17 @@ class Dream < ActiveRecord::Base
 					user_words.delete(word_record.id)
 				end
 
-				user_words_public[word_record.id][:freq] -= freq 							# Decrement User word_freq_public count
-				user_words_public[word_record.id][:dream_ids].delete(self.id)	# Remove dream_id from user_words_public hash
-
-				if user_words_public[word_record.id][:freq] == 0		# if User word_freq = 0, delete the listing from hash
-					user_words_public.delete(word_record.id)
-				end				
-
 				self.user.update_columns(word_freq: user_words)			# Save User word_freq hash
-				self.user.update_columns(word_freq_public: user_words_public)			# Save User word_freq_public hash
+
+				if user_words_public[word_record.id]				# if the word is in the user's public record
+					user_words_public[word_record.id][:freq] -= freq 							# Decrement User word_freq_public count
+					user_words_public[word_record.id][:dream_ids].delete(self.id)	# Remove dream_id from user_words_public hash
+					if user_words_public[word_record.id][:freq] == 0		# if User word_freq = 0, delete the listing from hash
+						user_words_public.delete(word_record.id)
+					end	
+					self.user.update_columns(word_freq_public: user_words_public)			# Save User word_freq_public hash
+				end
+
 
 				if word_record.global_count == 0		# if word record global count = 0, delete the word record
 					word_record.destroy
