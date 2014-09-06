@@ -427,6 +427,85 @@ label {
     font-size: 20px;
     font-weight: 700;
   }
+  .input-group {
+ #   display: inline;
+    .input-group-addon {
+ #     display: inline;
+    }
+  }
+}
+
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle {
+  color: $offBlack;
+  background-color: $lightBlue;
+  border-color: #adadad;
+}
+
+.modal-content {
+  border-radius: 0;
+}
+
+.modal-header {
+  padding: 7px 15px 5px 15px;
+  color: $darkBlue;
+  h3 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+}
+
+.modal-body {
+
+}
+
+#new_dream {
+  label {
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+}
+
+#twitter-login{
+  background: #00bced;
+}
+
+#facebook-login {
+  background: #3b5998;
+}
+
+#google-login {
+  background: #5b76f7;
+}
+
+#yahoo-login {
+  background: #810293;
+}
+
+#user_password {
+  display: inline;
+}
+
+/* Modals */
+
+.modal-dialog {
+  width: 712px;
+}
+
+.modal-footer {
+  text-align: left;
+}
+
+.modal-open .navbar-fixed-top, 
+.modal-open .navbar-fixed-bottom 
+{
+  padding-right: 15px;
+}
+
+.close {
+  font-size: 20px;
+  opacity: 0.5;
+
 }
 
 .modal-body {

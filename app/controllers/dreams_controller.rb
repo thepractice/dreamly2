@@ -7,6 +7,7 @@ class DreamsController < ApplicationController
 		if params[:impression].present?
 			@dreams = Dream.impression(params[:impression]).paginate(page: params[:page]).where(private: false)
 		end
+
 	end
 
 	def show

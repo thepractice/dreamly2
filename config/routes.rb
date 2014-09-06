@@ -15,6 +15,7 @@ Jhad::Application.routes.draw do
 #  match "/users/:id/huge", to: 'users#show', impression: 3, via: 'get'
 
 
+
   get 'dreams/new' => 'dreams#new', :as => :new     # For new dream modal
  # get 'dreams/edit' => 'dreams#edit', :as => :edit     # For edit dream modal
 

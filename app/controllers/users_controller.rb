@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 	def show
 		@user = User.find(params[:id])
 		@dreams = @user.dreams.paginate(page: params[:page])
+
 		if params[:impression].present?
 			@dreams = @user.dreams.impression(params[:impression]).paginate(page: params[:page])
 		end
@@ -36,6 +37,7 @@ class UsersController < ApplicationController
 
 #		@first_word_first_assoc_id = @first_word_assocs.keys[0]
 #		@first_word_first_assoc = Word.find(@first_word_first_assoc_id)
+
 	end
 
 	def graph

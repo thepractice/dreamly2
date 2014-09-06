@@ -3,6 +3,7 @@
     <h3 class="panel-title">Post your first dream!</h3>
   </div>
   <div class="panel-body">
+
         <%= simple_form_for(Dream.new, remote: true, html: {"data-type" => :json, class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
     
           <div id="dream_error_explanation_wrapper" class="alert alert-danger" style="display:none;">

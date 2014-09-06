@@ -67,6 +67,7 @@ jQuery ->
 # Ajax Signin form
 
 	$("form#new_user").on "ajax:success", (event, data, status, xhr) ->
+
 		current_user_id = xhr.responseJSON.current_user_id
 		window.location.pathname = "/users/#{current_user_id}"
 
@@ -140,4 +141,4 @@ jQuery ->
 			label = "Big"
 		if slideEvt.value == 3
 			label = "Huge"
-		$("#impression-slider-value3").text label		
+		$("#impression-slider-value3").text label

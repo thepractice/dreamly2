@@ -5,6 +5,7 @@ class Dream < ActiveRecord::Base
 	include ActionView::Helpers::SanitizeHelper
 
 	belongs_to :user, counter_cache: :dream_count
+
 	default_scope -> { order('dreamed_on DESC, created_at DESC') }
 	validates :body, presence: true
 	validates :user_id, presence: true
@@ -18,6 +19,7 @@ class Dream < ActiveRecord::Base
 	after_save :update_graph_public
 	before_destroy :reverse_dream
 	before_destroy :update_graph
+
 
 	protected
 
@@ -49,9 +51,11 @@ class Dream < ActiveRecord::Base
 			freqs.reverse!													# put in descending order
 
 			user_words = self.user.word_freq
+
 			user_words_public = self.user.word_freq_public
 
 			freqs.each do |word, frequency|
+
 
 				# Add unique words/frequencies to global Word table.										
 				word_record = Word.find_or_create_by(name: word)
@@ -64,6 +68,7 @@ class Dream < ActiveRecord::Base
 				self.word_freq[word_record.id] = frequency
 
 				# Add unique word ids/frequencies to User word_freq hash. Currently hacky: default value of hash should be 0, not nil.
+
 			#	if user_words[word_record.id] == nil
 			#		user_words[word_record.id] = frequency
 			#	else
@@ -93,6 +98,7 @@ class Dream < ActiveRecord::Base
 			user_words_public = Hash[user_words_public.sort_by { |k, v| v[:freq] }.reverse]
 			self.user.update_columns(word_freq: user_words)
 			self.user.update_columns(word_freq_public: user_words_public)
+
 		#	self.user.save   	# save User to save User word_freq hash
 			self.update_columns(word_freq: self.word_freq)		# save Dream word_freq hash
 		end
@@ -105,7 +111,9 @@ class Dream < ActiveRecord::Base
 	#		end
 	#		nodes += "]"
 
+
 			# Load the nodes array with ids of most frequent words.
+
 			nodes = Array.new
 			min_words = [self.user.word_freq.length, 5].min
 			min_words.times do |n|
@@ -123,6 +131,7 @@ class Dream < ActiveRecord::Base
 
 				word_object_id = self.user.word_freq.keys[n]
 				word_object = Word.find(word_object_id)
+
 				word_object_dreams = self.user.word_freq[word_object_id][:dream_ids]
 
 				# Set array with dream_ids of user which contain word_object
@@ -132,7 +141,7 @@ class Dream < ActiveRecord::Base
 		#			end
 		#		end
 
-	
+
 
 				word_object_dreams.each do |dream_id|														# Iterate through each dream
 					Dream.find(dream_id).word_freq.each do |word_id, frequency|		# Iterate through each unique word
@@ -159,21 +168,26 @@ class Dream < ActiveRecord::Base
 
 			node_text = "["
 			nodes.each do |word_id|
+
 				node_text += "{\"name\":\"#{Word.find(word_id).name}\",\"value\":#{self.user.word_freq[word_id][:freq]}},"
 			end
 			node_text = node_text[0..-2] unless nodes.empty?				# remove extra comma
+
 			node_text += "]"
 
 			link_text = "["
 			links.each do |link|
 				link_text += "{\"source\":#{link[0]},\"target\":#{link[1]}},"
 			end
+
 			link_text = link_text[0..-2] unless links.empty?		# remove extra comma
+
 			link_text += "]"
 
 			graph_text = "{\"nodes\":#{node_text},\"links\":#{link_text}}"
 			self.user.update_columns(graph: graph_text)
 		end
+
 
 		def update_graph_public
 			nodes = Array.new
@@ -274,6 +288,5 @@ class Dream < ActiveRecord::Base
 			self.word_freq.clear			# Clear the Dream word_freq hash
 
 		end
-
 
 end
