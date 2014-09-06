@@ -10,7 +10,11 @@ var svg = d3.select("#profile-graph").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-var graph_string = "<%= @user.graph %>";
+<% if current_user == @user %>
+  var graph_string = "<%= @user.graph %>";
+<% else %>
+  var graph_string = "<%= @user.graph_public %>";
+<% end %>
 var graph_string = graph_string.replace(/&quot;/ig,'"');
 var graph_json = JSON.parse(graph_string);
 

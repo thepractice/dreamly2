@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140810203756) do
+ActiveRecord::Schema.define(version: 20140824220529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 20140810203756) do
     t.text     "graph"
     t.string   "name"
     t.integer  "dream_count",            default: 0
+    t.text     "word_freq_public"
+    t.text     "graph_public"
   end
 
   add_index "users", ["dream_count"], name: "index_users_on_dream_count", using: :btree

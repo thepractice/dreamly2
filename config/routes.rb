@@ -11,8 +11,8 @@ Jhad::Application.routes.draw do
   match '/test', to: 'static_pages#test', via: 'get'
   match '/test', to: 'static_pages#test', via: 'get'
 
-  match "/users/:id/big", to: 'users#show', impression: 2, via: 'get'
-  match "/users/:id/huge", to: 'users#show', impression: 3, via: 'get'
+#  match "/users/:id/big", to: 'users#show', impression: 2, via: 'get'
+#  match "/users/:id/huge", to: 'users#show', impression: 3, via: 'get'
 
 
   get 'dreams/new' => 'dreams#new', :as => :new     # For new dream modal

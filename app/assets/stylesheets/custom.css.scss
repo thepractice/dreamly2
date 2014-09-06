@@ -71,7 +71,11 @@ body{
 }
 
 .navbar-nav.navbar-right:last-child {
-margin-right: 0;
+  margin-right: 0;
+}
+
+#settings-button {
+  margin-right: 0;
 }
 
 
@@ -269,6 +273,13 @@ margin-right: 0;
   width: 100%;
   margin-top: 10px;
   padding: 10px;
+}
+
+
+.nav-pills a{
+  font-weight: 700;
+  font-size: 15px;
+  color: $darkBlue;
 }
 
 /* User Index */
@@ -682,6 +693,7 @@ a:hover {
 .btn-login {
   min-width: 160px;
   padding: 10px 16px;
+  font-size: 17px;
 }
 
 .btn:hover {

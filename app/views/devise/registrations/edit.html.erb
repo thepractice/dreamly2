@@ -1,35 +1,33 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="panel panel-default white-panel" id="edit-account">
+  <div class="panel-heading">
+    <h3 class="panel-title">Edit account</h3>
+  </div>
+  <div class="panel-body">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal row', id: 'edit_account_form'}, wrapper: :horizontal_form) do |f| %>
+    
+          <div id="edit_account_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
+            <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <div id="edit_account_error_explanation"></div>
+          </div>
+          <%= devise_error_messages! %>
+          <%= f.input :name, required: false, hint: 'The long version of your name.', input_html: { value: current_user.name } %>
+          <%= f.input :email, hint: 'Your email will never be shown to the public.', input_html: { value: current_user.email } %>
+          <%= f.input :password, label: "New password", hint: "Leave blank if you don't want to change it. Must be at least 8 characters." %>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+          <!-- Don't display current_password field for OmniAuth users -->
+          <% if current_user.encrypted_password.present? %>
+
+            <div class="form-group password optional user_password"><label class="password optional col-sm-2 control-label" for="user_current_password">Current password</label><div class="col-sm-10"><input class="password optional form-control" id="user_current_password" name="user[current_password]" type="password"><p class="help-block">Enter your current password to confirm changes.</p></div></div>
+
+          <% end %>
+    
+  </div>
+  <div class="panel-footer">
+    <button type="submit" class="btn btn-primary btn-square">
+      Save changes
+    </button>
   <% end %>
-
-  <div><%= f.label :username %><br />
-  <%= f.text_field :username %></div>
-
-  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
-
-  <!-- Don't display current_password field for OmniAuth users -->
-  <% if f.object.encrypted_password.present? %>
-    <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-      <%= f.password_field :current_password, autocomplete: "off" %></div>
-  <% end %>
-
-  <div><%= f.submit "Update" %></div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+  </div>
+</div>

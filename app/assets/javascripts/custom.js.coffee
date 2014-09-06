@@ -17,37 +17,10 @@ jQuery ->
 				$.getScript(url)
 			$(window).scroll
 
-
-	# Impression Slider
-
-	$("#impression").slider()
-	$("#impression").on "slide", (slideEvt) ->
-		label = "Normal"
-		if slideEvt.value == 2
-			label = "Big"
-		if slideEvt.value == 3
-			label = "Huge"
-		$("#impression-slider-value").text label
-		return
-
-	$("#impression2").slider()
-	$("#impression2").on "slide", (slideEvt) ->
-		label = "Normal"
-		if slideEvt.value == 2
-			label = "Big"
-		if slideEvt.value == 3
-			label = "Huge"
-		$("#impression-slider-value2").text label
-		return
-
-
-
-
 # Ajax dream form
 
 	$("form#new_dream").on "ajax:success", (event, data, status, xhr) ->
 	#	$('#modal-window').modal('hide')
-		alert('signin success')
 		window.location.pathname = "/dreams/#{data.id}"
 
 	$("form#new_dream").on "ajax:error", (event, xhr, status, error) ->
@@ -94,7 +67,6 @@ jQuery ->
 # Ajax Signin form
 
 	$("form#new_user").on "ajax:success", (event, data, status, xhr) ->
-		#alert('signin success')
 		current_user_id = xhr.responseJSON.current_user_id
 		window.location.pathname = "/users/#{current_user_id}"
 
@@ -140,3 +112,32 @@ jQuery ->
 
 	$('#modal-window-signup').on 'hidden.bs.modal', (e) ->
 		$("#signup_error_explanation_wrapper").hide()
+
+	# Impression Slider
+
+	$("#impression").slider()
+	$("#impression").on "slide", (slideEvt) ->
+		label = "Normal"
+		if slideEvt.value == 2
+			label = "Big"
+		if slideEvt.value == 3
+			label = "Huge"
+		$("#impression-slider-value").text label
+
+	$("#impression2").slider()
+	$("#impression2").on "slide", (slideEvt) ->
+		label = "Normal"
+		if slideEvt.value == 2
+			label = "Big"
+		if slideEvt.value == 3
+			label = "Huge"
+		$("#impression-slider-value2").text label
+
+	$("#impression3").slider()
+	$("#impression3").on "slide", (slideEvt) ->
+		label = "Normal"
+		if slideEvt.value == 2
+			label = "Big"
+		if slideEvt.value == 3
+			label = "Huge"
+		$("#impression-slider-value3").text label		

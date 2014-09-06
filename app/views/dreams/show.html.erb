@@ -13,9 +13,10 @@
 		<div class="dream-right-top">
 			<div class="dream-right-top1">
 				<span class="dream-title"><h4><%= @dream.title %></h4></span>
-
-				<span class="dreamer1"><%= @dream.user.name %></span>
-				<span class="dreamer2">@<%= @dream.user.username %></span>
+				<%= link_to @dream.user do %>
+					<span class="dreamer1"><%= @dream.user.name %></span>
+					<span class="dreamer2">@<%= @dream.user.username %></span>
+				<% end %>
 			</div>
 			<div class="dream-right-top2">
 				<% if @dream.impression == 2 %>
@@ -45,6 +46,7 @@
 				<%= icon('trash-o') %>
 				Delete
 			<% end %>
+
 		<% end %> 
 	</div>
 </div>
