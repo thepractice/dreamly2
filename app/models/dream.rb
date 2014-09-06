@@ -259,6 +259,7 @@ class Dream < ActiveRecord::Base
 				end				
 
 				self.user.update_columns(word_freq: user_words)			# Save User word_freq hash
+				self.user.update_columns(word_freq_public: user_words_public)			# Save User word_freq_public hash
 
 				if word_record.global_count == 0		# if word record global count = 0, delete the word record
 					word_record.destroy
