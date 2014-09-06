@@ -12,6 +12,8 @@ class Dream < ActiveRecord::Base
 
 	scope :impression, -> (min_impression) { where("impression >= ?", min_impression) }
 
+
+
 	before_update :reverse_dream
 	before_save :init_data
 	after_save :gather_words
@@ -19,6 +21,17 @@ class Dream < ActiveRecord::Base
 	after_save :update_graph_public
 	before_destroy :reverse_dream
 	before_destroy :update_graph
+
+	include PgSearch
+	pg_search_scope :search, against: [:title, :body]
+
+	def self.text_search(query)
+		if query.present?
+			search(query)
+		else
+			scoped
+		end
+	end
 
 
 	protected

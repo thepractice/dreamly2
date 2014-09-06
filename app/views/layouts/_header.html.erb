@@ -14,10 +14,21 @@
 				
 		</div>
 		<nav>
+
 			<ul class="nav navbar-nav navbar-right">
 				<% if user_signed_in? %>
 					<!-- <li>Logged in as <strong><%= current_user.username %></strong></li> -->
 					<!-- <li><%= link_to "Post dream", new_dream_path %></li> -->
+					<%= form_tag dreams_path, class: "navbar-form", id: "header-search", method: "get", role: "search" do %>
+						<div class="form-group">
+							<%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search" %>
+						</div>
+						<%= button_tag class: "btn btn-default" do %>
+							<%= icon('search') %>
+						<% end %>
+
+			
+					<% end %>
 					
 					<%= link_to(new_dream_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', :class => 'btn btn-primary btn-square', :id => "add-dream-button"}) do %>
 						<%= icon('plus') %>

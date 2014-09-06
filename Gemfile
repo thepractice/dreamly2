@@ -22,6 +22,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-yahoo'
 gem 'bootstrap-slider-rails'
+gem 'pg_search'
 
 
 group :development do
