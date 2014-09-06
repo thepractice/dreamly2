@@ -46,7 +46,7 @@ module ApplicationHelper
 	# Hack: to get edit-dream modal div on application.html page, the edit dream form must accept
 	# dream_resource as parameter instead of undefined @dream.
 	def dream_resource
-		@dream || Dream.find(1)
+		@dream || Dream.first
 	end
 
 end

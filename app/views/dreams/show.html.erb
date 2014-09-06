@@ -41,7 +41,8 @@
 			<%= link_to(edit_dream_path(@dream.id), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-edit-dream', :class => 'btn btn-primary btn-square', :id => "edit-dream-button"}) do %>
 				<%= icon('pencil-square-o') %>
 				Edit
-			<% end %>			
+			<% end %>
+
 			<%= link_to(@dream, method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger btn-square') do %>
 				<%= icon('trash-o') %>
 				Delete
