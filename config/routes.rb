@@ -9,7 +9,7 @@ Jhad::Application.routes.draw do
   match '/contact', to: 'static_pages#contact', via: 'get'
   match '/graph', to: 'static_pages#graph', via: 'get'
   match '/test', to: 'static_pages#test', via: 'get'
-  match '/test', to: 'static_pages#test', via: 'get'
+  match '/search', to: 'static_pages#search', via: 'get'
 
 #  match "/users/:id/big", to: 'users#show', impression: 2, via: 'get'
 #  match "/users/:id/huge", to: 'users#show', impression: 3, via: 'get'

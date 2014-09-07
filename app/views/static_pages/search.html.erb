@@ -1,0 +1,11 @@
+<% provide(:title, "Search - #{params[:query]}") %>
+
+<h3 class="content-title">Results for <strong><%= params[:query] %></strong></h3>
+<%= link_to "Only my dreams", user_path(current_user.id, query: params[:query]) %>
+
+<ol class="list-unstyled dreams" id ="user-dreams">
+	<%= render partial: "dreams/dream", collection: @dreams %>
+</ol>
+<div class="users" id="user-list">
+	<%= render partial: "users/user", collection: @users %>
+</div>

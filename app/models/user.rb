@@ -18,6 +18,9 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
+  include PgSearch
+  multisearchable against: [:username, :name, :email, :graph_public]  
+
   # Method for Devise to use either username or email to login.
   # This is the correct method you override with the code below:
   # def self.find_for_database_authentication(warden_conditions)

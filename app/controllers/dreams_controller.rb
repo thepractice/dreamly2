@@ -7,7 +7,7 @@ class DreamsController < ApplicationController
 		if params[:impression].present?
 			@dreams = Dream.impression(params[:impression]).paginate(page: params[:page]).where(private: false)
 		elsif params[:query].present?
-			@dreams = Dream.text_search(params[:query]).page(params[:page]).per_page(3)
+			@dreams = Dream.text_search(params[:query]).page(params[:page])
 		end
 
 	end

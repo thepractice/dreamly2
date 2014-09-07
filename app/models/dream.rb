@@ -23,7 +23,9 @@ class Dream < ActiveRecord::Base
 	before_destroy :update_graph
 
 	include PgSearch
-	pg_search_scope :search, against: [:title, :body]
+	multisearchable against: [:title, :body]
+	pg_search_scope :search, against: [:title, :body],
+		using: {tsearch: {dictionary: "english"}}
 
 	def self.text_search(query)
 		if query.present?

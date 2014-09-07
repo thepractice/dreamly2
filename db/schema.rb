@@ -11,9 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20140824220529) do
-
+ActiveRecord::Schema.define(version: 20140906220129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +26,14 @@ ActiveRecord::Schema.define(version: 20140824220529) do
     t.text     "word_freq"
     t.integer  "impression", default: 1
     t.boolean  "private",    default: false
+  end
+
+  create_table "pg_search_documents", force: true do |t|
+    t.text     "content"
+    t.integer  "searchable_id"
+    t.string   "searchable_type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "users", force: true do |t|

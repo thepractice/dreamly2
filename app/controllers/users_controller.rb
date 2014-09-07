@@ -10,6 +10,8 @@ class UsersController < ApplicationController
 
 		if params[:impression].present?
 			@dreams = @user.dreams.impression(params[:impression]).paginate(page: params[:page])
+		elsif params[:query].present?
+			@dreams = Dream.text_search(params[:query]).paginate(page: params[:page]).where(user: @user)
 		end
 
 
