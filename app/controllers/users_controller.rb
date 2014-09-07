@@ -6,13 +6,28 @@ class UsersController < ApplicationController
 
 	def show
 		@user = User.find(params[:id])
-		@dreams = @user.dreams.paginate(page: params[:page])
+#		@dreams = @user.dreams.regular.paginate(page: params[:page])
 
-		if params[:impression].present?
-			@dreams = @user.dreams.impression(params[:impression]).paginate(page: params[:page])
-		elsif params[:query].present?
-			@dreams = Dream.text_search(params[:query]).paginate(page: params[:page]).where(user: @user)
+		if params[:query].present?
+			if params[:impression].present?
+				@dreams = Dream.text_search(params[:query]).impression(params[:impression]).where(user: @user).paginate(page: params[:page])
+			else
+				@dreams = Dream.text_search(params[:query]).where(user: @user).paginate(page: params[:page])
+			end
+		else
+			if params[:impression].present?
+				@dreams = @user.dreams.regular.impression(params[:impression]).paginate(page: params[:page])
+			else
+				@dreams = @user.dreams.regular.paginate(page: params[:page])
+			end
 		end
+
+#		if params[:impression].present?
+#			@dreams = @user.dreams.regular.impression(params[:impression]).paginate(page: params[:page])
+#		elsif params[:query].present?
+#			@dreams = Dream.text_search(params[:query]).paginate(page: params[:page]).where(user: @user)
+	#		@dreams = Dream.text_search(params[:query]).page(params[:page])
+#		end
 
 
 		# Word association logic

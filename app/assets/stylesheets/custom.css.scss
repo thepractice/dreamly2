@@ -12,8 +12,21 @@ $darkGray: #858585;
 $darkGray2: #666666;
 $lightYellow: #fffa9f;
 $lightRed: #f19c99;
+$darkRed: #d9534f;
 $teal: #00aeef;
 $offBlack: #2E2E2E;
+
+@media (min-width: 768px) {
+    .affix {
+        position: fixed;
+    }
+}
+
+@media (max-width: 768px) {
+    .affix {
+        position: static;
+    }
+}
 
 /* universal */
 
@@ -604,6 +617,7 @@ body {
   padding: 5px;
   margin-bottom: 10px;
   transition: background 0.25s;
+  position: relative;
 }
 
 
@@ -644,12 +658,18 @@ body {
   p {
     color: #5F5F5F
   }
+  a {
+    position: relative;
+    z-index: 1;
+  }
+
 }
 
 
 
 .dream-right-top1 {
   display: inline-block;
+
 }
 
 .dream-right-top2 {
@@ -681,10 +701,14 @@ body {
 
 
 .dream-title {
-  color: $offBlack;
-  h4{
+  h4 {
     margin-bottom: 2px;
-
+  }
+  a {
+    color: $offBlack;
+  }
+  a:hover {
+    text-decoration: underline;
   }
 }
 
@@ -749,6 +773,29 @@ body{
 a:hover {
   text-decoration: none;
 }
+
+/* Search page */
+
+#only-my-dreams-button {
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+.block-link {
+  text-indent: -500px;
+  overflow: hidden;
+  font: 10px monospace;
+  letter-spacing: -10px;
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+  background: rgba(255,255,255,0);
+}
+
 
 /* Buttons */
 

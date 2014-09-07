@@ -6,10 +6,11 @@ class Dream < ActiveRecord::Base
 
 	belongs_to :user, counter_cache: :dream_count
 
-	default_scope -> { order('dreamed_on DESC, created_at DESC') }
 	validates :body, presence: true
 	validates :user_id, presence: true
 
+#	default_scope -> { order('dreamed_on DESC, created_at DESC') }
+	scope :regular, -> { order('dreamed_on DESC, created_at DESC') }
 	scope :impression, -> (min_impression) { where("impression >= ?", min_impression) }
 
 

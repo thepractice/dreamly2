@@ -31,6 +31,9 @@ for(var i = 0; i < ed_nodes.length; i++) {
 //function node_radius(d) { return (d.value / total_value)*100 };
 function node_radius(d) { return (d.value / total_value) *60 + 10 };
 
+function node_url(d) { return "<%= user_path(@user) %>".concat("?query=").concat(d.name)}
+
+
 var k = Math.sqrt(ed_nodes.length / (width * height ));
 
 var force = d3.layout.force()
@@ -58,12 +61,23 @@ var force = d3.layout.force()
   	.attr("r", node_radius)
   	.attr("opacity", 1);
 
-  node.append("text")
+  node.append("svg:a")
+    .attr("xlink:href", node_url)
+      .append("text")
       .attr("x", 0)
       .attr("dy", ".35em")
       .attr("text-anchor", "middle")
       .attr("font-size", node_radius)
       .text(function(d) { return d.name });
+
+/*
+  node.append("text")
+    .attr("x", 0)
+    .attr("dy", ".35em")
+    .attr("text-anchor", "middle")
+    .attr("font-size", node_radius)
+    .text(function(d) { return d.name });
+    */
 
   force.on("tick", function() {
     link.attr("x1", function(d) { return d.source.x; })
