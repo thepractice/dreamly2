@@ -2,10 +2,11 @@
 
 <div class="row">
 	<div class ="col-md-3">
-		<div id="profile-left-sidebar" data-spy="affix">
+		<div id="profile-left-sidebar">
 			<div class="dashboard white-panel">
 				<div class="dashboard-avatar">
-					<%= gravatar_for @user %>
+<!--					<%= gravatar_for @user %>	-->
+					<%= image_tag @user.avatar.url(:large), class: "img-center" %>
 				</div>
 				<div class="dashboard-usernames">
 					<div class="dashboard-usernames-name">
@@ -15,34 +16,39 @@
 						@<%= @user.username %>
 					</div>
 				</div> 
-				<div class="dashboard-stats">
-					<div class="dashboard-stats-left">
-						<span class="stat-header">DREAMS</span> <br />
-						<span class="stat-number"><%= @user.dreams.count %></span>
-					</div>
-<!--
-					<div class="dashboard-stats-right">
-						<span class="stat-header">FOLLOWING</span> <br />
-						<span class="stat-number">11</span>
-					</div>
--->
-				</div>
+
 
 			</div>
-			<% if @user.dreams.any? %>
-				<div id="profile-graph" class="white-panel">
+			<div data-spy="affix" data-offset-top="245">
+				<% if @user.dreams.any? %>
+					<div id="profile-graph" class="white-panel">
+					</div>
+					<%= render 'users/graph' %>
+				<% end %>
+				<div id="links-panel" class="white-panel">
+					<%= link_to "Home", root_path %>
+					<%= link_to "About", about_path %>
+					<%= link_to "Contact", contact_path %>
+					<%= image_tag("footer_stripe.jpg", width: '243', height: '10', class: 'rainbow-bar') %>
 				</div>
-				<%= render 'users/graph' %>
-			<% end %>
-			<div id="links-panel" class="white-panel">
-				<%= link_to "Home", root_path %>
-				<%= link_to "About", about_path %>
-				<%= link_to "Contact", contact_path %>
-				<%= image_tag("footer_stripe.jpg", width: '243', height: '10', class: 'rainbow-bar') %>
 			</div>
 		</div>
 	</div>
 	<div class="col-md-9">
+		<div class="white-panel">
+			<div class="dashboard-stats">
+				<div class="dashboard-stats-left">
+					<span class="stat-header">DREAMS</span> <br />
+					<span class="stat-number"><%= @user.dreams.count %></span>
+				</div>
+<!--
+				<div class="dashboard-stats-right">
+					<span class="stat-header">FOLLOWING</span> <br />
+					<span class="stat-number">11</span>
+				</div>
+-->
+			</div>			
+		</div>
 		<% if @user.dreams.any? %>
 			<div>
 				<% if params[:query] %>

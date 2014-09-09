@@ -22,9 +22,9 @@
 		
 					<%= form_tag search_path, class: "navbar-form", id: "header-search", method: "get", role: "search" do %>
 						<div class="form-group">
-							<%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search" %>
+							<%= text_field_tag :query, params[:query], class: "form-control", id: "search-bar", placeholder: "Search" %>
 						</div>
-						<%= button_tag class: "btn btn-default" do %>
+						<%= button_tag class: "btn btn-default", id: "search-button" do %>
 							<%= icon('search') %>
 						<% end %>
 					<% end %>					
@@ -52,6 +52,15 @@
 					</div>
 
 				<% else %>
+
+					<%= form_tag search_path, class: "navbar-form", id: "header-search", method: "get", role: "search" do %>
+						<div class="form-group">
+							<%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search" %>
+						</div>
+						<%= button_tag class: "btn btn-default" do %>
+							<%= icon('search') %>
+						<% end %>
+					<% end %>					
 					
 					<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login', :class => "btn btn-primary btn-square", :id => "signin-button"}) do %>
 

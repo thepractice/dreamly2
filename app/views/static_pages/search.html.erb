@@ -19,7 +19,9 @@
 	<% end %>
 </ul>
 
-<%= link_to "Only my dreams", user_path(current_user.id, query: params[:query]), class: "btn btn-danger btn-square", id: "only-my-dreams-button" %>
+<% if current_user %>
+	<%= link_to "Only my dreams", user_path(current_user.id, query: params[:query]), class: "btn btn-danger btn-square", id: "only-my-dreams-button" %>
+<% end %>
 
 <ol class="list-unstyled dreams" id ="user-dreams">
 	<%= render partial: "dreams/dream", collection: @dreams %>

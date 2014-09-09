@@ -95,6 +95,15 @@ body{
   display: inline;
 }
 
+#search-bar {
+  border-radius: 10px;
+  width: 200px;
+}
+
+#search-button {
+  
+}
+
 
 
 /* Landing page */
@@ -204,18 +213,19 @@ body{
 }
 
 .dashboard{
-  width: 100%;
   /* border: 1px solid black; */
   border-radius: 10px;
   padding: 10px;
   margin-top: 5px;
-  float: left;
+  float: right;
 }
 
 .dashboard-avatar{
-  float: left;
+
+  
   img{
     border-radius: 10px;
+
   }
 }
 
@@ -233,11 +243,15 @@ body{
 
 .dashboard-usernames-handle {
   color: #999999;
-  font-size: 16px;
+  font-size: 14px;
+  margin-top: -5px;
+  margin-bottom: -5px;
 }
 
 .dashboard-stats{
-  padding-top: 10px;
+margin-top: 5px;
+  padding-top: 5px;
+  padding-left: 10px;
   clear: both;
   .stat-header{
     color: #999999;
@@ -250,8 +264,7 @@ body{
 }
 
 .dashboard-stats-left{
-  float: left;
-  width: 50%;
+
 }
 
 #profile-graph {

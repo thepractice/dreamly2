@@ -5,7 +5,7 @@
   <div class="panel-body">
 
 
-    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal row', id: 'edit_account_form'}, wrapper: :horizontal_form) do |f| %>
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal row', id: 'edit_account_form', multipart: true}, wrapper: :horizontal_form) do |f| %>
     
           <div id="edit_account_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
             <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -15,6 +15,8 @@
           <%= f.input :name, required: false, hint: 'The long version of your name.', input_html: { value: current_user.name } %>
           <%= f.input :email, hint: 'Your email will never be shown to the public.', input_html: { value: current_user.email } %>
           <%= f.input :password, label: "New password", hint: "Leave blank if you don't want to change it. Must be at least 8 characters." %>
+
+          <%= f.file_field :avatar %>
 
           <!-- Don't display current_password field for OmniAuth users -->
           <% if current_user.encrypted_password.present? %>

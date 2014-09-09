@@ -23,6 +23,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-yahoo'
 gem 'bootstrap-slider-rails'
 gem 'pg_search'
+gem 'paperclip', '~> 4.2'
 
 
 group :development do

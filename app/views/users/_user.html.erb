@@ -1,7 +1,7 @@
 <%= link_to(user) do %>
 	<div id="users-dashboard" class="dashboard white-panel highlighter">
 		<div class="dashboard-avatar">
-			<%= gravatar_for user %>
+			<%= image_tag user.avatar.url(:thumb) %>
 		</div>
 		<div class="dashboard-usernames">
 			<div class="dashboard-usernames-name">
