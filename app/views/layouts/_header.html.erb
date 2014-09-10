@@ -19,16 +19,15 @@
 				<% if user_signed_in? %>
 					<!-- <li>Logged in as <strong><%= current_user.username %></strong></li> -->
 					<!-- <li><%= link_to "Post dream", new_dream_path %></li> -->
-		
-					<%= form_tag search_path, class: "navbar-form", id: "header-search", method: "get", role: "search" do %>
-						<div class="form-group">
-							<%= text_field_tag :query, params[:query], class: "form-control", id: "search-bar", placeholder: "Search" %>
-						</div>
-						<%= button_tag class: "btn btn-default", id: "search-button" do %>
-							<%= icon('search') %>
-						<% end %>
+
+					<%= form_tag search_path, class: "navbar-form search-form", id: "header-search", method: "get", role: "search" do %>					
+								<%= text_field_tag :query, params[:query], class: "form-control", id: "search-bar", placeholder: "Search" %>
+										<%= button_tag class: "btn", id: "search-button" do %>
+								<%= icon('search') %>
+							<% end %>				
 					<% end %>					
-					
+
+
 					<%= link_to(new_dream_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', :class => 'btn btn-primary btn-square', :id => "add-dream-button"}) do %>
 						<%= icon('plus') %>
 						dream
@@ -40,27 +39,24 @@
 							<%= icon('bars', '', id: 'settings-button') %>
 						</button>
 						<ul class="dropdown-menu" role="menu">
-							<li><%= link_to "My journal", current_user %></li>
-							<li><%= link_to "Dreamfeed", dreams_path %></li>
+							<li><%= link_to "My dreams", current_user %></li>
+							<li><%= link_to "All dreams", dreams_path %></li>
 							<li><%= link_to "Dreamers",	 users_path %></li>
 					    <li class="divider"></li>
-					    <li><%= link_to "Help",		 help_path %></li>
 					    <li><%= link_to "Edit account", edit_user_registration_path %></li>
-
+					    <li><%= link_to "Help",		 help_path %></li>				  
 					    <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
 						</ul>
 					</div>
 
 				<% else %>
 
-					<%= form_tag search_path, class: "navbar-form", id: "header-search", method: "get", role: "search" do %>
-						<div class="form-group">
-							<%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search" %>
-						</div>
-						<%= button_tag class: "btn btn-default" do %>
-							<%= icon('search') %>
-						<% end %>
-					<% end %>					
+					<%= form_tag search_path, class: "navbar-form search-form", id: "header-search", method: "get", role: "search" do %>					
+								<%= text_field_tag :query, params[:query], class: "form-control", id: "search-bar", placeholder: "Search" %>
+										<%= button_tag class: "btn", id: "search-button" do %>
+								<%= icon('search') %>
+							<% end %>				
+					<% end %>						
 					
 					<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login', :class => "btn btn-primary btn-square", :id => "signin-button"}) do %>
 
@@ -75,9 +71,9 @@
 							<%= icon('bars', '', id: 'settings-button') %>
 						</button>
 						<ul class="dropdown-menu" role="menu">
-							<li><%= link_to "Dreamfeed", dreams_path %></li>
+							<li><%= link_to "All dreams", dreams_path %></li>
 
-							<li><%= link_to "Users",	 users_path %></li>
+							<li><%= link_to "Dreamers",	 users_path %></li>
 					    <li><%= link_to "Help",		 help_path %></li>
 						</ul>
 					</div>				

@@ -92,16 +92,62 @@ body{
 }
 
 #header-search {
-  display: inline;
+  display: inline-block;
+  position: relative;
 }
 
+
 #search-bar {
-  border-radius: 10px;
-  width: 200px;
+  border-radius: 20px;
+  width: 221px;
+  border-right: none;
+  background: #66757f;
+  color: white;
+  opacity: 0.6;
+  transition: all .2s ease-in-out;
+
+}
+
+
+#search-bar:focus{
+    border-color: #cccccc;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+      background: #66757f;
+  opacity: 1;
 }
 
 #search-button {
-  
+  position: absolute;
+  top: 0px;
+  right: 15px;
+  display: block;
+  border-radius: 0 20px 20px 0;
+  border-left: none;
+  margin-left: -3px;
+  background: none;
+
+}
+
+#search-button.btn .fa {
+    margin: 0;
+    color: white;
+  }
+
+
+#search-bar::-webkit-input-placeholder { /* WebKit browsers */
+    color:    white !important;
+}
+#search-bar:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    white !important;
+    opacity:  1;
+}
+#search-bar::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    white !important;
+    opacity:  1;
+}
+#search-bar:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    white !important;
 }
 
 
@@ -217,12 +263,23 @@ body{
   border-radius: 10px;
   padding: 10px;
   margin-top: 5px;
-  float: right;
+  float: left;
 }
 
-.dashboard-avatar{
+.dashboard-avatar-container {
+  width: 100%
+}
 
-  
+
+img{
+  border-radius: 10px;
+
+}
+
+
+.user-index-avatar{
+
+  float: left;
   img{
     border-radius: 10px;
 
@@ -231,7 +288,7 @@ body{
 
 .dashboard-usernames{
   float: left;
-  padding-left: 5px;
+
   max-width: 180px;
 
 }
@@ -239,9 +296,13 @@ body{
 .dashboard-usernames-name {
   color: $offBlack;
   font-size: 20px;
+  a{
+    color: $offBlack;
+    font-size: 20px;
+  }
 }
 
-.dashboard-usernames-handle {
+.dashboard-usernames-handle a{
   color: #999999;
   font-size: 14px;
   margin-top: -5px;
@@ -251,7 +312,7 @@ body{
 .dashboard-stats{
 margin-top: 5px;
   padding-top: 5px;
-  padding-left: 10px;
+
   clear: both;
   .stat-header{
     color: #999999;
@@ -868,6 +929,8 @@ a:hover {
 .dropdown-menu {
   margin: 0;
   border-top: none;
+  min-width: 0;
+  font-size: 14px;
 }
 
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {

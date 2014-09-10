@@ -16,7 +16,9 @@
           <%= f.input :email, hint: 'Your email will never be shown to the public.', input_html: { value: current_user.email } %>
           <%= f.input :password, label: "New password", hint: "Leave blank if you don't want to change it. Must be at least 8 characters." %>
 
-          <%= f.file_field :avatar %>
+      
+          <div class="form-group  optional"><label class="optional col-sm-2 control-label" for="user_avatar">Avatar</label><div class="col-sm-10"><input  id="user_avatar" name="user[avatar]" type="file"><p class="help-block">Upload a file from your computer.</p></div></div>
+
 
           <!-- Don't display current_password field for OmniAuth users -->
           <% if current_user.encrypted_password.present? %>

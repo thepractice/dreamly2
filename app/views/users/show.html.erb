@@ -3,20 +3,37 @@
 <div class="row">
 	<div class ="col-md-3">
 		<div id="profile-left-sidebar">
-			<div class="dashboard white-panel">
+			<div class="dashboard white-panel dashboard-avatar-container">
 				<div class="dashboard-avatar">
 <!--					<%= gravatar_for @user %>	-->
-					<%= image_tag @user.avatar.url(:large), class: "img-center" %>
+					<% if current_user == @user %>
+						<%= link_to edit_user_registration_path do %>
+							<%= image_tag @user.avatar.url(:large), class: "img-center" %>
+						<% end %>
+					<% else %>
+						<%= image_tag @user.avatar.url(:large), class: "img-center" %>
+					<% end %>
 				</div>
-				<div class="dashboard-usernames">
+				<div class="dashboard-usernames black-links">
 					<div class="dashboard-usernames-name">
-						<%= @user.name %>
+						<%= link_to @user.name, @user %>
 					</div>
 					<div class="dashboard-usernames-handle">
-						@<%= @user.username %>
+						<%= link_to "@#{@user.username}", @user %>
 					</div>
 				</div> 
-
+				<div class="dashboard-stats">
+					<div class="dashboard-stats-left">
+						<span class="stat-header">DREAMS</span> <br />
+						<span class="stat-number"><%= @user.dreams.count %></span>
+					</div>
+	<!--
+					<div class="dashboard-stats-right">
+						<span class="stat-header">FOLLOWING</span> <br />
+						<span class="stat-number">11</span>
+					</div>
+	-->
+				</div>
 
 			</div>
 			<div data-spy="affix" data-offset-top="245">
@@ -35,20 +52,6 @@
 		</div>
 	</div>
 	<div class="col-md-9">
-		<div class="white-panel">
-			<div class="dashboard-stats">
-				<div class="dashboard-stats-left">
-					<span class="stat-header">DREAMS</span> <br />
-					<span class="stat-number"><%= @user.dreams.count %></span>
-				</div>
-<!--
-				<div class="dashboard-stats-right">
-					<span class="stat-header">FOLLOWING</span> <br />
-					<span class="stat-number">11</span>
-				</div>
--->
-			</div>			
-		</div>
 		<% if @user.dreams.any? %>
 			<div>
 				<% if params[:query] %>
