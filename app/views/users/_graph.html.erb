@@ -39,9 +39,9 @@ var k = Math.sqrt(ed_nodes.length / (width * height ));
 var force = d3.layout.force()
     .gravity(100 * k)
  /*   .distance(100) */
-    .charge(-10 / k)
+    .charge(-50 / k)
     .size([width, height])
-    .linkDistance(200)
+    .linkDistance(0)
     .nodes(ed_nodes)
     .links(ed_links)
     .start();
