@@ -29,7 +29,7 @@ for(var i = 0; i < ed_nodes.length; i++) {
 //function node_radius(d) { return (d.value / total_value)*100 };
 function node_radius(d) { return (d.value / total_value) *60 + 10 };
 
-function node_url(d) { return "<%= user_path(@user) %>".concat("?query=").concat(d.name)}
+function node_url(d) { return "<%= dreams_path %>".concat("?query=").concat(d.name)}
 
 
 var k = Math.sqrt(ed_nodes.length / (width * height ));

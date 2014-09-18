@@ -1,31 +1,51 @@
 <% provide(:title, "Search - #{params[:query]}") %>
 
-<h3 class="content-title">Results for <strong><%= params[:query] %></strong></h3>
+<div class="row">
+	<div class ="col-md-3">
+		<div id="profile-left-sidebar">
+			<div data-spy="affix" data-offset-top="245">
+				<% if @dreams.any? %>
+					<div id="profile-graph" class="white-panel">
+					</div>
+					<%= render 'dreams/graph' %>
+				<% end %>
+				<div id="links-panel" class="white-panel">
+					<%= link_to "Home", root_path %>
+					<%= link_to "About", about_path %>
+					<%= link_to "Contact", contact_path %>
+					<%= image_tag("footer_stripe.jpg", width: '243', height: '10', class: 'rainbow-bar') %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<h3 class="content-title">Results for <strong><%= params[:query] %></strong></h3>
 
+		<ul class="nav nav-pills nav-pills-inline" role="tablist">
+			<% if params[:impression] == '2' %>
+				<li><%= link_to "All", search_path(query: params[:query]) %></li>
+				<li class="active"><%= link_to "Big", search_path(query: params[:query], impression: 2) %></li>
+				<li><%= link_to "Huge", search_path(query: params[:query], impression: 3) %></li>
+			<% elsif params[:impression] == '3' %>
+				<li><%= link_to "All", search_path(query: params[:query]) %></li>
+				<li><%= link_to "Big", search_path(query: params[:query], impression: 2) %></li>
+				<li class="active"><%= link_to "Huge", search_path(query: params[:query], impression: 3) %></li>
+			<% else %>
+				<li class="active"><%= link_to "All", search_path(query: params[:query]) %></li>
+				<li><%= link_to "Big", search_path(query: params[:query], impression: 2) %></li>
+				<li><%= link_to "Huge", search_path(query: params[:query], impression: 3) %></li>
+			<% end %>
+		</ul>
 
-<ul class="nav nav-pills nav-pills-inline" role="tablist">
-	<% if params[:impression] == '2' %>
-		<li><%= link_to "All", search_path(query: params[:query]) %></li>
-		<li class="active"><%= link_to "Big", search_path(query: params[:query], impression: 2) %></li>
-		<li><%= link_to "Huge", search_path(query: params[:query], impression: 3) %></li>
-	<% elsif params[:impression] == '3' %>
-		<li><%= link_to "All", search_path(query: params[:query]) %></li>
-		<li><%= link_to "Big", search_path(query: params[:query], impression: 2) %></li>
-		<li class="active"><%= link_to "Huge", search_path(query: params[:query], impression: 3) %></li>
-	<% else %>
-		<li class="active"><%= link_to "All", search_path(query: params[:query]) %></li>
-		<li><%= link_to "Big", search_path(query: params[:query], impression: 2) %></li>
-		<li><%= link_to "Huge", search_path(query: params[:query], impression: 3) %></li>
-	<% end %>
-</ul>
+		<% if current_user %>
+			<%= link_to "Only my dreams", user_path(current_user.id, query: params[:query]), class: "btn btn-danger btn-square", id: "only-my-dreams-button" %>
+		<% end %>
 
-<% if current_user %>
-	<%= link_to "Only my dreams", user_path(current_user.id, query: params[:query]), class: "btn btn-danger btn-square", id: "only-my-dreams-button" %>
-<% end %>
-
-<ol class="list-unstyled dreams" id ="user-dreams">
-	<%= render partial: "dreams/dream", collection: @dreams %>
-</ol>
-<div class="users" id="user-list">
-	<%= render partial: "users/user", collection: @users %>
+		<ol class="list-unstyled dreams" id ="user-dreams">
+			<%= render partial: "dreams/dream", collection: @dreams %>
+		</ol>
+		<div class="users" id="user-list">
+			<%= render partial: "users/user", collection: @users %>
+		</div>
+	</div>
 </div>
