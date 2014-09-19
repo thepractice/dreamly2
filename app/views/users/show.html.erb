@@ -1,3 +1,14 @@
+<% if params[:graph] %>
+	<div id="graph-full" class="white-panel">
+		<div id="full-screen-icon" rel="tooltip" data-toggle="tooltip" title="Minimize">
+			<%= link_to(user_path(@user.id, query: params[:query], impression: params[:impression])) do %>
+				<%= icon('compress') %>
+			<% end %>
+		</div>		
+	</div>
+	<%= render 'users/graph_full' %>
+<% else %>
+
 <% provide(:title, @user.username) %>
 
 <div class="row">
@@ -39,6 +50,9 @@
 			<div data-spy="affix" data-offset-top="245">
 				<% if @user.dreams.any? %>
 					<div id="profile-graph" class="white-panel">
+						<%= link_to(user_path(@user.id, graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon'}) do %>
+							<%= icon('arrows-alt') %>
+						<% end %>
 					</div>
 					<%= render 'users/graph' %>
 				<% end %>
@@ -85,3 +99,5 @@
 		<% end %>
 	</div>
 </div>
+
+<% end %>

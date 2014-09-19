@@ -59,8 +59,17 @@ class UsersController < ApplicationController
 		@word_count_sort = @word_count_sort.sort_by { |k, v| v }
 		@word_count_sort.reverse!
 
+		if params[:graph]
+			@min_words_constant = 15
+			@min_assocs_constant = 2
+		else
+			@min_words_constant = 5
+			@min_assocs_constant = 2
+		end
+
 		@nodes = Array.new
-		@min_words = [@word_count.length, 5].min
+
+		@min_words = [@word_count.length, @min_words_constant].min
 		@min_words.times do |n|
 			@nodes.push(@word_count.keys[n])
 		end
@@ -81,7 +90,7 @@ class UsersController < ApplicationController
 			end
 
 			@word_object_assocs = Hash[@word_object_assocs.sort_by{|k, v| v}.reverse]
-			@min_assocs = [@word_object_assocs.length, 2].min
+			@min_assocs = [@word_object_assocs.length, @min_assocs_constant].min
 			@min_assocs.times do |i|
 				if @nodes.include? @word_object_assocs.keys[i]		# if the association is already a node
 					@links.push([@nodes.index(@word_object_id), @nodes.index(@word_object_assocs.keys[i])])	# write the link
@@ -142,6 +151,7 @@ class UsersController < ApplicationController
 
 	def graph
 		@user = User.find(params[:id])
+		
 	end
 
 end

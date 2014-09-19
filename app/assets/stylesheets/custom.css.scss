@@ -329,6 +329,7 @@ margin-top: 5px;
 }
 
 #profile-graph {
+  position: relative;
   width: 100%;
   /* border: 1px solid black; */
   border-radius: 10px;
@@ -820,6 +821,17 @@ body {
 .node text:hover {
   fill: #5E3D3C;
   font-weight: 700;
+}
+
+#full-screen-icon {
+  position: absolute;
+  right: 5px;
+
+  padding: 5px;
+}
+
+#graph-full {
+  position: relative;
 }
 
 

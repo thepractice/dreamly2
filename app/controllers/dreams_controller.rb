@@ -100,6 +100,39 @@ class DreamsController < ApplicationController
 
 	def show
 		@dream = Dream.find(params[:id])
+
+	# Graph logic
+
+		@word_count = Hash.new
+		# Create hash of word frequencies in all relevant dreams
+		@dream.word_freq.each do |word_id, frequency|
+			if @word_count[word_id] == nil
+				@word_count[word_id] = frequency
+			else
+				@word_count[word_id] += frequency
+			end
+		end
+		
+		@word_count_sort = @word_count.sort_by { |k, v| v }
+		@word_count_sort.reverse!
+
+		@nodes = Array.new
+		@min_words = [@word_count.length, 5].min
+		@min_words.times do |n|
+			@nodes.push(@word_count.keys[n])
+		end
+
+		@node_text = "["
+		@nodes.each do |word_id|
+
+			@node_text += "{\"name\":\"#{Word.find(word_id).name}\",\"value\":#{@word_count[word_id]}},"
+		end
+		@node_text = @node_text[0..-2] unless @nodes.empty?				# remove extra comma
+
+		@node_text += "]"
+
+		@graph_text = "{\"nodes\":#{@node_text}}"
+
 	end
 
 	def new

@@ -20,6 +20,7 @@
 //= require bootstrap/alert
 //= require bootstrap/button
 //= require bootstrap/tab
+//= require bootstrap/tooltip
 //= require bootstrap-datepicker/core
 //= require bootstrap-sprockets
 //= require bootstrap-slider

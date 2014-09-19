@@ -114,16 +114,19 @@ jQuery ->
 	$('#modal-window-signup').on 'hidden.bs.modal', (e) ->
 		$("#signup_error_explanation_wrapper").hide()
 
+# Enable tooltips. Must come before Impression Slider.
+	$("#full-screen-icon").tooltip()
+
 	# Impression Slider
 
-	$("#impression").slider()
-	$("#impression").on "slide", (slideEvt) ->
-		label = "Normal"
-		if slideEvt.value == 2
-			label = "Big"
-		if slideEvt.value == 3
-			label = "Huge"
-		$("#impression-slider-value").text label
+	$("#impression").slider formater: (value) ->
+		if value == 1
+			"Normal"
+		else if value == 2
+			"Big"
+		else
+			"Huge"
+
 
 	$("#impression2").slider()
 	$("#impression2").on "slide", (slideEvt) ->
@@ -142,3 +145,4 @@ jQuery ->
 		if slideEvt.value == 3
 			label = "Huge"
 		$("#impression-slider-value3").text label
+

@@ -1,58 +1,78 @@
 <% if (@dream.private == false) || (current_user == @dream.user) %>
 
-<% provide(:title, @dream.title) %>
-<div class="dream white-panel" id="indiv-dream">
-	<div class="dream-left">
-		<span><%= @dream.dreamed_on.strftime("%^b") %></span><br />
-		<span><%= @dream.dreamed_on.strftime("%d") %></span><br/>
-		<% if @dream.dreamed_on.year != Time.now.year %>
-			<span class="year"><%= @dream.dreamed_on.strftime("%Y") %></span>
-		<% end %>
-	</div>
-	<div class="dream-right">
-		<div class="dream-right-top">
-			<div class="dream-right-top1">
-				<span class="dream-title"><h4><%= @dream.title %></h4></span>
+	<% provide(:title, @dream.title) %>
 
-				<%= link_to @dream.user do %>
-					<span class="dreamer1"><%= @dream.user.name %></span>
-					<span class="dreamer2">@<%= @dream.user.username %></span>
-				<% end %>
-
-			</div>
-			<div class="dream-right-top2">
-				<% if @dream.impression == 2 %>
-					<div class="big-dream">
-						Big <%= icon('star') %>
+	<div class="row">
+		<div class ="col-md-3">
+			<div id="profile-left-sidebar">
+				<div data-spy="affix" data-offset-top="245">
+					<div id="profile-graph" class="white-panel">
 					</div>
-				<% elsif @dream.impression == 3 %>
-					<div class="huge-dream">
-						Huge <%= icon('star') %>
+					<%= render 'dreams/graph_single' %>
+					<div id="links-panel" class="white-panel">
+						<%= link_to "Home", root_path %>
+						<%= link_to "About", about_path %>
+						<%= link_to "Contact", contact_path %>
+						<%= image_tag("footer_stripe.jpg", width: '243', height: '10', class: 'rainbow-bar') %>
 					</div>
-				<% end %>
-
-				<% if @dream.private %>
-					<%= icon('lock') %>
-				<% else %>
-					<%= icon('unlock') %>
-				<% end %>
+				</div>
 			</div>
 		</div>
-		<span class="body"><%= simple_format(@dream.body) %></span>
-		<% if current_user == @dream.user %>
-			<%= link_to(edit_dream_path(@dream.id), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-edit-dream', :class => 'btn btn-primary btn-square', :id => "edit-dream-button"}) do %>
-				<%= icon('pencil-square-o') %>
-				Edit
-			<% end %>
+		<div class="col-md-9">
+			<div class="dream white-panel" id="indiv-dream">
+				<div class="dream-left">
+					<span><%= @dream.dreamed_on.strftime("%^b") %></span><br />
+					<span><%= @dream.dreamed_on.strftime("%d") %></span><br/>
+					<% if @dream.dreamed_on.year != Time.now.year %>
+						<span class="year"><%= @dream.dreamed_on.strftime("%Y") %></span>
+					<% end %>
+				</div>
+				<div class="dream-right">
+					<div class="dream-right-top">
+						<div class="dream-right-top1">
+							<span class="dream-title"><h4><%= @dream.title %></h4></span>
 
-			<%= link_to(@dream, method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger btn-square') do %>
-				<%= icon('trash-o') %>
-				Delete
-			<% end %>
+							<%= link_to @dream.user do %>
+								<span class="dreamer1"><%= @dream.user.name %></span>
+								<span class="dreamer2">@<%= @dream.user.username %></span>
+							<% end %>
 
-		<% end %> 
+						</div>
+						<div class="dream-right-top2">
+							<% if @dream.impression == 2 %>
+								<div class="big-dream">
+									Big <%= icon('star') %>
+								</div>
+							<% elsif @dream.impression == 3 %>
+								<div class="huge-dream">
+									Huge <%= icon('star') %>
+								</div>
+							<% end %>
+
+							<% if @dream.private %>
+								<%= icon('lock') %>
+							<% else %>
+								<%= icon('unlock') %>
+							<% end %>
+						</div>
+					</div>
+					<span class="body"><%= simple_format(@dream.body) %></span>
+					<% if current_user == @dream.user %>
+						<%= link_to(edit_dream_path(@dream.id), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-edit-dream', :class => 'btn btn-primary btn-square', :id => "edit-dream-button"}) do %>
+							<%= icon('pencil-square-o') %>
+							Edit
+						<% end %>
+
+						<%= link_to(@dream, method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger btn-square') do %>
+							<%= icon('trash-o') %>
+							Delete
+						<% end %>
+
+					<% end %> 
+				</div>
+			</div>
+		</div>
 	</div>
-</div>
 
 <% else %>
 	<p>You don't have permission to view this page.</p>
