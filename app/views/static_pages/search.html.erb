@@ -1,3 +1,21 @@
+<% if params[:graph] %>
+	<div id="graph-full" class="white-panel">
+		<h3 class="graph-title"><%= impression_status().titleize %>
+			<% unless params[:impression] %>
+				All
+			<% end %>
+			dreams
+			<% if params[:query] %>
+			about <strong><%= params[:query] %></strong>
+			<% end %>
+		</h3>
+		<%= link_to search_path(query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", title: "Minimize"} do %>
+			<%= icon('compress') %>
+		<% end %>	
+	</div>
+	<%= render 'dreams/graph_full' %>
+<% else %>
+
 <% provide(:title, "Search - #{params[:query]}") %>
 
 <div class="row">
@@ -6,6 +24,9 @@
 			<div data-spy="affix" data-offset-top="245">
 				<% if @dreams.any? %>
 					<div id="profile-graph" class="white-panel">
+						<%= link_to search_path(graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", title: "Fullscreen"} do %>
+							<%= icon('arrows-alt') %>
+						<% end %>						
 					</div>
 					<%= render 'dreams/graph' %>
 				<% end %>
@@ -49,3 +70,5 @@
 		</div>
 	</div>
 </div>
+
+<% end %>

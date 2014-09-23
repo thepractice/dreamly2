@@ -1,5 +1,10 @@
 <% if params[:graph] %>
 	<div id="graph-full" class="white-panel">
+		<h3 class="graph-title"><%= @user.name %>'s <%= impression_status() %> dreams
+			<% if params[:query] %>
+			about <strong><%= params[:query] %></strong>
+			<% end %>
+		</h3>
 		<div id="full-screen-icon" rel="tooltip" data-toggle="tooltip" title="Minimize">
 			<%= link_to(user_path(@user.id, query: params[:query], impression: params[:impression])) do %>
 				<%= icon('compress') %>
@@ -15,14 +20,16 @@
 	<div class ="col-md-3">
 		<div id="profile-left-sidebar">
 			<div class="dashboard white-panel dashboard-avatar-container">
+				<div class ="profile-upper-background">
+				</div>
 				<div class="dashboard-avatar">
 <!--					<%= gravatar_for @user %>	-->
 					<% if current_user == @user %>
 						<%= link_to edit_user_registration_path do %>
-							<%= image_tag @user.avatar.url(:large), class: "img-center" %>
+							<%= image_tag @user.avatar.url(:medium), class: "img-center" %>
 						<% end %>
 					<% else %>
-						<%= image_tag @user.avatar.url(:large), class: "img-center" %>
+						<%= image_tag @user.avatar.url(:medium), class: "img-center" %>
 					<% end %>
 				</div>
 				<div class="dashboard-usernames black-links">
@@ -50,7 +57,7 @@
 			<div data-spy="affix" data-offset-top="245">
 				<% if @user.dreams.any? %>
 					<div id="profile-graph" class="white-panel">
-						<%= link_to(user_path(@user.id, graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon'}) do %>
+						<%= link_to(user_path(@user.id, graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", title: "Fullscreen"}) do %>
 							<%= icon('arrows-alt') %>
 						<% end %>
 					</div>

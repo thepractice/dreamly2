@@ -45,7 +45,7 @@ class DreamsController < ApplicationController
 		@nodes = Array.new
 		@min_words = [@word_count.length, 5].min
 		@min_words.times do |n|
-			@nodes.push(@word_count.keys[n])
+			@nodes.push(@word_count_sort[n][0])			#@word_count_sort has become an array.
 		end
 
 		@links = Array.new

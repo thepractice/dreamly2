@@ -267,7 +267,25 @@ body{
 }
 
 .dashboard-avatar-container {
-  width: 100%
+  width: 100%;
+  padding: 0;
+}
+
+.dashboard-avatar {
+  position: relative;
+  top: -30px;
+  left: 8px;
+  display: inline-block;
+  img {
+    border: 3px solid white;
+  }
+
+}
+
+.profile-upper-background {
+  height: 66px;
+  background: $lightYellow;
+  border-radius: 10px 10px 0 0;
 }
 
 
@@ -287,8 +305,9 @@ img{
 }
 
 .dashboard-usernames{
-  float: left;
-
+  display: inline-block;
+  position: relative;
+  left: 8px;
   max-width: 180px;
 
 }
@@ -310,8 +329,7 @@ img{
 }
 
 .dashboard-stats{
-margin-top: 5px;
-  padding-top: 5px;
+  margin: -30px 0 0 8px;
 
   clear: both;
   .stat-header{
@@ -376,6 +394,10 @@ margin-top: 5px;
 
 /* User Index */
 
+.user-index-div {
+  padding: 0;
+}
+
 #users-dashboard {
   width: 280px;
   margin-right: 5px;
@@ -386,6 +408,50 @@ margin-top: 5px;
   text-overflow: ellipsis;
 }
 
+.index-usernames-name {
+  color: $offBlack;
+  font-size: 20px;
+  a{
+    color: $offBlack;
+    font-size: 20px;
+  }
+}
+
+.user-index-stats{
+  clear: both;
+  padding: 10px;
+  .stat-header{
+    color: #999999;
+    font-size: 15px;
+  }
+  .stat-number{
+    color: #428bca;
+    font-size: 18px;
+  }
+}
+
+.user-index-topper {
+  overflow: hidden;
+  padding: 10px;
+}
+
+a:nth-child(3n - 2) {
+  .user-index-topper {
+    background: $lightYellow;
+  }
+}
+
+a:nth-child(3n - 1) {
+  .user-index-topper {
+    background: #F4B0AD;
+  }
+}
+
+a:nth-child(3n + 0) {
+  .user-index-topper {
+    background: #A9FF8D;
+  }
+}
 
 /* footer */
 
@@ -832,6 +898,14 @@ body {
 
 #graph-full {
   position: relative;
+  margin-top: -10px;
+}
+
+.graph-title {
+  text-align: center;
+  margin-top: 10px;
+  background: $lightYellow;
+  margin-bottom: 0  
 }
 
 
@@ -845,8 +919,11 @@ body{
 
   display: inline-block;
   vertical-align: middle;
-  margin-top: 10px
+  margin-top: 10px;
+
 }
+
+
 
 .nav-pills-inline {
   display: inline-block;

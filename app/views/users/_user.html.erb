@@ -1,17 +1,19 @@
 <%= link_to(user) do %>
-	<div id="users-dashboard" class="dashboard white-panel highlighter">
-		<div class="user-index-avatar">
-			<%= image_tag user.avatar.url(:medium) %>
+	<div id="users-dashboard" class="dashboard white-panel highlighter user-index-div">
+		<div class="user-index-topper">
+			<div class="user-index-avatar">
+				<%= image_tag user.avatar.url(:medium) %>
+			</div>
+			<div class="dashboard-usernames">
+				<div class="index-usernames-name">
+					<%= user.name %>
+				</div>
+				<div class="dashboard-usernames-handle">
+					@<%= user.username %>
+				</div>
+			</div> 
 		</div>
-		<div class="dashboard-usernames">
-			<div class="dashboard-usernames-name">
-				<%= user.name %>
-			</div>
-			<div class="dashboard-usernames-handle">
-				@<%= user.username %>
-			</div>
-		</div> 
-		<div class="dashboard-stats">
+		<div class="user-index-stats">
 			<div class="dashboard-stats-left">
 				<span class="stat-header">DREAMS</span> <br />
 				<span class="stat-number"><%= user.dreams.count %></span>

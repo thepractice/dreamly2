@@ -10,6 +10,17 @@ module ApplicationHelper
 		end
 	end
 
+	# Returns the impression param in text
+	def impression_status
+		if params[:impression] == '2'
+			'big'
+		elsif params[:impression] == '3'
+			'huge'
+		else
+			''
+		end
+	end
+
 	# Adjusts flash messages
 	def bootstrap_class_for flash_type
 		case flash_type
