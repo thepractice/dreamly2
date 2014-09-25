@@ -54,7 +54,7 @@
 				</div>
 
 			</div>
-			<div data-spy="affix" data-offset-top="245">
+			<div data-spy="affix" data-offset-top="240">
 				<% if @user.dreams.any? %>
 					<div id="profile-graph" class="white-panel">
 						<%= link_to(user_path(@user.id, graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", title: "Fullscreen"}) do %>

@@ -15,8 +15,8 @@
           </div>
           <%= devise_error_messages! %>
           <%= f.input :name, required: false, hint: 'The long version of your name.' %>
-          <%= f.input :email, hint: 'Your email will never be shown to the public.' %>
           <%= f.input :username, required: false, hint: "Your @username must be unique and have no spaces." %>
+          <%= f.input :email, hint: 'Your email will never be shown to the public.' %>         
           <%= f.input :password, hint: "Must be at least 8 characters." %>    
 
       </div>

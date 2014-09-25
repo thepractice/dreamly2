@@ -269,6 +269,7 @@ body{
 .dashboard-avatar-container {
   width: 100%;
   padding: 0;
+  margin-bottom: 15px;
 }
 
 .dashboard-avatar {
@@ -352,7 +353,6 @@ img{
   /* border: 1px solid black; */
   border-radius: 10px;
   float: left;
-  margin-top: 15px;
 }
 
 .panel-default > .panel-heading {
@@ -392,6 +392,10 @@ img{
   color: $darkBlue;
 }
 
+.affix {
+  width: 263px;
+}
+
 /* User Index */
 
 .user-index-div {
@@ -419,7 +423,7 @@ img{
 
 .user-index-stats{
   clear: both;
-  padding: 10px;
+  padding: 0 10px 10px 10px;
   .stat-header{
     color: #999999;
     font-size: 15px;
@@ -437,19 +441,19 @@ img{
 
 a:nth-child(3n - 2) {
   .user-index-topper {
-    background: $lightYellow;
+
   }
 }
 
 a:nth-child(3n - 1) {
   .user-index-topper {
-    background: #F4B0AD;
+
   }
 }
 
 a:nth-child(3n + 0) {
   .user-index-topper {
-    background: #A9FF8D;
+
   }
 }
 
@@ -970,6 +974,16 @@ a:hover {
   color: white;
   text-decoration: none;
 }
+
+.btn-square-small {
+
+  font-size: 14px;
+  line-height: 1.33;
+  border-radius: 0;
+  color: white;
+  text-decoration: none;
+}
+
 
 #signin-button {
   font-size: 15px;

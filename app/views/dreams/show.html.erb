@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class ="col-md-3">
 			<div id="profile-left-sidebar">
-				<div data-spy="affix" data-offset-top="245">
+				<div data-spy="affix" data-offset-top="23">
 					<div id="profile-graph" class="white-panel">
 					</div>
 					<%= render 'dreams/graph_single' %>
@@ -58,12 +58,12 @@
 					</div>
 					<span class="body"><%= simple_format(@dream.body) %></span>
 					<% if current_user == @dream.user %>
-						<%= link_to(edit_dream_path(@dream.id), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-edit-dream', :class => 'btn btn-primary btn-square', :id => "edit-dream-button"}) do %>
+						<%= link_to(edit_dream_path(@dream.id), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-edit-dream', :class => 'btn btn-primary btn-square-small', :id => "edit-dream-button"}) do %>
 							<%= icon('pencil-square-o') %>
 							Edit
 						<% end %>
 
-						<%= link_to(@dream, method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger btn-square') do %>
+						<%= link_to(@dream, method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger btn-square-small') do %>
 							<%= icon('trash-o') %>
 							Delete
 						<% end %>

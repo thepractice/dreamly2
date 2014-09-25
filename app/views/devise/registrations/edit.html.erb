@@ -13,6 +13,7 @@
           </div>
           <%= devise_error_messages! %>
           <%= f.input :name, required: false, hint: 'The long version of your name.', input_html: { value: current_user.name } %>
+          <%= f.input :username, required: false, hint: "Your @username must be unique and have no spaces.", input_html: { value: current_user.username } %>
           <%= f.input :email, hint: 'Your email will never be shown to the public.', input_html: { value: current_user.email } %>
           <%= f.input :password, label: "New password", hint: "Leave blank if you don't want to change it. Must be at least 8 characters." %>
 
