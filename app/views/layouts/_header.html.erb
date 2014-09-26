@@ -1,98 +1,40 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">
-		<!-- <%= link_to image_tag("logo.png", alt: "Just Had a Dream"), root_path, id: "logo" %> -->
-		<div id="site_header">
-			<% if user_signed_in? %>
-				<%= link_to(current_user) do %>
-					<span>just had a dream</span>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-jhad">
+        <li class="active"><a href="#">Me</a></li>
+        <li><a href="#">All dreams</a></li>
+        <li><a href="#">Dreamers</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+				<%= form_tag search_path, class: "navbar-form search-form", id: "header-search", method: "get", role: "search" do %>					
+							<%= text_field_tag :query, params[:query], class: "form-control", id: "search-bar", placeholder: "Search" %>
+									<%= button_tag class: "btn", id: "search-button" do %>
+							<%= icon('search') %>
+						<% end %>				
+				<% end %>					
+
+
+				<%= link_to(new_dream_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', :class => 'btn btn-primary btn-square', :id => "add-dream-button"}) do %>
+					<%= icon('plus') %>
+					dream
 				<% end %>
-			<% else %>
-				<%= link_to(root_path) do %>
-					<span>just had a dream</span>
-				<% end %>
-			<% end %>
 				
-		</div>
-		<nav>
+				<div class="btn-group">
+					<button type="button" class="btn btn-default navbar-btn btn-lg btn-alt dropdown-toggle" data-toggle="dropdown">
 
-			<ul class="nav navbar-nav navbar-right">
-				<% if user_signed_in? %>
-					<!-- <li>Logged in as <strong><%= current_user.username %></strong></li> -->
-					<!-- <li><%= link_to "Post dream", new_dream_path %></li> -->
-
-					<%= form_tag search_path, class: "navbar-form search-form", id: "header-search", method: "get", role: "search" do %>					
-								<%= text_field_tag :query, params[:query], class: "form-control", id: "search-bar", placeholder: "Search" %>
-										<%= button_tag class: "btn", id: "search-button" do %>
-								<%= icon('search') %>
-							<% end %>				
-					<% end %>					
-
-
-					<%= link_to(new_dream_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', :class => 'btn btn-primary btn-square', :id => "add-dream-button"}) do %>
-						<%= icon('plus') %>
-						dream
-					<% end %>
-					
-					<div class="btn-group">
-						<button type="button" class="btn btn-default navbar-btn btn-lg btn-alt dropdown-toggle" data-toggle="dropdown">
-
-							<%= icon('bars', '', id: 'settings-button') %>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><%= link_to "My dreams", current_user %></li>
-							<li><%= link_to "All dreams", dreams_path %></li>
-							<li><%= link_to "Dreamers",	 users_path %></li>
-					    <li class="divider"></li>
-					    <li><%= link_to "Edit account", edit_user_registration_path %></li>
-					    <li><%= link_to "Help",		 help_path %></li>				  
-					    <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
-						</ul>
-					</div>
-
-				<% else %>
-
-					<%= form_tag search_path, class: "navbar-form search-form", id: "header-search", method: "get", role: "search" do %>					
-								<%= text_field_tag :query, params[:query], class: "form-control", id: "search-bar", placeholder: "Search" %>
-										<%= button_tag class: "btn", id: "search-button" do %>
-								<%= icon('search') %>
-							<% end %>				
-					<% end %>						
-					
-					<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login', :class => "btn btn-primary btn-square", :id => "signin-button"}) do %>
-
-						<%= icon('user') %>
-
-						Sign in
-					<% end %>
-					
-					<div class="btn-group">
-						<button type="button" class="btn btn-default navbar-btn btn-lg btn-alt dropdown-toggle" data-toggle="dropdown">
-
-							<%= icon('bars', '', id: 'settings-button') %>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><%= link_to "All dreams", dreams_path %></li>
-
-							<li><%= link_to "Dreamers",	 users_path %></li>
-					    <li><%= link_to "Help",		 help_path %></li>
-						</ul>
-					</div>				
-
-<!--
-					<li><%= link_to "Home",		 root_path %></li>
-					<li><%= link_to "Users",	 users_path %></li>
-					<li><%= link_to "Help",		 help_path %></li>
-					<li><%= link_to "Sign up", new_user_registration_path %></li>
-					<li><%= link_to "Login", new_user_session_path, :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login' %></li>
-					<li><%= link_to "Login with Twitter", user_omniauth_authorize_path(:twitter) %></li>
-	-->
-				<% end %>
-			</ul>
-		</nav>
-		<div class="cloud_header">
-			<%= image_tag("cloud.png") %>
-		</div>
-	</div>
+						<%= icon('bars', '', id: 'settings-button') %>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+				    <li><%= link_to "Edit account", edit_user_registration_path %></li>
+				    <li><%= link_to "Help",		 help_path %></li>				  
+				    <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+					</ul>
+				</div>
+      </ul>
+    </div><!-- /.navbar-collapse -->
 	
-
+	</div>
 </nav>
