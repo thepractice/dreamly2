@@ -3,10 +3,14 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-jhad">
-        <li class="active"><a href="#">Me</a></li>
-        <li><a href="#">All dreams</a></li>
-        <li><a href="#">Dreamers</a></li>
+        <%= nav_link "Me", "user", current_user %>
+        <%= nav_link "All dreams", "rocket", dreams_path %>
+        <%= nav_link "Dreamers", "users", users_path %>
       </ul>
+
+			<div class="cloud_header">
+				<%= image_tag("cloud.png") %>
+			</div>      
 
       <ul class="nav navbar-nav navbar-right">
 				<%= form_tag search_path, class: "navbar-form search-form", id: "header-search", method: "get", role: "search" do %>					
@@ -23,7 +27,7 @@
 				<% end %>
 				
 				<div class="btn-group">
-					<button type="button" class="btn btn-default navbar-btn btn-lg btn-alt dropdown-toggle" data-toggle="dropdown">
+					<button type="button" class="btn btn-default navbar-btn btn-lg btn-alt dropdown-toggle btn-bars" data-toggle="dropdown">
 
 						<%= icon('bars', '', id: 'settings-button') %>
 					</button>
@@ -35,6 +39,6 @@
 				</div>
       </ul>
     </div><!-- /.navbar-collapse -->
-	
+
 	</div>
 </nav>

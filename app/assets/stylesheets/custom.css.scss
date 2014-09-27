@@ -37,15 +37,54 @@ body{
 
 /* header */
 
-.navbar-jhad .active a {
+.navbar-jhad .current a {
   background-color: transparent !important;
-  border-bottom: 1px solid #3071a9;
+  height: 46px;
+  border-bottom: 4px solid $mediumBlue;
+}
+
+
+
+.navbar-jhad {
+  li {
+    height: 46px;
+    overflow: hidden;
+    a {
+      display: block;
+      position: relative;
+      height: 50px;
+      padding-top: 12px;
+      padding-bottom: 16px;
+      color: $darkGray2 !important;
+      border-bottom: 4px solid $mediumBlue;
+
+      transition: all .15s ease-in-out;
+      span {
+        position: relative;
+        top: -2px;
+      }
+    }
+    a:hover {
+      height: 46px;
+      border-bottom: 4px solid $mediumBlue;
+      color: #3071a9 !important;
+
+    }
+    .fa {
+      font-size: 20px;
+    }
+  }
+}
+
+.navbar-nav {
+  height: 46px;
 }
 
 .navbar-default {
   background-color: white;
   border: 0;
   box-shadow: 0 2px 4px -2px rgba(51,51,51,0.25);
+  min-height: 46px;
   height: 46px;
 }
 
@@ -85,8 +124,17 @@ body{
 }
 
 #add-dream-button {
-  font-size: 19px;
+  position: relative;
+  top: -1px;
+  font-size: 17px;
 
+}
+
+.btn-bars {
+  height: 46px;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: -2px;
 }
 
 .navbar-nav.navbar-right:last-child {
@@ -100,18 +148,20 @@ body{
 #header-search {
   display: inline-block;
   position: relative;
+  top: -1px;
 }
 
 
 #search-bar {
   border-radius: 20px;
   width: 221px;
+  height: 32px;
   border-right: none;
   background: #66757f;
   color: white;
   opacity: 0.6;
   transition: all .2s ease-in-out;
-
+  font-size: 12px;
 }
 
 

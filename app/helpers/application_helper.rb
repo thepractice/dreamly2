@@ -10,6 +10,15 @@ module ApplicationHelper
 		end
 	end
 
+	# Produces 'current' class for nav links.
+	def nav_link(link_text, icon_text, link_path)
+		class_name = current_page?(link_path) ? 'current' : ''
+
+		content_tag(:li, :class => class_name) do
+			link_to "#{icon(icon_text)} <span>#{link_text}</span>".html_safe, link_path
+		end
+	end
+
 	# Returns the impression param in text
 	def impression_status
 		if params[:impression] == '2'
