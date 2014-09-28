@@ -5,7 +5,11 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		@user = User.find(params[:id])
+		if params[:id].nil?
+			@user = current_user
+		else
+			@user = User.find(params[:id])
+		end
 #		@dreams = @user.dreams.regular.paginate(page: params[:page])
 
 		if params[:query].present?

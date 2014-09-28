@@ -5,7 +5,7 @@
 			about <strong><%= params[:query] %></strong>
 			<% end %>
 		</h3>
-		<div id="full-screen-icon" rel="tooltip" data-toggle="tooltip" title="Minimize">
+		<div id="full-screen-icon" rel="tooltip" data-toggle="tooltip" data-container="body" title="Minimize">
 			<%= link_to(user_path(@user.id, query: params[:query], impression: params[:impression])) do %>
 				<%= icon('compress') %>
 			<% end %>
@@ -57,7 +57,7 @@
 			<div data-spy="affix" data-offset-top="240">
 				<% if @user.dreams.any? %>
 					<div id="profile-graph" class="white-panel">
-						<%= link_to(user_path(@user.id, graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", title: "Fullscreen"}) do %>
+						<%= link_to(user_path(@user.id, graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", "data-container" => "body", title: "Fullscreen"}) do %>
 							<%= icon('arrows-alt') %>
 						<% end %>
 					</div>

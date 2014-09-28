@@ -9,7 +9,7 @@
 			about <strong><%= params[:query] %></strong>
 			<% end %>
 		</h3>
-		<%= link_to search_path(query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", title: "Minimize"} do %>
+		<%= link_to search_path(query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", "data-container" => "body", title: "Minimize"} do %>
 			<%= icon('compress') %>
 		<% end %>	
 	</div>
@@ -24,7 +24,7 @@
 			<div data-spy="affix" data-offset-top="23">
 				<% if @dreams.any? %>
 					<div id="profile-graph" class="white-panel">
-						<%= link_to search_path(graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", title: "Fullscreen"} do %>
+						<%= link_to search_path(graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", "data-container" => "body", title: "Fullscreen"} do %>
 							<%= icon('arrows-alt') %>
 						<% end %>						
 					</div>

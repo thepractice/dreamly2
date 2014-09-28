@@ -1,9 +1,12 @@
 Jhad::Application.routes.draw do
+
+  root 'static_pages#home'
+
   devise_for :users, path_names: { sign_in: "login", sign_out: "logout" },
                      controllers: { omniauth_callbacks: "omniauth_callbacks", sessions: 'sessions', registrations: 'registrations' }
   resources :users
   resources :dreams
-  root 'static_pages#home'
+
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'

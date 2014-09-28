@@ -86,6 +86,9 @@ body{
   box-shadow: 0 2px 4px -2px rgba(51,51,51,0.25);
   min-height: 46px;
   height: 46px;
+  .container {
+    height: 46px;
+  }
 }
 
 #site_header {
@@ -106,10 +109,17 @@ body{
 
 .cloud_header {
   display: block;
-  width: 50px;
-  line-height: 53px;
+  position: relative;
+  top: -46px;
+  width: 198px;
+  line-height: 46px;
   margin: 0 auto;
   vertical-align: middle;
+  font-weight: 700;
+  font-size: 25px;
+  img {
+    border-radius: 0;
+  }
 }
 
 .navbar-btn {
@@ -212,7 +222,7 @@ body{
 
 #home-top-panel {
   background: $lightYellow;
-  margin-top: -7px;
+  margin-top: -14px;
   height: 228px;
 }
 
@@ -409,6 +419,7 @@ img{
   /* border: 1px solid black; */
   border-radius: 10px;
   float: left;
+  margin-top: 5px;
 }
 
 .panel-default > .panel-heading {
@@ -1043,6 +1054,8 @@ a:hover {
 
 #signin-button {
   font-size: 15px;
+  position: relative;
+  top: -1px;
 }
 
 .btn-gray {
@@ -1101,4 +1114,3 @@ a:hover {
 .btn .fa {
   margin-right: 7px;
 }
-
