@@ -22,16 +22,32 @@
 			<div class="dashboard white-panel dashboard-avatar-container">
 				<div class ="profile-upper-background">
 				</div>
-				<div class="dashboard-avatar">
+				
 <!--					<%= gravatar_for @user %>	-->
 					<% if current_user == @user %>
 						<%= link_to edit_user_registration_path do %>
-							<%= image_tag @user.avatar.url(:medium), class: "img-center" %>
+							<% if @user.avatar_file_name.nil? %>
+								<div class="dashboard-avatar-default">
+									<p><%= @user.username.first.upcase %></p>
+								</div>
+							<% else %>
+								<div class="dashboard-avatar">
+									<%= image_tag @user.avatar.url(:medium), class: "img-center" %>
+								</div>
+							<% end %>
 						<% end %>
 					<% else %>
-						<%= image_tag @user.avatar.url(:medium), class: "img-center" %>
+						<% if @user.avatar_file_name.nil? %>
+							<div class="dashboard-avatar-default">
+								<p><%= @user.username.first.upcase %></p>
+							</div>
+						<% else %>
+							<div class="dashboard-avatar">
+								<%= image_tag @user.avatar.url(:medium), class: "img-center" %>
+							</div>
+						<% end %>
 					<% end %>
-				</div>
+				
 				<div class="dashboard-usernames black-links">
 					<div class="dashboard-usernames-name">
 						<%= link_to @user.name, @user %>

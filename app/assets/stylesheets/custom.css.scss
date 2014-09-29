@@ -346,7 +346,28 @@ body{
   img {
     border: 3px solid white;
   }
+}
 
+.dashboard-avatar-default {
+  display: inline-block;
+  position: relative;
+  left: 8px;
+  top: -26px;
+  height: 76px;
+  width: 76px;
+  background: $lightRed;
+  color: white;
+  font-size: 60px;
+  line-height: 40px;
+  text-align: center;
+  margin-bottom: 7px;
+  border-radius: 5px;
+  border: 3px solid white;
+  p {
+    color: white;
+    position: relative;
+    top: 12px;
+  }
 }
 
 .profile-upper-background {
@@ -363,11 +384,27 @@ img{
 
 
 .user-index-avatar{
-
   float: left;
+  height: 70px;
+  width: 70px;
   img{
-    border-radius: 10px;
+    border-radius: 5px;
+  }
+}
 
+.user-index-avatar-default {
+  height: 70px;
+  width: 70px;
+  display: inline-block;
+  background: $lightRed;
+  font-size: 60px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 5px;
+  p {
+    color: white;
+    position: relative;
+    top: 12px
   }
 }
 
@@ -480,7 +517,7 @@ img{
 }
 
 .index-usernames-name {
-  color: $offBlack;
+  color: $darkGray2;
   font-size: 20px;
   a{
     color: $offBlack;
@@ -503,7 +540,7 @@ img{
 
 .user-index-topper {
   overflow: hidden;
-  padding: 10px;
+  padding: 10px 10px 5px 10px;
 }
 
 a:nth-child(3n - 2) {
@@ -830,6 +867,10 @@ body {
   margin-bottom: 10px;
   transition: background 0.25s;
   position: relative;
+  overflow: auto;
+  img {
+   border-radius: 5px;
+  }
 }
 
 
@@ -853,12 +894,17 @@ body {
 }
 */
 
+
 .dream-left{
   float: left;
+  display: block;
+  height: 100%;
   width: 50px;
   padding-top: 6px;
+  margin-right: 10px;
+  margin-left: 5px;
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   color: #999999;
   .year {
     font-size: 14px;
@@ -866,7 +912,7 @@ body {
 }
 
 .dream-right{
-  margin-left: 50px;
+  margin-left: 65px;
   p {
     color: #5F5F5F
   }
@@ -877,7 +923,21 @@ body {
 
 }
 
-
+.dream-avatar-default {
+  height: 48px;
+  width: 48px;
+  display: inline-block;
+  background: $lightRed;
+  font-size: 38px;
+  line-height: 38px;
+  text-align: center;
+  border-radius: 5px;
+  p {
+    color: white;
+    position: relative;
+    top: 2px
+  }
+}
 
 .dream-right-top1 {
   display: inline-block;
@@ -1049,6 +1109,7 @@ a:hover {
   border-radius: 0;
   color: white;
   text-decoration: none;
+  padding: 5px 10px 5px 10px;
 }
 
 

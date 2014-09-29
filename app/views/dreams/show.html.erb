@@ -21,6 +21,13 @@
 		<div class="col-md-9">
 			<div class="dream white-panel" id="indiv-dream">
 				<div class="dream-left">
+					<% if @dream.user.avatar_file_name.nil? %>
+						<div class="dream-avatar-default">
+							<p><%= @dream.user.username.first.upcase %></p>
+						</div>						
+					<% else %>
+						<%= image_tag @dream.user.avatar.url(:thumb) %>
+					<% end %>					
 					<span><%= @dream.dreamed_on.strftime("%^b") %></span><br />
 					<span><%= @dream.dreamed_on.strftime("%d") %></span><br/>
 					<% if @dream.dreamed_on.year != Time.now.year %>

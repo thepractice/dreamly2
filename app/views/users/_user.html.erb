@@ -1,9 +1,15 @@
 <%= link_to(user) do %>
 	<div id="users-dashboard" class="dashboard white-panel highlighter user-index-div">
 		<div class="user-index-topper">
-			<div class="user-index-avatar">
-				<%= image_tag user.avatar.url(:medium) %>
-			</div>
+			<% if user.avatar_file_name.nil? %>
+				<div class="user-index-avatar-default">
+					<p><%= user.username.first.upcase %></p>
+				</div>			
+			<% else %>
+				<div class="user-index-avatar">
+					<%= image_tag user.avatar.url(:medium) %>
+				</div>
+			<% end %>
 			<div class="dashboard-usernames">
 				<div class="index-usernames-name">
 					<%= user.name %>
