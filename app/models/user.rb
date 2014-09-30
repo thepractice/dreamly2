@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
 
   serialize :word_freq_public, Hash
 
-
   has_many :dreams, dependent: :destroy
 
   has_attached_file :avatar, :styles => { :large => "200x200>", :medium => "70x70>", :thumb => "48x48>" }, :default_url => "/images/:style/missing.jpeg"
@@ -23,6 +22,20 @@ class User < ActiveRecord::Base
 
   include PgSearch
   multisearchable against: [:username, :name, :email, :graph_public]  
+
+  alias :devise_valid_password? :valid_password?
+
+  # Allows for old jhad passwords
+  def valid_password?(password)
+    begin
+      super(password)
+    rescue BCrypt::Errors::InvalidHash
+      return false unless Digest::SHA256.hexdigest(password) == encrypted_password
+      logger.info "User #{email} is using the old password hashing method, updating attribute."
+      self.password = password
+      true
+    end
+  end
 
   # Method for Devise to use either username or email to login.
   # This is the correct method you override with the code below:
