@@ -949,6 +949,9 @@ body {
   margin-top: 5px;
   font-size: 18px;
   padding-right: 10px;
+  .fa {
+    color: $darkGray;
+  }
 }
 
 .big-dream {
@@ -1174,8 +1177,4 @@ a:hover {
 
 .btn .fa {
   margin-right: 7px;
-}
-
-body {
-  background-image: url(/assets/geometry2.png);
 }
