@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   serialize :word_freq_public, Hash
 
   has_many :dreams, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   has_attached_file :avatar, :styles => { :large => "200x200>", :medium => "70x70>", :thumb => "48x48>" }, :default_url => "/images/:style/missing.jpeg"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/

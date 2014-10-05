@@ -78,6 +78,25 @@
 					<% end %> 
 				</div>
 			</div>
+			<div class="comment-box">
+				<h3>Comment:</h3>
+				<% if user_signed_in? %>
+				<!-- the simple_form_for call uses an array which builds a nested route, e.g. /dreams/1/comments' -->
+					<%= simple_form_for([@dream, @dream.comments.build]) do |f| %>	
+						<%= f.input :body %>
+						<%= f.submit %>
+					<% end %>
+				<% end %>
+			</div>
+			<div class="comment-listing">
+				<h3>Comments</h3>
+				<%= @dream.comments.length %>
+				<%= @dream.comments.each do |comment| %>
+					<%= User.find(1) %>
+					<%= User.find(1) %>
+					<%= comment.body %>
+				<% end %>
+			</div>		
 		</div>
 	</div>
 
