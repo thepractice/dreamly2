@@ -1,0 +1,10 @@
+<%= simple_form_for([@dream, @comment]) do |f| %>	
+	<%= f.input :body %>
+	<button type="submit" class="btn btn-primary btn-square">
+    Save changes
+  </button>
+<% end %>
+
+
+
+ <%= f.input :name, required: false, hint: 'The long version of your name.', input_html: { value: current_user.name } %>

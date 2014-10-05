@@ -1178,3 +1178,15 @@ a:hover {
 .btn .fa {
   margin-right: 7px;
 }
+
+/* Comments */
+
+.new_comment {
+  label {
+    display: none;
+  }
+  textarea {
+    width: 100%;
+    height: 106px;
+  }
+}
