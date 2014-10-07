@@ -40,6 +40,17 @@ jQuery ->
 	$('#modal-window').on 'hidden.bs.modal', (e) ->
 		$("#dream_error_explanation_wrapper").hide()
 
+# Comment form
+
+	$("form.comment-form").on "ajax:success", (event, data, status, xhr) ->
+		window.location.pathname = "/dreams/#{data.id}"
+
+	$("form.comment-form").on "ajax:error", (event, xhr, status, error) ->
+		errors = jQuery.parseJSON(xhr.responseText)
+		$('.comment_error_explanation').empty()
+		for e in errors
+			$('.comment_error_explanation').append(e)
+		$('.comment_error_explanation_wrapper').show()
 
 # Ajax edit dream form
 

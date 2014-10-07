@@ -78,21 +78,40 @@
 					<% end %> 
 				</div>
 			</div>
+
 			<div class="comment-box">
 				<% if user_signed_in? %>
 				<!-- the simple_form_for call uses an array which builds a nested route, e.g. /dreams/1/comments' -->
-					<%= simple_form_for([@dream, @dream.comments.build]) do |f| %>	
+					<%= simple_form_for([@dream, @dream.comments.build], remote: true, html: { "data-type" => :json, class: "comment-form" }) do |f| %>	
+
+	          <div class="comment_error_explanation_wrapper alert alert-danger" style="display:none;">
+	            <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	            <div class="comment_error_explanation"></div>
+	          </div>
+
 						<%= f.input :body, label: 'hey', placeholder: 'Add your comment.' %>
+            <div class="btn-group btn-toggle" data-toggle="buttons">
+              <label class="btn btn-default active">
+                <input type="radio" name="comment[private]" value="false" checked> Public
+              </label>
+              <label class="btn btn-default">
+                <input type="radio" name="comment[private]" value="true"> Private
+              </label>                
+            </div>
+
 						<button type="submit" class="btn btn-primary btn-square">
+							<%= icon('comments') %>
 				      Post Comment
 				    </button>
+
 					<% end %>
 				<% end %>
 			</div>
 			<div class="comment-listing">
-				<h3>Comments (<%= @dream.comments[0...-1].length %>)</h3>
-	
-					<%= render partial: "comments/comment", collection: @dream.comments[0...-1] %>
+				<% if comment_count(@dream) > 0 %>
+					<h3><%= icon('comments') %> Comments (<%= comment_count(@dream) %>)</h3>
+				<% end %>
+					<%= render partial: "comments/comment", collection: @dream.comments.regular %>
 	
 			</div>		
 		</div>

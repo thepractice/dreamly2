@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141004231414) do
+ActiveRecord::Schema.define(version: 20141006234745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
-    t.boolean  "private"
+    t.boolean  "private",    default: false
     t.text     "body"
     t.integer  "dream_id"
     t.integer  "user_id"

@@ -44,6 +44,10 @@
 					</div>
 				</div>
 				<span class="body"><%= simple_format(truncate(dream.body, length: 500, separator: ' ')) %></span>
+				<% if comment_count(dream) > 0 %>
+					<%= icon('comments') %>
+					<%= pluralize(comment_count(dream), 'comment') %>
+				<% end %>
 			</div>
 			<%= link_to "hey", dream, class: "block-link" %>
 		</div>
