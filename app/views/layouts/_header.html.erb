@@ -10,6 +10,11 @@
         <% end %>
         <%= nav_link "All dreams", "rocket", dreams_path %>
         <%= nav_link "Dreamers", "users", users_path %>
+        <% if user_signed_in? && current_user.notifications.where(seen: false).length > 0 %>
+        	<%= link_to notifications_path do %>
+        		<span id="notify-badge" class="badge"><%= current_user.notifications.where(seen: false).length %></span>
+        	<% end %>
+        <% end %>
       </ul>     
 
       <ul class="nav navbar-nav navbar-right">

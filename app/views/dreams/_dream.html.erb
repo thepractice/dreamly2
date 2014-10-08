@@ -47,6 +47,11 @@
 				<% if comment_count(dream) > 0 %>
 					<%= icon('comments') %>
 					<%= pluralize(comment_count(dream), 'comment') %>
+
+						<% if dream.notifications.where(user: current_user, seen: false).present? %>
+							(<%= dream.notifications.where(user: current_user, seen: false).length %> new)
+						<% end %>				
+
 				<% end %>
 			</div>
 			<%= link_to "hey", dream, class: "block-link" %>

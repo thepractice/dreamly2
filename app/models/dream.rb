@@ -6,6 +6,7 @@ class Dream < ActiveRecord::Base
 
 	belongs_to :user, counter_cache: :dream_count
 	has_many :comments, dependent: :destroy
+	has_many :notifications, dependent: :destroy
 
 	validates :body, presence: true
 	validates :user_id, presence: true

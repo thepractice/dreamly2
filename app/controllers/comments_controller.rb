@@ -13,8 +13,19 @@ class CommentsController < ApplicationController
 				format.json { render json: @comment.errors.full_messages, status: :unprocessable_entity }
 			end
 		end
-		#@comment.save!
-		#redirect_to dream_path(@dream)
+
+		# Create notifications
+		@users = [@dream.user]
+		@dream.comments.each do |comment|
+			if comment.user != @comment.user
+				@users.push(comment.user)
+			end
+		end
+		@users.uniq!
+		@users.each do |user|
+			Notification.create(dream: @dream, user: user)
+		end
+
 	end
 
 	def edit

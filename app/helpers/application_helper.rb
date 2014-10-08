@@ -81,5 +81,4 @@ module ApplicationHelper
 		@comment_counter
 	end
 
-
 end
