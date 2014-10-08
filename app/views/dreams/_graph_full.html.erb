@@ -21,25 +21,28 @@ var ed_nodes = graph_json.nodes;
 var ed_links = graph_json.links;
 
 var total_value = 0;
+var max_value = 0;
 
 for(var i = 0; i < ed_nodes.length; i++) {
 	total_value += ed_nodes[i].value;
+  max_value = Math.max(max_value, ed_nodes[i].value)
 }
 
 //function node_radius(d) { return (d.value / total_value)*100 };
-function node_radius(d) { return (d.value / total_value) *100 + 12 };
+function node_radius(d) { return Math.max(12,Math.pow(d.value / max_value, 2) * 50) };
 
 function node_url(d) { return "<%= dreams_path %>".concat("?query=").concat(d.name)}
 
+var color = d3.scale.category20();
 
 var k = Math.sqrt(ed_nodes.length / (width * height ));
 
 var force = d3.layout.force()
-    .gravity(100 * k)
+    .gravity(400 * k)
  /*   .distance(100) */
-    .charge(-50 / k)
+    .charge(-70 / k)
     .size([width, height])
-    .linkDistance(0)
+ /*   .linkDistance(0)  */
     .nodes(ed_nodes)
     .links(ed_links)
     .start();
@@ -55,8 +58,11 @@ var force = d3.layout.force()
       .attr("class", "node")
       .call(force.drag);
 
-  node.append("circle")
-  	.attr("r", node_radius)
+  node.append("rect")
+  	.attr("width", node_radius)
+    .attr("height", node_radius)
+    .style("fill", function (d,i) { return 'white'; })
+
   	.attr("opacity", 1);
 
   node.append("svg:a")
@@ -66,6 +72,7 @@ var force = d3.layout.force()
       .attr("dy", ".35em")
       .attr("text-anchor", "middle")
       .attr("font-size", node_radius)
+      .attr("fill", function (d,i) { return color(i); })      
       .text(function(d) { return d.name });
 
 /*

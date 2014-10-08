@@ -1026,10 +1026,13 @@ body {
 
 .link {
   stroke: #ccc;
+  stroke-width: 3px;
 }
 
+
+
 .node circle {
-  fill: $lightBlue;
+ 
   stroke: #fff;
   stroke-width: 1.5px;
 }
