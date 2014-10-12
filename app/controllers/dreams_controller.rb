@@ -2,8 +2,6 @@ class DreamsController < ApplicationController
 	before_filter :authenticate_user!, except: [:show, :index]	# Method provided by Devise
 	before_filter :correct_user, only: [:edit, :update, :destroy]
 
-	after_filter :update_notifications, only: :show
-
 	def index
 		
 		if params[:query].present?
@@ -110,6 +108,14 @@ class DreamsController < ApplicationController
 
 	def show
 		@dream = Dream.find(params[:id])
+
+		# Mark as 'seen' all notifications on dream
+		if user_signed_in?
+			@dream.notifications.where(user: current_user, seen: false).each do |notification|
+				notification.update_attribute(:seen, true)
+			end
+		end
+
 
 	# Graph logic
 
@@ -222,14 +228,6 @@ class DreamsController < ApplicationController
 		def correct_user
 			@dream = current_user.dreams.find_by(id: params[:id])
 			redirect_to root_url if @dream.nil?
-		end
-
-		def update_notifications
-			# Mark as 'seen' all notifications on dream
-			@dream = Dream.find(params[:id])
-			@dream.notifications.where(user: current_user, seen: false).each do |notification|
-				notification.update_attribute(:seen, true)
-			end
 		end
 		
 end

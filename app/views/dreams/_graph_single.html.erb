@@ -29,7 +29,7 @@ for(var i = 0; i < ed_nodes.length; i++) {
 function node_radius(d) { return (d.value / total_value) *60 + 10 };
 
 function node_url(d) { return "<%= dreams_path %>".concat("?query=").concat(d.name)}
-
+var color = d3.scale.category20();
 
 var k = Math.sqrt(ed_nodes.length / (width * height ));
 
@@ -47,18 +47,28 @@ var force = d3.layout.force()
       .attr("class", "node")
       .call(force.drag);
 
-  node.append("circle")
-  	.attr("r", node_radius)
-  	.attr("opacity", 1);
-
-  node.append("svg:a")
+  var text = node.append("svg:a")
     .attr("xlink:href", node_url)
       .append("text")
       .attr("x", 0)
       .attr("dy", ".35em")
       .attr("text-anchor", "middle")
       .attr("font-size", node_radius)
+      .attr("fill", function (d,i) { return color(i); })
       .text(function(d) { return d.name });
+
+  var bbox_array = [];
+  text.each(function (d,i) {
+    bbox_array.push(this.getBBox());
+  });      
+
+  node.insert("rect", "a")
+    .attr("x", function (d,i) { return bbox_array[i].x })
+    .attr("y", function (d,i) { return bbox_array[i].y })
+    .attr("width", function (d,i) { return bbox_array[i].width })
+    .attr("height", function (d,i) { return bbox_array[i].height })
+    .style("fill", function (d,i) { return 'white'; })
+    .attr("opacity", 1);
 
 /*
   node.append("text")

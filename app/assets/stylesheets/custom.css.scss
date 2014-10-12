@@ -1030,7 +1030,6 @@ body {
 }
 
 
-
 .node circle {
  
   stroke: #fff;
@@ -1038,9 +1037,12 @@ body {
 }
 
 .node text:hover {
-  fill: #5E3D3C;
+
   font-weight: 700;
+  text-decoration: underline;
 }
+
+
 
 #full-screen-icon {
   position: absolute;

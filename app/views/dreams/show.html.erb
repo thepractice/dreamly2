@@ -108,8 +108,8 @@
 				<% end %>
 			</div>
 			<div class="comment-listing">
-				<% if comment_count(@dream) > -1 %>
-					<h3><%= icon('comments') %> Comments (<%= comment_count(@dream)-1 %>)</h3>
+				<% if comment_count(@dream) > 0 %>
+					<h3><%= icon('comments') %> Comments (<%= comment_count(@dream) %>)</h3>
 				<% end %>
 					<%= render partial: "comments/comment", collection: @dream.comments.regular %>
 	

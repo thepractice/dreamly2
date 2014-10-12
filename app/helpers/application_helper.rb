@@ -78,6 +78,9 @@ module ApplicationHelper
 				@comment_counter = @comment_counter + 1
 			end
 		end
+		if user_signed_in? && current_page?(dream)
+			@comment_counter = @comment_counter - 1
+		end
 		@comment_counter
 	end
 
