@@ -1,3 +1,4 @@
+<!--
 <%= link_to(user) do %>
 	<div id="users-dashboard" class="dashboard white-panel highlighter user-index-div">
 		<div class="user-index-topper">
@@ -34,3 +35,84 @@
 
 	</div>
 <% end %>
+-->
+	
+
+	
+			<div id="users-dashboard" class="dashboard white-panel dashboard-avatar-container">
+				<div class ="profile-upper-background">
+				</div>
+				
+
+					<% if current_user == user %>
+						<%= link_to edit_user_registration_path do %>
+							<% if user.avatar_file_name.nil? %>
+								<div class="dashboard-avatar-default">
+									<p><%= user.username.first.upcase %></p>
+								</div>
+							<% else %>
+								<div class="dashboard-avatar">
+									<%= image_tag user.avatar.url(:medium), class: "img-center" %>
+								</div>
+							<% end %>
+						<% end %>
+					<% else %>
+						<% if user.avatar_file_name.nil? %>
+							<div class="dashboard-avatar-default">
+								<p><%= user.username.first.upcase %></p>
+							</div>
+						<% else %>
+							<div class="dashboard-avatar">
+								<%= image_tag user.avatar.url(:medium), class: "img-center" %>
+							</div>
+						<% end %>
+					<% end %>
+				
+				<div class="dashboard-usernames black-links">
+					<div class="dashboard-usernames-name">
+						<%= link_to user.name, user %>
+					</div>
+					<div class="dashboard-usernames-handle">
+						<%= link_to "@#{user.username}", user %>
+					</div>
+				</div> 
+				<div class="dashboard-stats">
+					<div class="dashboard-stats-left">
+						<%= link_to user do %>
+							<span class="stat-header">DREAMS</span> <br />
+							<span class="stat-number"><%= user.dreams.count %></span> <br />
+						<% end %>
+						<%= link_to following_user_path(user) do %>
+							<span class="stat-header">FOLLOWING</span> <br />
+							<span id="following" class="stat-number"><%= user.followed_users.count %></span>
+						<% end %>
+					</div>
+					<div class="dashboard-stats-right">
+						<span class="stat-header">COMMENTS</span> <br />
+						<span class="stat-number"><%= user.comments.count %></span> <br />
+						<%= link_to followers_user_path(user) do %>
+							<span class="stat-header">FOLLOWERS</span> <br />
+							<span id="followers" class="stat-number"><%= user.followers.count %></span>
+						<% end %>			
+					</div>
+
+				</div>
+				<% if user_signed_in? %>
+
+					<% unless current_user == user %>
+						<div id="follow_form">
+							<% if current_user.following?(user) %>
+								<%= form_for(current_user.relationships.find_by(followed_id: user.id), html: { method: :delete }) do |f| %>
+									<%= f.submit "Unfollow", class: "btn btn-large btn-follow" %>
+								<% end %>
+							<% else %>
+								<%= form_for(current_user.relationships.build(followed_id: user.id)) do |f| %>
+									<div><%= f.hidden_field :followed_id %></div>
+									<%= f.submit "Follow", class: "btn btn-large btn-primary btn-follow" %>
+								<% end %>
+							<% end %>
+						</div>
+					<% end %>
+
+				<% end %>
+			</div>

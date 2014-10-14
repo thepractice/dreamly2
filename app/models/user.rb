@@ -6,6 +6,10 @@ class User < ActiveRecord::Base
   has_many :dreams, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+  has_many :followed_users, through: :relationships, source: :followed
+  has_many :reverse_relationships, foreign_key: "followed_id", class_name: "Relationship", dependent: :destroy
+  has_many :followers, through: :reverse_relationships, source: :follower
 
   has_attached_file :avatar, :styles => { :large => "200x200>", :medium => "70x70>", :thumb => "48x48>" }, :default_url => "/images/:style/missing.jpeg"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
@@ -119,4 +123,18 @@ class User < ActiveRecord::Base
       super
     end
   end
+
+  # For following methods
+  def following?(other_user)
+    self.relationships.find_by(followed_id: other_user.id)
+  end
+
+  def follow!(other_user)
+    self.relationships.create!(followed_id: other_user.id)
+  end
+
+  def unfollow!(other_user)
+    relationships.find_by(followed_id: other_user.id).destroy
+  end
+
 end

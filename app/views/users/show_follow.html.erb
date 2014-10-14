@@ -1,19 +1,3 @@
-<% if params[:graph] %>
-	<div id="graph-full" class="white-panel">
-		<h3 class="graph-title"><%= @user.name %>'s <%= impression_status() %> dreams
-			<% if params[:query] %>
-			about <strong><%= params[:query] %></strong>
-			<% end %>
-		</h3>
-		<div id="full-screen-icon" rel="tooltip" data-toggle="tooltip" data-container="body" title="Minimize">
-			<%= link_to(user_path(@user.id, query: params[:query], impression: params[:impression])) do %>
-				<%= icon('compress') %>
-			<% end %>
-		</div>		
-	</div>
-	<%= render 'users/graph_full' %>
-<% else %>
-
 <% provide(:title, @user.username) %>
 
 <div class="row">
@@ -79,15 +63,27 @@
 				</div>
 				<%= render 'follow_form' if user_signed_in? %>
 			</div>
-			<div data-spy="affix" data-offset-top="240">
-				<% if @user.dreams.any? %>
-					<div id="profile-graph" class="white-panel">
-						<%= link_to(user_path(@user.id, graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", "data-container" => "body", title: "Fullscreen"}) do %>
-							<%= icon('arrows-alt') %>
+
+			<% if @users.any? %>
+				<div class="raster-avatar-collection">
+					<% @users.each do |user| %>
+						<%= link_to user do %>
+							<% if user.avatar_file_name.nil? %>
+								<div class="dashboard-avatar-default-thumb">
+									<p><%= user.username.first.upcase %></p>
+								</div>
+							<% else %>
+								<div class="dashboard-avatar-thumb">
+									<%= image_tag user.avatar.url(:thumb), class: "img-center" %>
+								</div>
+							<% end %>
 						<% end %>
-					</div>
-					<%= render 'users/graph' %>
-				<% end %>
+					<% end %>
+				</div>
+			<% end %>
+
+			<div data-spy="affix" data-offset-top="240">
+				
 				<div id="links-panel" class="white-panel">
 					<%= link_to "Home", root_path %>
 					<%= link_to "About", about_path %>
@@ -98,38 +94,11 @@
 		</div>
 	</div>
 	<div class="col-md-9">
-		<% if @user.dreams.any? %>
-			<div>
-				<% if params[:query] %>
-					<h3 class="content-title">Results for <strong><%= params[:query] %></strong></h3>
-				<% else %>
-					<h3 class="content-title">Dreams</h3>
-				<% end %>
-				<ul class="nav nav-pills nav-pills-inline" role="tablist">
-					<% if params[:impression] == '2' %>
-						<li><%= link_to "All", user_path(@user.id, query: params[:query]) %></li>
-						<li class="active"><%= link_to "Big", user_path(@user.id, query: params[:query], impression: 2) %></li>
-						<li><%= link_to "Huge", user_path(@user.id, query: params[:query], impression: 3) %></li>
-					<% elsif params[:impression] == '3' %>
-						<li><%= link_to "All", user_path(@user.id, query: params[:query]) %></li>
-						<li><%= link_to "Big", user_path(@user.id, query: params[:query], impression: 2) %></li>
-						<li class="active"><%= link_to "Huge", user_path(@user.id, query: params[:query], impression: 3) %></li>
-					<% else %>
-						<li class="active"><%= link_to "All", user_path(@user.id, query: params[:query]) %></li>
-						<li><%= link_to "Big", user_path(@user.id, query: params[:query], impression: 2) %></li>
-						<li><%= link_to "Huge", user_path(@user.id, query: params[:query], impression: 3) %></li>
-					<% end %>
-				</ul>
-			</div>
-			<ol class="list-unstyled dreams" id ="user-dreams">
-				<%= render @dreams %>
-			</ol>
-			<!-- renderer parameter is needed by will_paginate-boostrap gem -->
-			<%= will_paginate @dreams, renderer: BootstrapPagination::Rails %>
-		<% elsif current_user == @user %>
-			<%= render 'dreams/firstnew' %>
+		<div>
+			<h3 class="content-title title-space"><%= @title %></h3>
+		</div>
+		<% if @users.any? %>
+			<%= render @users %>
 		<% end %>
 	</div>
 </div>
-
-<% end %>

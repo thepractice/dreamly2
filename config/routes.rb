@@ -4,11 +4,16 @@ Jhad::Application.routes.draw do
 
   devise_for :users, path_names: { sign_in: "login", sign_out: "logout" },
                      controllers: { omniauth_callbacks: "omniauth_callbacks", sessions: 'sessions', registrations: 'registrations' }
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :dreams do
     resources :comments
   end
   resources :notifications
+  resources :relationships, only: [:create, :destroy]
 
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'
