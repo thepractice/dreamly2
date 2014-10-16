@@ -398,8 +398,14 @@ body{
 }
 
 .profile-upper-background {
-  height: 66px;
+  height: 46px;
   background: $lightYellow;
+  border-radius: 10px 10px 0 0;
+}
+
+.index-upper-background {
+  height: 46px;
+  background: #C2FFD6;
   border-radius: 10px 10px 0 0;
 }
 

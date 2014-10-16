@@ -1,48 +1,184 @@
-<div id="home-top-panel" class="text-center">
-	<div id="home-header">just had a dream</div>	
-	<div id="home-byline">Your dream journal app</div>
-	<div id="home-byline2">
-		<%= link_to "free | private | social", about_path %>
-	</div>
-	<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login'}) do %>
-		<button type="button" id="signup-button" class="btn btn-primary btn-lg">
-			<span>Sign up!</span>
-		</button>
-	<% end %>
-</div>
+<% if user_signed_in? %>
 
-<div id="home-panel1">
-	<span>Merrily, merrily, merrily,</span><br/>
-	<span>merrily; life is but a dream.</span>
-</div>
-
-<div id="home-panel2">
-	<div id="home-panel2-inner">
-		<div id="panel2-1" class="col-md-3 col-md-offset-2 white-panel">
-			<h3>Automatic word association</h3>
-			<p>Discover hidden trends, patterns and associations in your unconscious mind.</p>
-		</div>	
-		<div id="panel2-2" class="col-md-3 col-md-offset-2 white-panel">
-			<h3>Smartphone friendly</h3>
-			<p>Journal your dreams without getting up from your bed! Just had a dream was designed to be used with your smartphone - no need to download an 'app'.</p>
-			<%= image_tag("iphone.png", alt: "Mobile friendly") %>
+	<% if params[:graph] %>
+		<div id="graph-full" class="white-panel">
+			<h3 class="graph-title"><%= @user.name %>'s <%= impression_status() %> dreams
+				<% if params[:query] %>
+				about <strong><%= params[:query] %></strong>
+				<% end %>
+			</h3>
+			<div id="full-screen-icon" rel="tooltip" data-toggle="tooltip" data-container="body" title="Minimize">
+				<%= link_to(user_path(@user.id, query: params[:query], impression: params[:impression])) do %>
+					<%= icon('compress') %>
+				<% end %>
+			</div>		
 		</div>
-		<%= render 'shared/graph' %>
+		<%= render 'users/graph_full' %>
+	<% else %>
+
+	<div class="row">
+		<div class ="col-md-3">
+			<div id="profile-left-sidebar">
+				<div class="dashboard white-panel dashboard-avatar-container">
+					<div class ="profile-upper-background">
+					</div>
+					
+	<!--					<%= gravatar_for @user %>	-->
+						<% if current_user == @user %>
+							<%= link_to edit_user_registration_path do %>
+								<% if @user.avatar_file_name.nil? %>
+									<div class="dashboard-avatar-default">
+										<p><%= @user.username.first.upcase %></p>
+									</div>
+								<% else %>
+									<div class="dashboard-avatar">
+										<%= image_tag @user.avatar.url(:medium), class: "img-center" %>
+									</div>
+								<% end %>
+							<% end %>
+						<% else %>
+							<% if @user.avatar_file_name.nil? %>
+								<div class="dashboard-avatar-default">
+									<p><%= @user.username.first.upcase %></p>
+								</div>
+							<% else %>
+								<div class="dashboard-avatar">
+									<%= image_tag @user.avatar.url(:medium), class: "img-center" %>
+								</div>
+							<% end %>
+						<% end %>
+					
+					<div class="dashboard-usernames black-links">
+						<div class="dashboard-usernames-name">
+							<%= link_to @user.name, @user %>
+						</div>
+						<div class="dashboard-usernames-handle">
+							<%= link_to "@#{@user.username}", @user %>
+						</div>
+					</div> 
+					<div class="dashboard-stats">
+						<div class="dashboard-stats-left">
+							<%= link_to @user do %>
+								<span class="stat-header">DREAMS</span> <br />
+								<span class="stat-number"><%= @user.dreams.count %></span> <br />
+							<% end %>
+							<%= link_to following_user_path(@user) do %>
+								<span class="stat-header">FOLLOWING</span> <br />
+								<% following_id = "following_#{@user.id}" %>
+								<span id="<%= following_id %>" class="stat-number"><%= @user.following.count %></span>
+							<% end %>
+						</div>
+						<div class="dashboard-stats-right">
+							<span class="stat-header">COMMENTS</span> <br />
+							<span class="stat-number"><%= @user.comments.count %></span> <br />
+							<%= link_to followers_user_path(@user) do %>
+								<span class="stat-header">FOLLOWERS</span> <br />
+								<% followers_id = "followers_#{@user.id}" %>
+								<span id="<%= followers_id %>" class="stat-number"><%= @user.followers.count %></span>
+							<% end %>			
+						</div>
+
+					</div>
+				</div>
+				<div data-spy="affix" data-offset-top="240">
+					<% if @dreams_raw.any? %>
+						<div id="profile-graph" class="white-panel">
+							<%= link_to(user_path(@user.id, graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", "data-container" => "body", title: "Fullscreen"}) do %>
+								<%= icon('arrows-alt') %>
+							<% end %>
+						</div>
+						<%= render 'users/graph' %>
+					<% end %>
+					<div id="links-panel" class="white-panel">
+						<%= link_to "Home", root_path %>
+						<%= link_to "About", about_path %>
+						<%= link_to "Contact", contact_path %>
+						<%= image_tag("footer_stripe.jpg", width: '243', height: '10', class: 'rainbow-bar') %>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-9">
+			<% if @dreams_raw.any? %>
+				<div>
+					<h3 class="content-title">Dreams</h3>
+					<ul class="nav nav-pills nav-pills-inline" role="tablist">
+						<% if params[:impression] == '2' %>
+							<li><%= link_to "All", root_path %></li>
+							<li class="active"><%= link_to "Big", root_path(impression: 2) %></li>
+							<li><%= link_to "Huge", root_path(impression: 3) %></li>
+						<% elsif params[:impression] == '3' %>
+							<li><%= link_to "All", root_path %></li>
+							<li><%= link_to "Big", root_path(impression: 2) %></li>
+							<li class="active"><%= link_to "Huge", root_path(impression: 3) %></li>
+						<% else %>
+							<li class="active"><%= link_to "All", root_path %></li>
+							<li><%= link_to "Big", root_path(impression: 2) %></li>
+							<li><%= link_to "Huge", root_path(impression: 3) %></li>
+						<% end %>
+					</ul>
+				</div>
+				<ol class="list-unstyled dreams" id ="user-dreams">
+					<%= render @dreams %>
+				</ol>
+				<!-- renderer parameter is needed by will_paginate-boostrap gem -->
+				<%= will_paginate @dreams, renderer: BootstrapPagination::Rails %>
+			<% elsif current_user == @user %>
+				<%= render 'dreams/firstnew' %>
+			<% end %>
+		</div>
 	</div>
 
-</div>
+<% end %>
 
-<div id="home-panel3">
-	<div id="home-panel3-inner">
-		<div id="panel3-1" class="col-md-3 col-md-offset-2 white-panel">
-			<h3><span class="glyphicon glyphicon-user"></span> Social</h3>
-			<p>Follow the dreams of your friends and favorite celebrities. Share comments and interpretations.</p>
-		</div>	
-		<div id="panel3-2" class="col-md-3 col-md-offset-2 white-panel">
-			<h3><span class="glyphicon glyphicon-eye-open"></span> Private</h3>
-			<p>Keep any dream private or public - it's your choice.</p>
+<% else %>
+
+	<div id="home-top-panel" class="text-center">
+		<div id="home-header">just had a dream</div>	
+		<div id="home-byline">Your dream journal app</div>
+		<div id="home-byline2">
+			<%= link_to "free | private | social", about_path %>
 		</div>
-	</div>	
-</div>
-<%= render 'layouts/footer' %>
+		<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login'}) do %>
+			<button type="button" id="signup-button" class="btn btn-primary btn-lg">
+				<span>Sign up!</span>
+			</button>
+		<% end %>
+	</div>
 
+	<div id="home-panel1">
+		<span>Merrily, merrily, merrily,</span><br/>
+		<span>merrily; life is but a dream.</span>
+	</div>
+
+	<div id="home-panel2">
+		<div id="home-panel2-inner">
+			<div id="panel2-1" class="col-md-3 col-md-offset-2 white-panel">
+				<h3>Automatic word association</h3>
+				<p>Discover hidden trends, patterns and associations in your unconscious mind.</p>
+			</div>	
+			<div id="panel2-2" class="col-md-3 col-md-offset-2 white-panel">
+				<h3>Smartphone friendly</h3>
+				<p>Journal your dreams without getting up from your bed! Just had a dream was designed to be used with your smartphone - no need to download an 'app'.</p>
+				<%= image_tag("iphone.png", alt: "Mobile friendly") %>
+			</div>
+			<%= render 'shared/graph' %>
+		</div>
+
+	</div>
+
+	<div id="home-panel3">
+		<div id="home-panel3-inner">
+			<div id="panel3-1" class="col-md-3 col-md-offset-2 white-panel">
+				<h3><span class="glyphicon glyphicon-user"></span> Social</h3>
+				<p>Follow the dreams of your friends and favorite celebrities. Share comments and interpretations.</p>
+			</div>	
+			<div id="panel3-2" class="col-md-3 col-md-offset-2 white-panel">
+				<h3><span class="glyphicon glyphicon-eye-open"></span> Private</h3>
+				<p>Keep any dream private or public - it's your choice.</p>
+			</div>
+		</div>	
+	</div>
+	<%= render 'layouts/footer' %>
+
+<% end %>

@@ -3,10 +3,9 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-jhad">
+      	<%= nav_link "Home", "home", root_path %>
       	<% if user_signed_in? %>
         	<%= nav_link "Me", "user", current_user %>
-        <% else %>
-        	<%= nav_link "Home", "home", root_path %>
         <% end %>
         <%= nav_link "All dreams", "rocket", dreams_path %>
         <%= nav_link "Dreamers", "users", users_path %>

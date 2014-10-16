@@ -6,10 +6,11 @@ class User < ActiveRecord::Base
   has_many :dreams, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :notifications, dependent: :destroy
-  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
-  has_many :followed_users, through: :relationships, source: :followed
-  has_many :reverse_relationships, foreign_key: "followed_id", class_name: "Relationship", dependent: :destroy
-  has_many :followers, through: :reverse_relationships, source: :follower
+
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :followers, through: :passive_relationships, source: :follower
 
   has_attached_file :avatar, :styles => { :large => "200x200>", :medium => "70x70>", :thumb => "48x48>" }, :default_url => "/images/:style/missing.jpeg"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
@@ -124,17 +125,24 @@ class User < ActiveRecord::Base
     end
   end
 
-  # For following methods
+  # Follows a user
+  def follow(other_user)
+    self.active_relationships.create(followed_id: other_user.id)
+  end
+
+  # Unfollows a user
+  def unfollow(other_user)
+    self.active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  # Returns true if the current user is following the other user
   def following?(other_user)
-    self.relationships.find_by(followed_id: other_user.id)
+    self.following.include?(other_user)
   end
 
-  def follow!(other_user)
-    self.relationships.create!(followed_id: other_user.id)
-  end
-
-  def unfollow!(other_user)
-    relationships.find_by(followed_id: other_user.id).destroy
+  # Returns a user's status feed
+  def feed
+    Dream.from_users_followed_by(self)
   end
 
 end

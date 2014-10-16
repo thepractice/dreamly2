@@ -38,6 +38,12 @@ class Dream < ActiveRecord::Base
 		end
 	end
 
+	def Dream.from_users_followed_by(user)
+		following_ids = "SELECT followed_id FROM relationships
+										 WHERE follower_id = :user_id"
+		where("user_id IN (#{following_ids}) AND private = false OR user_id = :user_id", user_id: user)
+	end
+
 
 	protected
 
