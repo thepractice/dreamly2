@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141018182709) do
+ActiveRecord::Schema.define(version: 20141018213436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,14 @@ ActiveRecord::Schema.define(version: 20141018182709) do
     t.text     "word_freq"
     t.integer  "impression", default: 1
     t.boolean  "private",    default: false
+    t.text     "hashtags"
+  end
+
+  create_table "hashtags", force: true do |t|
+    t.string   "name"
+    t.string   "dreams"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "notifications", force: true do |t|

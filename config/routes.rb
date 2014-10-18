@@ -13,6 +13,7 @@ Jhad::Application.routes.draw do
     resources :comments
   end
   resources :notifications
+  resources :hashtags
   resources :relationships, only: [:create, :destroy]
 
   match '/help',    to: 'static_pages#help',    via: 'get'
@@ -25,12 +26,13 @@ Jhad::Application.routes.draw do
 #  match "/users/:id/big", to: 'users#show', impression: 2, via: 'get'
 #  match "/users/:id/huge", to: 'users#show', impression: 3, via: 'get'
 
-
+  
 
   get 'dreams/new' => 'dreams#new', :as => :new     # For new dream modal
  # get 'dreams/edit' => 'dreams#edit', :as => :edit     # For edit dream modal
 
   get ':controller(/:action(/:id))'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

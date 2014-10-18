@@ -63,7 +63,10 @@
 							<% end %>
 						</div>
 					</div>
-					<span class="body"><%= simple_format(@dream.body) %></span>
+
+
+
+					<span class="body"><%= simple_format(auto_link(@dream.body, hashtag_url_base: hashtags_path+"/")) %></span>
 					<% if current_user == @dream.user %>
 						<%= link_to(edit_dream_path(@dream.id), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-edit-dream', :class => 'btn btn-primary btn-square-small', :id => "edit-dream-button"}) do %>
 							<%= icon('pencil-square-o') %>

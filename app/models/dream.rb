@@ -1,8 +1,12 @@
 class Dream < ActiveRecord::Base
 	serialize :word_freq, Hash
+	serialize :hashtags, Array
 
 	include ActionView::Helpers::TextHelper
 	include ActionView::Helpers::SanitizeHelper
+	include Twitter::Extractor
+	include Twitter::Autolink
+#	html = auto_link("link @user, please #request")
 
 	belongs_to :user, counter_cache: :dream_count
 	has_many :comments, dependent: :destroy
@@ -49,6 +53,20 @@ class Dream < ActiveRecord::Base
 
 		def init_data
 			self.dreamed_on ||= Date.today if new_record?
+
+			hashtags = extract_hashtags(self.body)
+
+			self.hashtags = []    # Clear the Dream hashtag column
+
+			hashtags.each do |hashtag|     # Create or update the Hashtag model
+				hashtag_record = Hashtag.find_or_create_by(name: hashtag)
+				hashtag_record.dreams.push(self.id)
+				hashtag_record.save
+
+				self.hashtags.push(hashtag_record.id)    # Add hashtag model ID to Dream model hashtag column
+			end
+
+
 		end
 
 

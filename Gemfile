@@ -24,6 +24,8 @@ gem 'omniauth-yahoo'
 gem 'bootstrap-slider-rails'
 gem 'pg_search'
 gem 'paperclip', '~> 4.2'
+gem 'twitter-text'
+gem 'friendly_id', '~> 5.0.0'
 
 
 group :development do

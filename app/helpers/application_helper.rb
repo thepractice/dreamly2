@@ -1,5 +1,8 @@
 module ApplicationHelper
 
+	# For twitter-text gem
+	include Twitter::Autolink
+
 	# Returns the full title on a per-page basis.
 	def full_title(page_title)
 		base_title = "Just Had a Dream"
@@ -83,5 +86,7 @@ module ApplicationHelper
 		end
 		@comment_counter
 	end
+
+
 
 end
