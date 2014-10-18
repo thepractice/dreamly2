@@ -9,11 +9,6 @@
         <% end %>
         <%= nav_link "All dreams", "rocket", dreams_path %>
         <%= nav_link "Dreamers", "users", users_path %>
-        <% if user_signed_in? && current_user.notifications.where(seen: false).length > 0 %>
-        	<%= link_to notifications_path do %>
-        		<span id="notify-badge" class="badge"><%= current_user.notifications.where(seen: false).length %></span>
-        	<% end %>
-        <% end %>
       </ul>     
 
       <ul class="nav navbar-nav navbar-right">
@@ -29,6 +24,14 @@
 						<%= icon('plus') %>
 						dream
 					<% end %>
+					
+					<%= link_to(notifications_path, :class => 'btn btn-default btn-alt notification-button', :id => "notification-button") do %>
+						<%= icon('bell') %>
+						<% if current_user.notifications.where(seen: false).length > 0 %>
+							<span><%= current_user.notifications.where(seen: false).length %></span>
+						<% end %>	
+					<% end %>
+					
 				<% else %>
 					<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login', :class => "btn btn-primary btn-square", :id => "signin-button"}) do %>
 
@@ -37,7 +40,7 @@
 						Sign in
 					<% end %>				
 				<% end %>
-				
+
 				<div class="btn-group">
 					<button type="button" class="btn btn-default navbar-btn btn-lg btn-alt dropdown-toggle btn-bars" data-toggle="dropdown">
 
@@ -46,6 +49,7 @@
 					<ul class="dropdown-menu" role="menu">
 						<li><%= link_to "Help",		 help_path %></li>
 						<% if user_signed_in? %>
+							<li><%= link_to "Notifications", notifications_path %></li>
 					    <li><%= link_to "Edit account", edit_user_registration_path %></li>	  
 					    <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
 					  <% end %>

@@ -110,11 +110,11 @@ class DreamsController < ApplicationController
 		@dream = Dream.find(params[:id])
 
 		# Mark as 'seen' all notifications on dream
-		if user_signed_in?
-			@dream.notifications.where(user: current_user, seen: false).each do |notification|
-				notification.update_attribute(:seen, true)
-			end
-		end
+	#	if user_signed_in?
+	#		@dream.notifications.where(user: current_user, seen: false).each do |notification|
+	#		notification.update_attribute(:seen, true)
+	#		end
+	#	end
 
 
 	# Graph logic
@@ -167,6 +167,12 @@ class DreamsController < ApplicationController
 
 	def create
 		@dream = current_user.dreams.build(dream_params)
+
+		# Create notifications
+		@users = []
+		@dream.user.followers.each do |follower|
+			Notification.create(user: follower, dream: @dream, other_user_id: @dream.user.id, subject: 'dream')
+		end
 
 
 		respond_to do |format|

@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
 		end
 		@users.uniq!
 		@users.each do |user|
-			Notification.create(dream: @dream, user: user)
+			Notification.create(dream: @dream, user: user, other_user_id: @comment.user.id, subject: 'comment')
 		end
 
 	end

@@ -1,5 +1,35 @@
-<% if notification.seen != true %>
+<% other_user = User.find(notification.other_user_id) %>
 
-<p>New comment for <%= link_to notification.dream.title, notification.dream %></p>
-
-<% end %>
+<div class="notify-box highlighter">
+	<div class="dream-left">
+		<span><%= notification.created_at.strftime("%^b") %></span><br />
+		<span><%= notification.created_at.strftime("%d") %></span><br/>
+		<% if notification.created_at.year != Time.now.year %>
+			<span class="year"><%= @dream.dreamed_on.strftime("%Y") %></span>
+		<% end %>
+	</div>
+	<div class="notify-right">
+		<div class="notify-avatar">
+			<%= link_to other_user do %>
+				<% if other_user.avatar_file_name.nil? %>
+					<div class="dashboard-avatar-default-thumb">
+						<p><%= other_user.username.first.upcase %></p>
+					</div>
+				<% else %>
+					<div class="dashboard-avatar-thumb">
+						<%= image_tag other_user.avatar.url(:thumb), class: "img-center" %>
+					</div>
+				<% end %>
+			<% end %>
+		</div>
+		<div class="notify-text">
+			<% if notification.subject == 'comment' %>
+				<%= link_to other_user.username, other_user %> posted a new comment on <%= link_to notification.dream.title, notification.dream %>.
+			<% elsif notification.subject == 'follow' %>
+				<%= link_to other_user.username, other_user %> started following you.
+			<% elsif notification.subject == 'dream' %>
+				<%= link_to other_user.username, other_user %> posted a new dream, <%= link_to notification.dream.title, notification.dream %>.
+			<% end %>
+		</div>
+	</div>
+</div>

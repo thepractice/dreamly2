@@ -128,6 +128,7 @@ class User < ActiveRecord::Base
   # Follows a user
   def follow(other_user)
     self.active_relationships.create(followed_id: other_user.id)
+    Notification.create(user: other_user, other_user_id: self.id, subject: 'follow')
   end
 
   # Unfollows a user
