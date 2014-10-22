@@ -24,3 +24,4 @@
 //= require bootstrap-datepicker/core
 //= require bootstrap-sprockets
 //= require bootstrap-slider
+//= require d3.min

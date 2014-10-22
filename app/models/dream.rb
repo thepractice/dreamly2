@@ -1,6 +1,5 @@
 class Dream < ActiveRecord::Base
 	serialize :word_freq, Hash
-	serialize :hashtags, Array
 
 	include ActionView::Helpers::TextHelper
 	include ActionView::Helpers::SanitizeHelper
@@ -11,6 +10,8 @@ class Dream < ActiveRecord::Base
 	belongs_to :user, counter_cache: :dream_count
 	has_many :comments, dependent: :destroy
 	has_many :notifications, dependent: :destroy
+	has_many :dreamtags
+	has_many :hashtags, through: :dreamtags
 
 	validates :body, presence: true
 	validates :user_id, presence: true
@@ -23,6 +24,7 @@ class Dream < ActiveRecord::Base
 
 	before_update :reverse_dream
 	before_save :init_data
+	after_save :set_hashtags
 	after_save :gather_words
 	#after_save :update_graph
 	#after_save :update_graph_public
@@ -54,17 +56,31 @@ class Dream < ActiveRecord::Base
 		def init_data
 			self.dreamed_on ||= Date.today if new_record?
 
+	#		hashtags = extract_hashtags(self.body)
+
+	#		self.hashtags = []    # Clear the Dream hashtag column
+
+	#		hashtags.each do |hashtag|     # Create or update the Hashtag model
+	#			hashtag_record = Hashtag.find_or_create_by(name: hashtag)
+	#			hashtag_record.dreams.push(self.id)
+	#			hashtag_record.save
+
+	#			self.hashtags.push(hashtag_record.id)    # Add hashtag model ID to Dream model hashtag column
+	#		end		
+
+		end
+
+		def set_hashtags
+
 			hashtags = extract_hashtags(self.body)
 
-			self.hashtags = []    # Clear the Dream hashtag column
+			hashtags.each do |hashtag|    
+				hashtag_record = Hashtag.find_or_create_by(name: hashtag)   # Create or update the Hashtag model
 
-			hashtags.each do |hashtag|     # Create or update the Hashtag model
-				hashtag_record = Hashtag.find_or_create_by(name: hashtag)
-				hashtag_record.dreams.push(self.id)
-				hashtag_record.save
 
-				self.hashtags.push(hashtag_record.id)    # Add hashtag model ID to Dream model hashtag column
-			end
+				self.dreamtags.create(hashtag_id: hashtag_record.id)   # Create the intermediate relationship
+
+			end			
 
 
 		end

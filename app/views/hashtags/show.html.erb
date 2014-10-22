@@ -1,3 +1,75 @@
 <% provide(:title, @hashtag.name) %>
 
-<%= @hashtag.name %>
+<% if params[:graph] %>
+	<div id="graph-full" class="white-panel">
+		<h3 class="graph-title"><%= impression_status().titleize %>
+			<% unless params[:impression] %>
+				All
+			<% end %>
+			dreams
+			<% if params[:query] %>
+			about <strong><%= params[:query] %></strong>
+			<% end %>
+		</h3>
+		<%= link_to dreams_path(query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", "data-container" => "body", title: "Minimize"} do %>
+			<%= icon('compress') %>
+		<% end %>	
+	</div>
+	<%= render 'dreams/graph_full' %>
+
+<% else %>
+
+<div class="row">
+	<div class ="col-md-3">
+		<div id="profile-left-sidebar">
+			<div data-spy="affix" data-offset-top="23">
+				<% if @dreams.any? %>
+					<div id="profile-graph" class="white-panel">
+						<%= link_to hashtag_path(@hashtag.id, graph: true, impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", "data-container" => "body", title: "Fullscreen"} do %>
+							<%= icon('arrows-alt') %>
+						<% end %>
+					</div>
+					<%= render 'dreams/graph' %>
+				<% end %>
+				<div id="links-panel" class="white-panel">
+					<%= link_to "Home", root_path %>
+					<%= link_to "About", about_path %>
+					<%= link_to "Contact", contact_path %>
+					<%= image_tag("footer_stripe.jpg", width: '243', height: '10', class: 'rainbow-bar') %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div>
+			<h3 class="content-title">#<%= @hashtag.name %></h3>
+			<ul class="nav nav-pills nav-pills-inline" role="tablist">
+				<% if params[:impression] == '2' %>
+					<li><%= link_to "All", hashtag_path(@hashtag.id) %></li>
+					<li class="active"><%= link_to "Big", hashtag_path(@hashtag.id, impression: 2) %></li>
+					<li><%= link_to "Huge", hashtag_path(@hashtag.id, impression: 3) %></li>
+				<% elsif params[:impression] == '3' %>
+					<li><%= link_to "All", hashtag_path(@hashtag.id) %></li>
+					<li><%= link_to "Big", hashtag_path(@hashtag.id, impression: 2) %></li>
+					<li class="active"><%= link_to "Huge", hashtag_path(@hashtag.id, impression: 3) %></li>
+				<% else %>
+					<li class="active"><%= link_to "All", hashtag_path(@hashtag.id) %></li>
+					<li><%= link_to "Big", hashtag_path(@hashtag.id, impression: 2) %></li>
+					<li><%= link_to "Huge", hashtag_path(@hashtag.id, impression: 3) %></li>
+				<% end %>
+			</ul>
+
+			<% if current_user %>
+				<%= link_to "Only my dreams", hashtag_path(@hashtag.id, onlyme: true, impression: params[:impression]), class: "btn btn-danger btn-square", id: "only-my-dreams-button" %>
+			<% end %>
+
+		</div>
+		<ol class="list-unstyled dreams" id ="user-dreams">
+			<%= render partial: "dreams/dream", collection: @dreams %>
+		</ol>
+		<!-- renderer parameter is needed by will_paginate-boostrap gem -->
+		<%= will_paginate @dreams, renderer: BootstrapPagination::Rails %>
+	</div>
+</div>
+
+<% end %>

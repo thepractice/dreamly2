@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141018213436) do
+ActiveRecord::Schema.define(version: 20141022011658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,12 +38,21 @@ ActiveRecord::Schema.define(version: 20141018213436) do
     t.text     "word_freq"
     t.integer  "impression", default: 1
     t.boolean  "private",    default: false
-    t.text     "hashtags"
   end
+
+  create_table "dreamtags", force: true do |t|
+    t.integer  "dream_id"
+    t.integer  "hashtag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "dreamtags", ["dream_id", "hashtag_id"], name: "index_dreamtags_on_dream_id_and_hashtag_id", unique: true, using: :btree
+  add_index "dreamtags", ["dream_id"], name: "index_dreamtags_on_dream_id", using: :btree
+  add_index "dreamtags", ["hashtag_id"], name: "index_dreamtags_on_hashtag_id", using: :btree
 
   create_table "hashtags", force: true do |t|
     t.string   "name"
-    t.string   "dreams"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
