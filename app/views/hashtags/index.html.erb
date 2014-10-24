@@ -6,3 +6,50 @@
 <%= render @hashtags %>
 </ol>
 
+<div id="hashtag-box">
+</div>
+
+
+<script>
+  var fill = d3.scale.category20();
+
+  var hashtag_words = <%= @hashtag_words.to_json.html_safe %>;
+
+  function node_url(d) { return "<%= hashtags_path %>".concat("/").concat(d.text)};
+  function node_size(d) { return 12 + d.weight * 3 };
+
+  d3.layout.cloud().size([500, 500])
+      .words(hashtag_words.map(function(d) {
+        return {text: d[0], size: 12+ d[1] * 10};
+      }))
+      .padding(5)
+ //     .rotate(50)
+      .rotate(function() { return Math.random() * 20 - Math.random() * 40 })
+ //     .rotate(function() { return ~~(Math.random() * 2) * 90; })
+      .font("Impact")
+      .fontSize(function(d) { return d.size; })
+      .on("end", draw)
+      .start();
+
+  function draw(words) {
+    d3.select("#hashtag-box").append("svg")
+        .attr("width", 500)
+        .attr("height", 500)
+      .append("g")
+        .attr("transform", "translate(250,250)")
+      .selectAll("text")
+        .data(words)
+      .enter().append("svg:a")
+      	.attr("xlink:href", node_url)
+      	.append("text")
+	        .style("font-size", function(d) { return d.size + "px"; })
+	        .style("font-family", "Impact")
+	        .style("fill", function(d, i) { return fill(i); })
+	        .attr("text-anchor", "middle")
+	        .attr("transform", function(d) {
+	          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+	        })
+	        .text(function(d) { return d.text; });
+  }
+</script>
+

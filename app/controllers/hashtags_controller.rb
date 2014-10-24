@@ -2,6 +2,11 @@ class HashtagsController < ApplicationController
 
 	def index
 		@hashtags = Hashtag.all
+		@hashtag_words = []
+		@hashtags.each do |hashtag|
+			@hashtag_words.push([hashtag.name, hashtag.dreams.length])
+		end
+		
 	end
 
 	def show
