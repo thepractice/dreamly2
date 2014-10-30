@@ -23,7 +23,7 @@ class DreamsController < ApplicationController
 
 		@word_count = Hash.new
 		# Create hash of word frequencies in all relevant dreams
-		@dreams_raw.each do |dream|
+		@dreams.each do |dream|
 			dream.word_freq.each do |word_id, frequency|
 				if @word_count[word_id] == nil
 					@word_count[word_id] = { freq: frequency, dream_ids: [dream.id] }

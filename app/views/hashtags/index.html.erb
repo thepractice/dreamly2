@@ -2,15 +2,26 @@
 <div class="title-box">
 	<h3 class="content-title">Hashtags</h3>
 </div>
-<ol class="list-unstyled " id ="user-dreams">
-<%= render @hashtags %>
-</ol>
 
+
+
+  
+
+<div class="blank_box">
+  <%= render @hashtags %>
+</div>
+
+
+
+<!--
 <div id="hashtag-box">
 </div>
 
 
 <script>
+
+
+
   var fill = d3.scale.category20();
 
   var hashtag_words = <%= @hashtag_words.to_json.html_safe %>;
@@ -18,13 +29,27 @@
   function node_url(d) { return "<%= hashtags_path %>".concat("/").concat(d.text)};
   function node_size(d) { return 12 + d.weight * 3 };
 
-  d3.layout.cloud().size([500, 500])
+var makeRandom = function(seed) {
+    return function() {
+        return (seed = (seed * 9301 + 49297) % 233280) / 233280.0; 
+    }
+}
+
+
+var random = new MersenneTwister(123);  
+
+
+
+  d3.layout.cloud()
+      .random(random)
+      .size([500, 500])
       .words(hashtag_words.map(function(d) {
-        return {text: d[0], size: 12+ d[1] * 10};
+        return {text: d[0], size: 19};
       }))
       .padding(5)
- //     .rotate(50)
-      .rotate(function() { return Math.random() * 20 - Math.random() * 40 })
+ //     .rotate(10)
+      .rotate(function(i) { return (i%2)*10 })
+ //     .rotate(function() { return Math.random() * 20 - Math.random() * 40 })
  //     .rotate(function() { return ~~(Math.random() * 2) * 90; })
       .font("Impact")
       .fontSize(function(d) { return d.size; })
@@ -53,3 +78,4 @@
   }
 </script>
 
+-->

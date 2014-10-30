@@ -1,6 +1,13 @@
-<div class="notify-box highlighter">
-	<%= link_to hashtag do %>		
+
+<% hashtag_size0 =  100 * (hashtag.dreams.length / @hashtag_total.to_f) ** 0.4 %>
+
+<% hashtag_size =  [12, hashtag_size0].max  %>
+<% hashtag_style = "font-size: #{hashtag_size}px;" %>
+
+
+<%= link_to hashtag, html_option = { :style => "font-size: 0" } do %>	
+	<div class="highlighter hashtag-div" style="<%= hashtag_style %>">
 		#<%= hashtag.name %>
 		<%= hashtag.dreams.length %>
-	<% end %>
-</div>
+	</div>	
+<% end %>
