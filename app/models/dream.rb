@@ -77,9 +77,9 @@ class Dream < ActiveRecord::Base
 			hashtags.each do |hashtag|    
 				hashtag_record = Hashtag.find_or_create_by(name: hashtag)   # Create or update the Hashtag model
 
-
-				self.dreamtags.create(hashtag_id: hashtag_record.id)   # Create the intermediate relationship
-
+				if self.dreamtags.where(hashtag_id: hashtag_record.id).empty?		# Avoid double-creating the dreamtag (? needed)
+					self.dreamtags.create(hashtag_id: hashtag_record.id)   # Create the intermediate relationship
+				end
 			end			
 
 

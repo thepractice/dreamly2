@@ -1,7 +1,7 @@
 class HashtagsController < ApplicationController
 
 	def index
-		@hashtags = Hashtag.all
+		@hashtags = Hashtag.all.order('dreams_count DESC')
 
 		@hashtag_total = 0
 
