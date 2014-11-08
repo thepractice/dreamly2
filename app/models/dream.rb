@@ -74,7 +74,8 @@ class Dream < ActiveRecord::Base
 
 			hashtags = extract_hashtags(self.body)
 
-			hashtags.each do |hashtag|    
+			hashtags.each do |hashtag|
+				hashtag.downcase!   
 				hashtag_record = Hashtag.find_or_create_by(name: hashtag)   # Create or update the Hashtag model
 
 				if self.dreamtags.where(hashtag_id: hashtag_record.id).empty?		# Avoid double-creating the dreamtag (? needed)
