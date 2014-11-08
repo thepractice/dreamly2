@@ -72,7 +72,7 @@ class Dream < ActiveRecord::Base
 
 		def set_hashtags
 
-			hashtags = extract_hashtags(self.body)
+			hashtags = extract_hashtags(self.body).uniq
 
 			hashtags.each do |hashtag|
 				hashtag.downcase!   
@@ -81,7 +81,15 @@ class Dream < ActiveRecord::Base
 				if self.dreamtags.where(hashtag_id: hashtag_record.id).empty?		# Avoid double-creating the dreamtag (? needed)
 					self.dreamtags.create(hashtag_id: hashtag_record.id)   # Create the intermediate relationship
 				end
-			end			
+
+				if self.private == false
+					hashtag_record.dreams_count = hashtag_record.dreams_count + 1
+					hashtag_record.save
+				end	
+
+			end		
+
+
 
 
 		end
@@ -345,6 +353,17 @@ class Dream < ActiveRecord::Base
 			end
 
 			self.word_freq.clear			# Clear the Dream word_freq hash
+
+			self.hashtags.each do |hashtag|
+				self.dreamtags.where(hashtag: hashtag).destroy_all
+				if self.private == false
+					hashtag.dreams_count = hashtag.dreams_count - 1
+					hashtag.save
+				end
+				if hashtag.dreams.length < 1
+					hashtag.destroy
+				end
+			end
 
 		end
 

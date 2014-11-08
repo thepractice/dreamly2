@@ -4,12 +4,14 @@
 
 		<div class="dream white-panel highlighter">
 			<div class="dream-left">
-				<% if dream.user.avatar_file_name.nil? %>
-					<div class="dream-avatar-default">
-						<p><%= dream.user.username.first.upcase %></p>
-					</div>						
-				<% else %>
-					<%= image_tag dream.user.avatar.url(:thumb) %>
+				<%= link_to dream.user do %>
+					<% if dream.user.avatar_file_name.nil? %>
+						<div class="dream-avatar-default">
+							<p><%= dream.user.username.first.upcase %></p>
+						</div>						
+					<% else %>
+						<%= image_tag dream.user.avatar.url(:thumb) %>
+					<% end %>
 				<% end %>
 				<span><%= dream.dreamed_on.strftime("%^b") %></span><br />
 				<span><%= dream.dreamed_on.strftime("%d") %></span><br/>
@@ -20,7 +22,7 @@
 			<div class="dream-right">
 				<div class="dream-right-top">
 					<div class="dream-right-top1">
-						<span class="dream-title"><h4><%= dream.title %></h4></span>
+						<span class="dream-title"><h4><%= link_to dream.title, dream %></h4></span>
 
 						<span class="dreamer1"><%= link_to dream.user.name, dream.user %></span>
 						<span class="dreamer2"><%= link_to "@#{dream.user.username}", dream.user %></span>
@@ -42,19 +44,22 @@
 							<%= icon('unlock') %>
 						<% end %>
 					</div>
+
 				</div>
-				<span class="body"><%= simple_format(truncate(dream.body, length: 500, separator: ' ')) %></span>
+				<span class="body"><%= simple_format(auto_link(truncate(dream.body, length: 500, separator: ' '), hashtag_url_base: hashtags_path+"/")) %></span>
 				<% if comment_count(dream) > 0 %>
-					<%= icon('comments') %>
-					<%= pluralize(comment_count(dream), 'comment') %>
-						<% if user_signed_in? %>
-							<% if dream.notifications.where(user: current_user, seen: false).present? %>
-								(<%= dream.notifications.where(user: current_user, seen: false).length %> new)
-							<% end %>				
-						<% end %>
+					<%= link_to(dream, html_options = { :class => "comment-link" }) do %>
+						<%= icon('comments') %>
+						<%= pluralize(comment_count(dream), 'comment') %>
+							<% if user_signed_in? %>
+								<% if dream.notifications.where(user: current_user, seen: false).present? %>
+									(<%= dream.notifications.where(user: current_user, seen: false).length %> new)
+								<% end %>				
+							<% end %>
+					<% end %>		
 				<% end %>
 			</div>
-			<%= link_to "hey", dream, class: "block-link" %>
+<!--			<%= link_to "hey", dream, class: "block-link" %> -->
 		</div>
 <!--	<% end %> -->
 <% end %>

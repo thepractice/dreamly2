@@ -1,4 +1,4 @@
 class Dreamtag < ActiveRecord::Base
 	belongs_to :dream 
-	belongs_to :hashtag, :counter_cache => :dreams_count
+	belongs_to :hashtag
 end

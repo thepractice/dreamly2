@@ -1031,7 +1031,7 @@ body {
     margin-bottom: 2px;
   }
   a {
-    color: $offBlack;
+    color: rgb(95, 95, 95);
   }
   a:hover {
     text-decoration: underline;
@@ -1251,6 +1251,10 @@ a:hover {
     background-color: $lightYellow;
   }
 
+}
+
+.comment-link {
+  color: rgb(95, 95, 95);
 }
 
 /* Notifications */

@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
 
-  validates :username, presence: true, uniqueness: { case_sensitive: false }
+  validates :username, presence: true, uniqueness: { case_sensitive: false }, format: { without: /\s/ }
   validates :name, presence: true
 
   include PgSearch

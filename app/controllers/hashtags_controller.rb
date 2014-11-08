@@ -1,7 +1,7 @@
 class HashtagsController < ApplicationController
 
 	def index
-		@hashtags = Hashtag.all.order('dreams_count DESC')
+		@hashtags = Hashtag.all.order('dreams_count DESC').where('dreams_count > 0')
 
 		@hashtag_total = 0
 
@@ -17,9 +17,9 @@ class HashtagsController < ApplicationController
 		@hashtag = Hashtag.friendly.find(params[:id])
 
 		if params[:impression].present?
-			@dreams_raw = @hashtag.dreams.regular.impression(params[:impression]).where(private: false)
+			@dreams_raw = @hashtag.dreams.regular.impression(params[:impression])
 		else
-			@dreams_raw = @hashtag.dreams.regular.where(private: false)
+			@dreams_raw = @hashtag.dreams.regular
 		end
 
 		if params[:onlyme]
@@ -33,12 +33,14 @@ class HashtagsController < ApplicationController
 		@word_count = Hash.new
 		# Create hash of word frequencies in all relevant dreams
 		@dreams_raw.each do |dream|
-			dream.word_freq.each do |word_id, frequency|
-				if @word_count[word_id] == nil
-					@word_count[word_id] = { freq: frequency, dream_ids: [dream.id] }
-				else
-					@word_count[word_id][:freq] += frequency
-					@word_count[word_id][:dream_ids].push(dream.id)
+			if (dream.private == false) || dream.user = current_user
+				dream.word_freq.each do |word_id, frequency|
+					if @word_count[word_id] == nil
+						@word_count[word_id] = { freq: frequency, dream_ids: [dream.id] }
+					else
+						@word_count[word_id][:freq] += frequency
+						@word_count[word_id][:dream_ids].push(dream.id)
+					end
 				end
 			end
 		end
