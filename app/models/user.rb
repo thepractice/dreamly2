@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
   serialize :word_freq, Hash
-
   serialize :word_freq_public, Hash
+  serialize :hash_freq, Hash
+  serialize :hash_freq_public, Hash
 
   has_many :dreams, dependent: :destroy
   has_many :comments, dependent: :destroy

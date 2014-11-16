@@ -74,6 +74,8 @@ class Dream < ActiveRecord::Base
 
 			hashtags = extract_hashtags(self.body).uniq
 
+			user_hashes = self.user.hash_freq
+
 			hashtags.each do |hashtag|
 				hashtag.downcase!   
 				hashtag_record = Hashtag.find_or_create_by(name: hashtag)   # Create or update the Hashtag model
@@ -85,9 +87,28 @@ class Dream < ActiveRecord::Base
 				if self.private == false
 					hashtag_record.dreams_count = hashtag_record.dreams_count + 1
 					hashtag_record.save
+
+					if self.user.hash_freq_public[hashtag_record.id] == nil
+						self.user.hash_freq_public[hashtag_record.id] = 1
+					else
+						self.user.hash_freq_public[hashtag_record.id] += 1
+					end
+
 				end	
 
+				if user_hashes[hashtag_record.id] == nil
+					user_hashes[hashtag_record.id] = 1
+				else
+					user_hashes[hashtag_record.id] += 1
+				end
+
+				user_hashes = Hash[user_hashes.sort_by { |k, v| v }.reverse]
+				self.user.update_columns(hash_freq: user_hashes, hash_freq_public: self.user.hash_freq_public)
+
 			end		
+
+			
+			
 
 
 
@@ -359,10 +380,16 @@ class Dream < ActiveRecord::Base
 				if self.private == false
 					hashtag.dreams_count = hashtag.dreams_count - 1
 					hashtag.save
+				else
+					self.user.hash_freq_public[hashtag.id] -= 1
 				end
 				if hashtag.dreams.length < 1
 					hashtag.destroy
 				end
+
+				self.user.hash_freq[hashtag.id] -= 1	# Decrement the User's hash count
+
+
 			end
 
 		end

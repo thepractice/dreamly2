@@ -10,8 +10,11 @@ class UsersController < ApplicationController
 		else
 			@user = User.find(params[:id])
 		end
-#		@dreams = @user.dreams.regular.paginate(page: params[:page])
 
+
+
+#		@dreams = @user.dreams.regular.paginate(page: params[:page])
+		
 		if params[:query].present?
 			if params[:impression].present?
 				@dreams_raw = Dream.text_search(params[:query]).impression(params[:impression]).where(user: @user)
@@ -20,9 +23,27 @@ class UsersController < ApplicationController
 			end
 		else
 			if params[:impression].present?
-				@dreams_raw = @user.dreams.regular.impression(params[:impression])
+				@hashtag = Hashtag.find_by name: (params[:hashtag])
+				if params[:hashtag].present?
+					if @hashtag == nil
+						@dreams_raw = @user.dreams.where("impression = 5")	#hack to get empty collection of dreams
+					else
+						@dreams_raw = @hashtag.dreams.regular.where(user: @user).impression(params[:impression])
+					end
+				else
+					@dreams_raw = @user.dreams.regular.impression(params[:impression])
+				end
 			else
-				@dreams_raw = @user.dreams.regular
+				if params[:hashtag].present?
+					@hashtag = Hashtag.find_by name: (params[:hashtag])
+					if @hashtag == nil
+						@dreams_raw = @user.dreams.where("impression = 5")	#hack to get empty collection of dreams
+					else
+						@dreams_raw = @hashtag.dreams.regular.where(user: @user)
+					end
+				else				
+					@dreams_raw = @user.dreams.regular
+				end
 			end
 		end
 
@@ -30,7 +51,10 @@ class UsersController < ApplicationController
 			@dreams_raw = @dreams_raw.where(private: false)
 		end
 
-		@dreams = @dreams_raw.paginate(page: params[:page])
+	
+			@dreams = @dreams_raw.paginate(page: params[:page])
+		
+
 
 #		if params[:impression].present?
 #			@dreams = @user.dreams.regular.impression(params[:impression]).paginate(page: params[:page])

@@ -4,12 +4,13 @@
 <% hashtag_size =  [12, hashtag_size0].max  %>
 <% hashtag_style = "font-size: #{hashtag_size}px;" %>
 
+<div class="hashtag-div hashtag-color" style="<%= hashtag_style %>">
+<%= link_to hashtag do %>	
+	
+		<%= hashtag.name %>
 
-<%= link_to hashtag, html_option = { :style => "font-size: 0" } do %>	
-	<div class="highlighter hashtag-div" style="<%= hashtag_style %>">
-		#<%= hashtag.name %>
 
 
 
-	</div>	
 <% end %>
+	</div>	

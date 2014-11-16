@@ -81,7 +81,7 @@
 				</div>
 				<%= render 'follow_form' if user_signed_in? %>
 			</div>
-			<div data-spy="affix" data-offset-top="240">
+			<div>
 				<% if @user.dreams.any? %>
 					<div id="profile-graph" class="white-panel">
 						<%= link_to(user_path(@user.id, graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", "data-container" => "body", title: "Fullscreen"}) do %>
@@ -90,6 +90,28 @@
 					</div>
 					<%= render 'users/graph' %>
 				<% end %>
+
+					<% if @user == current_user %>
+
+						<% @user.hash_freq.each do |hashtag_id, freq| %>
+							<%= link_to user_path(@user.id, hashtag: Hashtag.find(hashtag_id).name), { :class => "btn user-hash-link hashtag-color" } do %>
+								<%= Hashtag.find(hashtag_id).name %>
+								(<%= freq %>)
+							<% end %>
+						<% end %>					
+
+					<% else %>
+			
+						<% @user.hash_freq_public.each do |hashtag_id, freq| %>
+							<%= link_to user_path(@user.id, hashtag: Hashtag.find(hashtag_id).name), { :class => "btn user-hash-link hashtag-color" } do %>
+								<%= Hashtag.find(hashtag_id).name %>
+								(<%= freq %>)
+							<% end %>
+						<% end %>
+
+					<% end %>	
+
+	
 				<div id="links-panel" class="white-panel">
 					<%= link_to "Home", root_path %>
 					<%= link_to "About", about_path %>

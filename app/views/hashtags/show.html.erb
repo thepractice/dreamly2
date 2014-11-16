@@ -60,8 +60,11 @@
 				<% end %>
 			</ul>
 
+
+
+
 			<% if current_user %>
-				<%= link_to "Only my dreams", hashtag_path(@hashtag.id, onlyme: true, impression: params[:impression]), class: "btn btn-danger btn-square", id: "only-my-dreams-button" %>
+				<%= link_to "Only my dreams", user_path(current_user, hashtag: @hashtag.name), class: "btn btn-danger btn-square", id: "only-my-dreams-button" %>
 			<% end %>
 
 		</div>
