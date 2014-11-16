@@ -1,5 +1,8 @@
  <div class="modal-dialog modal-lg">
     <div class="modal-content">
+
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), remote: true, html: {"data-type" => :json, class: 'form-horizontal row', id: 'signup_form'}, wrapper: :horizontal_form) do |f| %>
+      
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           <%= icon('times') %>
@@ -7,7 +10,7 @@
         <h3 class="modal-title" id="myModalLabel">Create new account</h4>
       </div>
       <div class="modal-body">
-        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), remote: true, html: {"data-type" => :json, class: 'form-horizontal row', id: 'signup_form'}, wrapper: :horizontal_form) do |f| %>
+
     
           <div id="signup_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
             <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -21,7 +24,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary btn-lg btn-square">
+        <button type="submit" class="btn btn-primary btn-lg btn-square submit-btn">
           Create new account
         </button>
       </div>

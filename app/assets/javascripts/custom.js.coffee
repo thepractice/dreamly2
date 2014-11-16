@@ -1,4 +1,4 @@
-jQuery ->
+jQuery(document).on "ready page:change", ->
 
 	# Infinite scroll
 
@@ -18,6 +18,11 @@ jQuery ->
 			$(window).scroll
 
 # Ajax dream form
+
+	# New version of turbolinks made it so modal forms only submit after refresh.
+	# The below manually submits modal forms.
+	#$('.submit-btn').on 'click', ->
+	#	$('form.simple_form').submit()
 
 	$("form#new_dream").on "ajax:success", (event, data, status, xhr) ->
 	#	$('#modal-window').modal('hide')
@@ -138,6 +143,7 @@ jQuery ->
 #		else
 #			"Huge"
 
+	
 	$("#impression").slider()
 	$("#impression").on "slide", (slideEvt) ->
 		label = "Normal"
@@ -166,3 +172,10 @@ jQuery ->
 			label = "Huge"
 		$("#impression-slider-value3").text label
 
+$(document).ready ->
+
+	# Use affix plugin
+	$("[data-spy=affix]").affix offset:
+		top: 240
+
+	return

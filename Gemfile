@@ -26,6 +26,7 @@ gem 'pg_search'
 gem 'paperclip', '~> 4.2'
 gem 'twitter-text'
 gem 'friendly_id', '~> 5.0.0'
+gem 'jquery-turbolinks'
 
 
 group :development do
@@ -42,7 +43,7 @@ gem 'sass-rails', '4.0.1'
 gem 'uglifier', '2.5.0'
 gem 'coffee-rails', '4.0.1'
 gem 'jquery-rails', '3.1.0'
-gem 'turbolinks', '1.1.1'
+gem 'turbolinks'
 gem 'jbuilder', '2.0.5'
 
 group :doc do

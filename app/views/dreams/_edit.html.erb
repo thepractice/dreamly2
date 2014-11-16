@@ -1,5 +1,8 @@
  <div class="modal-dialog modal-lg">
     <div class="modal-content">
+
+        <%= simple_form_for(dream_resource, remote: true, html: {"data-type" => :json, class: 'form-horizontal', id: 'edit-dream-form'}, wrapper: :horizontal_form) do |f| %>
+      
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           <%= icon('times') %>
@@ -8,8 +11,6 @@
       </div>
       <div class="modal-body">
 
-
-        <%= simple_form_for(dream_resource, remote: true, html: {"data-type" => :json, class: 'form-horizontal', id: 'edit-dream-form'}, wrapper: :horizontal_form) do |f| %>
 
     
           <div id="dream_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
@@ -81,7 +82,7 @@
         </div>
         <div class="modal-footer">
 
-          <button type="submit" class="btn btn-primary btn-square">
+          <button type="submit" class="btn btn-primary btn-square submit-btn">
             <%= icon('paper-plane') %>Save dream
           </button>
         <% end %>

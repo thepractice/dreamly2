@@ -1,5 +1,8 @@
  <div class="modal-dialog">
     <div class="modal-content">
+
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), remote: true, html: {"data-type" => :json, class: 'form-horizontal row'}, wrapper: :horizontal_form) do |f| %>
+      
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           <%= icon('times') %>
@@ -25,7 +28,7 @@
         <h4 style="text-align:center; margin-bottom:20px; margin-top: 20px;">Or</h4>
 
 
-        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), remote: true, html: {"data-type" => :json, class: 'form-horizontal row'}, wrapper: :horizontal_form) do |f| %>
+
     
           <div id="login_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
             <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -38,7 +41,7 @@
       </div>
 
           <div class="modal-footer">             
-            <button type="submit" class="btn btn-primary btn-lg btn-square">
+            <button type="submit" class="btn btn-primary btn-lg btn-square submit-btn">
               <%= icon('unlock') %>Sign in
             </button>
 

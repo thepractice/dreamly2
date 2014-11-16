@@ -81,7 +81,7 @@
 				</div>
 				<%= render 'follow_form' if user_signed_in? %>
 			</div>
-			<div>
+			<div data-spy="affix" data-offset-top="240">
 				<% if @user.dreams.any? %>
 					<div id="profile-graph" class="white-panel">
 						<%= link_to(user_path(@user.id, graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", "data-container" => "body", title: "Fullscreen"}) do %>
@@ -126,6 +126,8 @@
 			<div>
 				<% if params[:query] %>
 					<h3 class="content-title">Results for <strong><%= params[:query] %></strong></h3>
+				<% elsif params[:hashtag] %>
+					<h3 class="content-title">#<%= params[:hashtag] %></h3>
 				<% else %>
 					<h3 class="content-title">Dreams</h3>
 				<% end %>

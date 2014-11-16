@@ -381,7 +381,9 @@ class Dream < ActiveRecord::Base
 					hashtag.dreams_count = hashtag.dreams_count - 1
 					hashtag.save
 				else
-					self.user.hash_freq_public[hashtag.id] -= 1
+					unless self.user.hash_freq_public[hashtag.id] == nil
+						self.user.hash_freq_public[hashtag.id] -= 1
+					end
 				end
 				if hashtag.dreams.length < 1
 					hashtag.destroy

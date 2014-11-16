@@ -11,8 +11,8 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
 //= require bootstrap/dropdown
 //= require bootstrap/affix
@@ -26,3 +26,4 @@
 //= require bootstrap-slider
 //= require d3.min
 //= require d3.layout.cloud.js
+//= require turbolinks
