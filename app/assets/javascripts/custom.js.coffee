@@ -172,6 +172,8 @@ jQuery(document).on "ready page:change", ->
 			label = "Huge"
 		$("#impression-slider-value3").text label
 
+	Turbolinks.enableProgressBar()
+
 $(document).ready ->
 
 	# Use affix plugin

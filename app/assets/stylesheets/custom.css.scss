@@ -226,6 +226,7 @@ body{
 
 /* Landing page */
 
+
 #home-top-panel {
   background: $lightYellow;
   margin-top: -14px;
@@ -406,7 +407,7 @@ body{
 
 .index-upper-background {
   height: 46px;
-  background: #87859C;
+  background: #29264E;
   border-radius: 10px 10px 0 0;
 }
 
@@ -652,6 +653,10 @@ footer {
 
 .form-control{
   width: auto;
+}
+
+.form-horizontal {
+  background: white;
 }
 
 label {
