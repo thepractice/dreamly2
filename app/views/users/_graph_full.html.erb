@@ -67,7 +67,7 @@ var force = d3.layout.force()
       .attr("dy", ".35em")
       .attr("text-anchor", "middle")
       .attr("font-size", node_radius)
-      .attr("fill", function (d,i) { return color(i); })      
+      .attr("fill", function (d,i) { return 'white'; })      
       .text(function(d) { return d.name });
 
   var bbox_array = [];
@@ -76,11 +76,11 @@ var force = d3.layout.force()
   });
 
   node.insert("rect", "a")
-    .attr("x", function (d,i) { return bbox_array[i].x })
-    .attr("y", function (d,i) { return bbox_array[i].y })
-    .attr("width", function (d,i) { return bbox_array[i].width })
-    .attr("height", function (d,i) { return bbox_array[i].height })
-    .style("fill", function (d,i) { return 'white'; })
+    .attr("x", function (d,i) { return bbox_array[i].x -5 })
+    .attr("y", function (d,i) { return bbox_array[i].y -3 })
+    .attr("width", function (d,i) { return bbox_array[i].width + 10 })
+    .attr("height", function (d,i) { return bbox_array[i].height + 6 })
+    .style("fill", function (d,i) { return color(i); })
     .attr("opacity", 1);
 
 /*

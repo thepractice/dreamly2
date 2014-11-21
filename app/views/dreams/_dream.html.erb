@@ -1,6 +1,63 @@
 <% if (dream.private == false) || (current_user == dream.user) %>
 
+
+		<div class="dream">
+			<div class="dream-left">
+				<%= link_to dream.user do %>
+					<% if dream.user.avatar_file_name.nil? %>
+						<div class="dream-avatar-default">
+							<p><%= dream.user.username.first.upcase %></p>
+						</div>						
+					<% else %>
+						<%= image_tag dream.user.avatar.url(:thumb) %>
+					<% end %>
+				<% end %>
+			</div>
+			<div class="dream-right">
+				<div class="dream-right-top">
+					<div class="dream-right-top1">
+						<span class="dream-title small-font"><h4><%= link_to dream.title, dream %></h4></span>
+						<span class="small-font">dreamed <%= time_ago_in_words(dream.dreamed_on) %> ago by</span>
+						<span class="dreamer1 small-font"><%= link_to dream.user.name, dream.user %></span>
+						<span class="dreamer2 small-font"><%= link_to "@#{dream.user.username}", dream.user %></span>
+						<span class="small-font"> and submitted <%= time_ago_in_words(dream.created_at) %> ago</span>					
+					</div>
+					<div class="dream-right-top2">
+						<% if dream.impression == 2 %>
+							<div class="big-dream">
+								Big <%= icon('star') %>
+							</div>
+						<% elsif dream.impression == 3 %>
+							<div class="huge-dream">
+								Huge <%= icon('star') %>
+							</div>
+						<% end %>
+
+						<% if dream.private %>
+							<%= icon('lock') %>
+						<% else %>
+							<%= icon('unlock') %>
+						<% end %>
+					</div>
+
+				</div>
+		
+				<% if comment_count(dream) > 0 %>
+					<%= link_to(dream, html_options = { :class => "comment-link" }) do %>
+						<%= icon('comments') %>
+						<%= pluralize(comment_count(dream), 'comment') %>
+							<% if user_signed_in? %>
+								<% if dream.notifications.where(user: current_user, seen: false).present? %>
+									(<%= dream.notifications.where(user: current_user, seen: false).length %> new)
+								<% end %>				
+							<% end %>
+					<% end %>		
+				<% end %>
+			</div>
+		</div>
+
 <!--	<%= link_to dream do %> -->
+<!--
 
 		<div class="dream white-panel highlighter">
 			<div class="dream-left">
@@ -59,7 +116,10 @@
 					<% end %>		
 				<% end %>
 			</div>
+-->
 <!--			<%= link_to "hey", dream, class: "block-link" %> -->
+<!--
 		</div>
+-->
 <!--	<% end %> -->
 <% end %>
