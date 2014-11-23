@@ -218,6 +218,17 @@ class DreamsController < ApplicationController
 		end
 	end
 
+	def upvote
+		@dream = Dream.find(params[:id])
+		@dream.liked_by current_user
+		redirect_to @dream
+	end
+
+	def downvote
+		@dream = Dream.find(params[:id])
+		@dream.downvote_from current_user
+		redirect_to @dream
+	end	
 
 	def destroy
 		@dream.destroy

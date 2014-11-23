@@ -16,7 +16,12 @@ Jhad::Application.routes.draw do
   end
   resources :dreams do
     resources :comments
+    member do
+      put 'like', to: "dreams#upvote"
+      put "dislike", to: "dreams#downvote"
+    end
   end
+  
   resources :notifications
   resources :hashtags
   resources :relationships, only: [:create, :destroy]

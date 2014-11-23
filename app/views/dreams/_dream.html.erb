@@ -2,6 +2,19 @@
 
 
 		<div class="dream">
+			<div class="dream-left-left">
+
+				<%= link_to like_dream_path(dream), method: :put, :class => "vote-div vote-arrow" do %>
+				
+					<%= image_tag('up_arrow.png') %>
+				<% end %>
+				<span class="vote-div vote-counter"><%= dream.votes_for.size %></span>
+				<%= link_to dislike_dream_path(dream), method: :put, :class => "vote-div vote-arrow"  do %>
+					<%= image_tag('down_arrow.png') %>
+				<% end %>
+
+				
+			</div>
 			<div class="dream-left">
 				<%= link_to dream.user do %>
 					<% if dream.user.avatar_file_name.nil? %>

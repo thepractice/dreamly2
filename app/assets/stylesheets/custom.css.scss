@@ -1056,6 +1056,10 @@ body {
 }
 */
 
+.dream-left-left {
+  float: left;
+  margin-top: 9px;
+}
 
 .dream-left{
   float: left;
@@ -1533,4 +1537,26 @@ a:hover {
 
 .container-fluid {
   height: 100%;
+}
+
+.vote-div {
+  display: block;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  color: #d3d7d3;
+}
+
+.vote-counter {
+  line-height: 14px;
+  color: #b5b5b5;
+}
+
+.vote-arrow {
+  line-height: 0;
+
+}
+
+.col-md-9 {
+  padding-left: 0;
 }

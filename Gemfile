@@ -27,6 +27,7 @@ gem 'paperclip', '~> 4.2'
 gem 'twitter-text'
 gem 'friendly_id', '~> 5.0.0'
 gem 'jquery-turbolinks'
+gem 'acts_as_votable', '~> 0.10.0'
 
 
 group :development do

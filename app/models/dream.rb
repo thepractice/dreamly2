@@ -13,6 +13,8 @@ class Dream < ActiveRecord::Base
 	has_many :dreamtags
 	has_many :hashtags, through: :dreamtags
 
+	acts_as_votable
+
 	validates :body, presence: true
 	validates :user_id, presence: true
 
