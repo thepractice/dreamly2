@@ -171,13 +171,3 @@ jQuery(document).on "ready page:change", ->
 		if slideEvt.value == 3
 			label = "Huge"
 		$("#impression-slider-value3").text label
-
-	Turbolinks.enableProgressBar()
-
-$(document).ready ->
-
-	# Use affix plugin
-	$("[data-spy=affix]").affix offset:
-		top: 240
-
-	return

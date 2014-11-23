@@ -28,3 +28,4 @@
 //= require d3.layout.cloud.js
 //= require turbolinks
 
+Turbolinks.enableProgressBar();

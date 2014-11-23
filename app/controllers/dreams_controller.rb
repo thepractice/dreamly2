@@ -18,6 +18,14 @@ class DreamsController < ApplicationController
 			end
 		end
 		@dreams = @dreams_raw.paginate(page: params[:page], per_page: 40)
+		@hashes = Hash.new
+		@dreams_raw.each do |dream|
+			dream.hashtags.each do |hashtag|
+				@hashes[hashtag.id] =+ 1
+			end
+		end
+		@hashes = @hashes.sort_by { |k, v| v }
+		@hashes.reverse!
 
 	# Graph logic
 

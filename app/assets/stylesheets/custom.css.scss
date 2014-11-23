@@ -804,20 +804,107 @@ label {
 
 }
 
+.user-login {
+  margin: 0;
+}
+
+.submit-btn {
+  font-size: 15px;
+
+
+}
+
+.submit-btn-2 {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 6px 3px 6px;
+  border-radius: 0;
+  float: right;
+  position: relative;
+  top: -4px;
+}
+
+
+#oauth-links {
+  display: inline;
+}
+
+#signup_words {
+  float: right;
+  font-size: 12px;
+}
+
+.btn-login-2 {
+  padding: 2px 0px 0px 0px;
+  font-size: 13px;
+  border-radius: 0;
+  color: white;
+  width: 25px;
+  .fa {
+    margin-right: 0 !important;
+  }
+}
+
+
+.login-box {
+  width: 287px;
+}
+
+.login-box-lower {
+  clear: left;
+  border-bottom: 1px solid $lightGray;
+  width: 287px;
+  padding-bottom: 5px;
+  padding-top: 3px;
+  margin-bottom: 5px; 
+}
+
+.login-small-words {
+  font-size: 12px;
+  position: relative;
+  top: -3px;
+}
+
+.login-form {
+  display: inline;
+  width: 141px;
+  box-shadow: none;
+  border-radius: 0;
+  float: left;
+  margin-bottom: 7px;
+  background: rgb(250, 255, 189);
+}
+
+.username-login-form {
+  margin-right: 5px;
+}
+
 #twitter-login{
   background: #00bced;
+}
+#twitter-login:hover {
+    background: black;
 }
 
 #facebook-login {
   background: #3b5998;
 }
+#facebook-login:hover {
+    background: black;
+}
 
 #google-login {
   background: #5b76f7;
 }
+#google-login:hover {
+    background: black;
+}
 
 #yahoo-login {
   background: #810293;
+}
+#yahoo-login:hover {
+    background: black;
 }
 
 #user_password {
@@ -1232,10 +1319,15 @@ a:hover {
 }
 
 .btn-login {
-  min-width: 160px;
-  padding: 10px 16px;
+  padding: 5px;
   font-size: 17px;
+  .fa {
+    margin-right: 0;
+  }
 }
+
+
+
 
 .btn:hover {
   color: white;
