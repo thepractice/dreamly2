@@ -80,7 +80,7 @@ class StaticPagesController < ApplicationController
       @node_text = "["
       @nodes.each do |word_id|
 
-        @node_text += "{\"name\":\"#{Word.find(word_id).name}\",\"value\":#{@word_count[word_id][:freq]}},"
+        @node_text += "{\"name\":\"#{word_id}\",\"value\":#{@word_count[word_id][:freq]}},"
       end
       @node_text = @node_text[0..-2] unless @nodes.empty?       # remove extra comma
 
@@ -209,7 +209,7 @@ class StaticPagesController < ApplicationController
     @node_text = "["
     @nodes.each do |word_id|
 
-      @node_text += "{\"name\":\"#{Word.find(word_id).name}\",\"value\":#{@word_count[word_id][:freq]}},"
+      @node_text += "{\"name\":\"#{word_id}\",\"value\":#{@word_count[word_id][:freq]}},"
     end
     @node_text = @node_text[0..-2] unless @nodes.empty?       # remove extra comma
 

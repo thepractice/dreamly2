@@ -103,6 +103,7 @@ class Dream < ActiveRecord::Base
 				end
 
 				user_hashes = Hash[user_hashes.sort_by { |k, v| v }.reverse]
+				self.user.hash_freq_public = Hash[self.user.hash_freq_public.sort_by { |k, v| v }.reverse]
 				self.user.update_columns(hash_freq: user_hashes, hash_freq_public: self.user.hash_freq_public)
 
 			end		
@@ -134,60 +135,11 @@ class Dream < ActiveRecord::Base
 				if ( stopwords.exclude? word ) && word.length > 1
 					freqs[word] += 1 	# Iterate through raw words array, if freqs[word] == nil, create this
 				end
-			end																				# key-value pair with value of 1, else increment value by 1.
-			freqs = freqs.sort_by { |x, y| y }			# Sort by value (count)
-			freqs.reverse!													# put in descending order
+			end	
 
-			user_words = self.user.word_freq
+			freqs = Hash[freqs.sort_by{ |k, v| v }.reverse]	
 
-			user_words_public = self.user.word_freq_public
-
-			freqs.each do |word, frequency|
-
-
-				# Add unique words/frequencies to global Word table.										
-				word_record = Word.find_or_create_by(name: word)
-				word_record.global_count += frequency
-				word_record.dreams.push(self.id)	# Add dream_id to Word.dreams array
-				word_record.save
-
-
-				# Add word id/frequency to Dream Word_freq hash.
-				self.word_freq[word_record.id] = frequency
-
-				# Add unique word ids/frequencies to User word_freq hash. Currently hacky: default value of hash should be 0, not nil.
-
-			#	if user_words[word_record.id] == nil
-			#		user_words[word_record.id] = frequency
-			#	else
-			#		user_words[word_record.id] += frequency
-			#	end
-
-				# Add unique word ids/frequencies to User word_freq hash. Currently hacky: default value of hash should be 0, not nil.
-				if user_words[word_record.id] == nil
-					user_words[word_record.id] = { freq: frequency, dream_ids: [self.id] }
-				else
-					user_words[word_record.id][:freq] += frequency
-					user_words[word_record.id][:dream_ids].push(self.id)
-				end
-
-				if self.private == false
-					# Add unique word ids/frequencies to User word_freq_public hash. Currently hacky: default value of hash should be 0, not nil.
-					if user_words_public[word_record.id] == nil
-						user_words_public[word_record.id] = { freq: frequency, dream_ids: [self.id] }
-					else
-						user_words_public[word_record.id][:freq] += frequency
-						user_words_public[word_record.id][:dream_ids].push(self.id)
-					end
-				end
-
-			end
-			user_words = Hash[user_words.sort_by { |k, v| v[:freq] }.reverse]
-			user_words_public = Hash[user_words_public.sort_by { |k, v| v[:freq] }.reverse]
-			self.user.update_columns(word_freq: user_words)
-			self.user.update_columns(word_freq_public: user_words_public)
-
-		#	self.user.save   	# save User to save User word_freq hash
+			self.word_freq = freqs
 			self.update_columns(word_freq: self.word_freq)		# save Dream word_freq hash
 		end
 
@@ -337,46 +289,10 @@ class Dream < ActiveRecord::Base
 
 		def reverse_dream
 
-			user_words = self.user.word_freq
-			user_words_public = self.user.word_freq_public
-
-			# Iterate through dream word frequency hash
-			self.word_freq.each do |word_id, freq|
-				word_record = Word.find(word_id)
-				word_record.global_count -= freq 		# Decrement word record global count
-				word_record.dreams.delete(self.id)	# Remove dream id from word_record dream array
-
-				user_words[word_record.id][:freq] -= freq 							# Decrement User word_freq count
-				user_words[word_record.id][:dream_ids].delete(self.id)	# Remove dream_id from User word_freq hash
-
-				if user_words[word_record.id][:freq] == 0		# if User word_freq = 0, delete the listing from hash
-					user_words.delete(word_record.id)
-				end
-
-				self.user.update_columns(word_freq: user_words)			# Save User word_freq hash
-
-				if user_words_public[word_record.id]				# if the word is in the user's public record
-					user_words_public[word_record.id][:freq] -= freq 							# Decrement User word_freq_public count
-					user_words_public[word_record.id][:dream_ids].delete(self.id)	# Remove dream_id from user_words_public hash
-					if user_words_public[word_record.id][:freq] == 0		# if User word_freq = 0, delete the listing from hash
-						user_words_public.delete(word_record.id)
-					end	
-					self.user.update_columns(word_freq_public: user_words_public)			# Save User word_freq_public hash
-				end
-
-
-				if word_record.global_count == 0		# if word record global count = 0, delete the word record
-					word_record.destroy
-				else
-					word_record.save
-				end
-								
-			end
-
 			self.word_freq.clear			# Clear the Dream word_freq hash
 
 			self.hashtags.each do |hashtag|
-				self.dreamtags.where(hashtag: hashtag).destroy_all
+				
 				if self.private == false
 					hashtag.dreams_count = hashtag.dreams_count - 1
 					hashtag.save
@@ -391,6 +307,7 @@ class Dream < ActiveRecord::Base
 				if hashtag.dreams.length < 1
 					hashtag.destroy
 				end
+				self.dreamtags.where(hashtag: hashtag).destroy_all
 
 				self.user.hash_freq[hashtag.id] -= 1	# Decrement the User's hash count
 

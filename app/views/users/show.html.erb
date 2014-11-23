@@ -134,8 +134,10 @@
 							<h3 class="content-title">Results for <strong><%= params[:query] %></strong></h3>
 						<% elsif params[:hashtag] %>
 							<h3 class="content-title">#<%= params[:hashtag] %></h3>
-						<% else %>
+						<% elsif @user == current_user %>
 							<h3 class="content-title">My dreams</h3>
+						<% else %>
+							<h3 class="content-title"><%= @user.username %>'s dreams</h3>
 						<% end %>
 						<ul class="nav nav-pills nav-pills-inline" role="tablist">
 							<% if params[:impression] == '2' %>

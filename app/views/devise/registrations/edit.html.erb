@@ -1,11 +1,14 @@
 <div class="panel panel-default white-panel" id="edit-account">
+
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal row', id: 'edit_account_form', multipart: true}, wrapper: :horizontal_form) do |f| %>
+
   <div class="panel-heading">
     <h3 class="panel-title">Edit account</h3>
   </div>
   <div class="panel-body">
 
 
-    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal row', id: 'edit_account_form', multipart: true}, wrapper: :horizontal_form) do |f| %>
+
     
           <div id="edit_account_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
             <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -33,6 +36,12 @@
     <button type="submit" class="btn btn-primary btn-square">
       Save changes
     </button>
-  <% end %>
+  
   </div>
+  <% end %>
 </div>
+
+
+
+
+

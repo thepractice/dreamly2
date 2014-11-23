@@ -32,12 +32,12 @@ class DreamsController < ApplicationController
 		@word_count = Hash.new
 		# Create hash of word frequencies in all relevant dreams
 		@dreams.each do |dream|
-			dream.word_freq.each do |word_id, frequency|
-				if @word_count[word_id] == nil
-					@word_count[word_id] = { freq: frequency, dream_ids: [dream.id] }
+			dream.word_freq.each do |word, frequency|
+				if @word_count[word] == nil
+					@word_count[word] = { freq: frequency, dream_ids: [dream.id] }
 				else
-					@word_count[word_id][:freq] += frequency
-					@word_count[word_id][:dream_ids].push(dream.id)
+					@word_count[word][:freq] += frequency
+					@word_count[word][:dream_ids].push(dream.id)
 				end
 			end
 		end
@@ -67,14 +67,14 @@ class DreamsController < ApplicationController
 		@links = Array.new
 
 		@min_words.times do |n|
-			@word_object_id = @nodes[n]
+			@word = @nodes[n]
 			@word_object_assocs = Hash.new(0)
-			@word_object_dreams = @word_count[@word_object_id][:dream_ids]
+			@word_object_dreams = @word_count[@word][:dream_ids]
 
 			@word_object_dreams.each do |dream_id|
-				Dream.find(dream_id).word_freq.each do |word_id, freq|
-					if word_id != @word_object_id
-						@word_object_assocs[word_id] += freq
+				Dream.find(dream_id).word_freq.each do |word2, freq|
+					if word2 != @word
+						@word_object_assocs[word2] += freq
 					end
 				end
 			end
@@ -83,19 +83,19 @@ class DreamsController < ApplicationController
 			@min_assocs = [@word_object_assocs.length, @min_assocs_constant].min
 			@min_assocs.times do |i|
 				if @nodes.include? @word_object_assocs.keys[i]		# if the association is already a node
-					@links.push([@nodes.index(@word_object_id), @nodes.index(@word_object_assocs.keys[i])])	# write the link
+					@links.push([@nodes.index(@word), @nodes.index(@word_object_assocs.keys[i])])	# write the link
 				else @nodes.include? @word_object_assocs.keys[i]		
 					@nodes.push(@word_object_assocs.keys[i])
-					@links.push([@nodes.index(@word_object_id), @nodes.index(@word_object_assocs.keys[i])])
+					@links.push([@nodes.index(@word), @nodes.index(@word_object_assocs.keys[i])])
 				end
 			end
 		end
 
 
 		@node_text = "["
-		@nodes.each do |word_id|
+		@nodes.each do |word|
 
-			@node_text += "{\"name\":\"#{Word.find(word_id).name}\",\"value\":#{@word_count[word_id][:freq]}},"
+			@node_text += "{\"name\":\"#{word}\",\"value\":#{@word_count[word][:freq]}},"
 		end
 		@node_text = @node_text[0..-2] unless @nodes.empty?				# remove extra comma
 
@@ -127,18 +127,9 @@ class DreamsController < ApplicationController
 
 	# Graph logic
 
-		@word_count = Hash.new
-		# Create hash of word frequencies in all relevant dreams
-		@dream.word_freq.each do |word_id, frequency|
-			if @word_count[word_id] == nil
-				@word_count[word_id] = frequency
-			else
-				@word_count[word_id] += frequency
-			end
-		end
-		
-		@word_count_sort = @word_count.sort_by { |k, v| v }
-		@word_count_sort.reverse!
+		@word_count = @dream.word_freq
+
+
 
 		if params[:graph]
 			@min_words_constant = 15
@@ -153,9 +144,9 @@ class DreamsController < ApplicationController
 		end
 
 		@node_text = "["
-		@nodes.each do |word_id|
+		@nodes.each do |word|
 
-			@node_text += "{\"name\":\"#{Word.find(word_id).name}\",\"value\":#{@word_count[word_id]}},"
+			@node_text += "{\"name\":\"#{word}\",\"value\":#{@word_count[word]}},"
 		end
 		@node_text = @node_text[0..-2] unless @nodes.empty?				# remove extra comma
 
