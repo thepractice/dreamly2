@@ -17,6 +17,52 @@ class DreamsController < ApplicationController
 				@dreams_raw = Dream.regular.where(private: false)
 			end
 		end
+
+		@sorting_array = []
+
+		if params[:time] == '24hr'
+
+			@dreams_raw.each do |dream|
+				@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 24.hours.ago..Time.now).size - dream.get_downvotes.where(:created_at => 24.hours.ago..Time.now).size])
+			end		
+			
+		elsif params[:time] == 'week'
+
+			@dreams_raw.each do |dream|
+				@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.week.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.week.ago..Time.now).size])
+			end		
+
+		elsif params[:time] == 'month'
+
+			@dreams_raw.each do |dream|
+				@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.month.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.month.ago..Time.now).size])
+			end		
+
+		elsif params[:time] == 'year'
+
+			@dreams_raw.each do |dream|
+				@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.year.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.year.ago..Time.now).size])
+			end		
+
+		elsif params[:time] == 'all'
+
+			@dreams_raw.each do |dream|
+				@sorting_array.push([dream, dream.get_upvotes.size - dream.get_downvotes.size])
+			end							
+
+		else
+
+			@dreams_raw.each do |dream|
+				@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.week.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.week.ago..Time.now).size])
+			end		
+
+		end
+
+		@dreams_raw = @sorting_array.reverse.each_with_index.sort_by { |a, idx| [a[1], idx] }.reverse.map(&:first).map { |x| x[0] }
+
+
+
+
 		@dreams = @dreams_raw.paginate(page: params[:page], per_page: 40)
 		@hashes = Hash.new
 		@dreams_raw.each do |dream|

@@ -19,8 +19,11 @@ class Dream < ActiveRecord::Base
 	validates :user_id, presence: true
 
 #	default_scope -> { order('dreamed_on DESC, created_at DESC') }
-	scope :regular, -> { order('dreamed_on DESC, created_at DESC') }
+	scope :regular, -> { order('created_at DESC') }
+	scope :chronological, -> { order('dreamed_on DESC, created_at DESC') }
 	scope :impression, -> (min_impression) { where("impression >= ?", min_impression) }
+
+
 
 
 
@@ -37,6 +40,8 @@ class Dream < ActiveRecord::Base
 	multisearchable against: [:title, :body]
 	pg_search_scope :search, against: [:title, :body],
 		using: {tsearch: {dictionary: "english"}}
+
+
 
 	def self.text_search(query)
 		if query.present?
@@ -135,11 +140,13 @@ class Dream < ActiveRecord::Base
 			words.each do |word|
 				word.downcase!
 				if ( stopwords.exclude? word ) && word.length > 1
-					freqs[word] += 1 	# Iterate through raw words array, if freqs[word] == nil, create this
+					stem = Lingua.stemmer(word)
+					freqs[stem][0] += 1 	# Iterate through raw words array, if freqs[word] == nil, create this
+					freqs[stem][1] = word
 				end
 			end	
 
-			freqs = Hash[freqs.sort_by{ |k, v| v }.reverse]	
+			freqs = Hash[freqs.sort_by{ |k, v| v[0] }.reverse]	
 
 			self.word_freq = freqs
 			self.update_columns(word_freq: self.word_freq)		# save Dream word_freq hash

@@ -28,10 +28,18 @@ class UsersController < ApplicationController
 					if @hashtag == nil
 						@dreams_raw = @user.dreams.where("impression = 5")	#hack to get empty collection of dreams
 					else
-						@dreams_raw = @hashtag.dreams.regular.where(user: @user).impression(params[:impression])
+						if @user == current_user
+							@dreams_raw = @hashtag.dreams.chronological.where(user: @user).impression(params[:impression])
+						else
+							@dreams_raw = @hashtag.dreams.regular.where(user: @user).impression(params[:impression])
+						end
 					end
 				else
-					@dreams_raw = @user.dreams.regular.impression(params[:impression])
+					if @user == current_user
+						@dreams_raw = @user.dreams.chronological.impression(params[:impression])
+					else					
+						@dreams_raw = @user.dreams.regular.impression(params[:impression])
+					end
 				end
 			else
 				if params[:hashtag].present?
@@ -39,10 +47,18 @@ class UsersController < ApplicationController
 					if @hashtag == nil
 						@dreams_raw = @user.dreams.where("impression = 5")	#hack to get empty collection of dreams
 					else
-						@dreams_raw = @hashtag.dreams.regular.where(user: @user)
+						if @user == current_user
+							@dreams_raw = @hashtag.dreams.chronological.where(user: @user)
+						else						
+							@dreams_raw = @hashtag.dreams.regular.where(user: @user)
+						end
 					end
-				else				
-					@dreams_raw = @user.dreams.regular
+				else
+					if @user == current_user
+						@dreams_raw = @user.dreams.chronological
+					else					
+						@dreams_raw = @user.dreams.regular
+					end
 				end
 			end
 		end

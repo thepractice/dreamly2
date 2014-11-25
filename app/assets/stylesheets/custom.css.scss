@@ -847,13 +847,13 @@ label {
 
 
 .login-box {
-  width: 287px;
+  width: 100%;
 }
 
 .login-box-lower {
   clear: left;
   border-bottom: 1px solid $lightGray;
-  width: 287px;
+  width: 100%;
   padding-bottom: 5px;
   padding-top: 3px;
   margin-bottom: 5px; 
@@ -867,7 +867,7 @@ label {
 
 .login-form {
   display: inline;
-  width: 141px;
+  width: 49%;
   box-shadow: none;
   border-radius: 0;
   float: left;
@@ -1559,4 +1559,30 @@ a:hover {
 
 .col-md-9 {
   padding-left: 0;
+}
+
+.sort-dropdown {
+  display: inline-block;
+  .dropdown-toggle {
+    border-radius: 0 4px 4px 0;
+    border-left: 0;
+  }
+  .fa {
+    margin-right: 0 !important;
+    margin-left: 4px;
+  }
+  top: -1px;
+  left: -3px;
+}
+
+
+
+.dropdown-title {
+  display: inline-block;
+  background: #2ecc71;
+  padding: 6px 12px;
+  color: white;
+  border-radius: 4px 0 0 4px;
+  border: 1px solid #adadad;
+  border-right: 0;
 }
