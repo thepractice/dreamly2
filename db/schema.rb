@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141123185128) do
+ActiveRecord::Schema.define(version: 20150115015251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,17 @@ ActiveRecord::Schema.define(version: 20141123185128) do
 
   add_index "comments", ["dream_id"], name: "index_comments_on_dream_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "dreamemotions", force: true do |t|
+    t.integer  "dream_id"
+    t.integer  "emotion_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "dreamemotions", ["dream_id", "emotion_id"], name: "index_dreamemotions_on_dream_id_and_emotion_id", unique: true, using: :btree
+  add_index "dreamemotions", ["dream_id"], name: "index_dreamemotions_on_dream_id", using: :btree
+  add_index "dreamemotions", ["emotion_id"], name: "index_dreamemotions_on_emotion_id", using: :btree
 
   create_table "dreams", force: true do |t|
     t.string   "title"
@@ -50,6 +61,15 @@ ActiveRecord::Schema.define(version: 20141123185128) do
   add_index "dreamtags", ["dream_id", "hashtag_id"], name: "index_dreamtags_on_dream_id_and_hashtag_id", unique: true, using: :btree
   add_index "dreamtags", ["dream_id"], name: "index_dreamtags_on_dream_id", using: :btree
   add_index "dreamtags", ["hashtag_id"], name: "index_dreamtags_on_hashtag_id", using: :btree
+
+  create_table "emotions", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "dreams_count", default: 0
+  end
+
+  add_index "emotions", ["dreams_count"], name: "index_emotions_on_dreams_count", using: :btree
 
   create_table "hashtags", force: true do |t|
     t.string   "name"
@@ -120,6 +140,8 @@ ActiveRecord::Schema.define(version: 20141123185128) do
     t.datetime "avatar_updated_at"
     t.text     "hash_freq"
     t.text     "hash_freq_public"
+    t.text     "emotion_freq"
+    t.text     "emotion_freq_public"
   end
 
   add_index "users", ["dream_count"], name: "index_users_on_dream_count", using: :btree

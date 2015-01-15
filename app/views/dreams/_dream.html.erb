@@ -66,6 +66,11 @@
 				<div class="dream-right-top">
 					<div class="dream-right-top1">
 						<span class="dream-title small-font"><h4><%= link_to dream.title, dream %></h4></span>
+						<% dream.emotions.each do |emotion| %>
+							<% if emotion.id == 2 %>
+								Happy!
+							<% end %>
+						<% end %>
 						<span class="small-font">dreamed <%= time_ago_in_words(dream.dreamed_on) %> ago by</span>
 						<span class="dreamer1 small-font"><%= link_to dream.user.name, dream.user %></span>
 						<span class="dreamer2 small-font"><%= link_to "@#{dream.user.username}", dream.user %></span>

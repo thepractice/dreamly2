@@ -12,6 +12,8 @@ class Dream < ActiveRecord::Base
 	has_many :notifications, dependent: :destroy
 	has_many :dreamtags
 	has_many :hashtags, through: :dreamtags
+	has_many :dreamemotions
+	has_many :emotions, through: :dreamemotions
 
 	acts_as_votable
 
@@ -89,6 +91,7 @@ class Dream < ActiveRecord::Base
 
 				if self.dreamtags.where(hashtag_id: hashtag_record.id).empty?		# Avoid double-creating the dreamtag (? needed)
 					self.dreamtags.create(hashtag_id: hashtag_record.id)   # Create the intermediate relationship
+
 				end
 
 				if self.private == false
@@ -113,11 +116,7 @@ class Dream < ActiveRecord::Base
 				self.user.hash_freq_public = Hash[self.user.hash_freq_public.sort_by { |k, v| v }.reverse]
 				self.user.update_columns(hash_freq: user_hashes, hash_freq_public: self.user.hash_freq_public)
 
-			end		
-
-			
-			
-
+			end
 
 
 
@@ -139,6 +138,11 @@ class Dream < ActiveRecord::Base
 			freqs = Hash.new										# Instantiate new hash to hold unique word frequencies
 			words.each do |word|
 				word.downcase!
+		
+				if self.dreamemotions.where(emotion_id: 2).empty?		# Avoid double-creating the dreamtag (? needed)
+					self.dreamemotions.create(emotion_id: 2)	# Create the intermediate relationship
+				end	
+
 				if ( stopwords.exclude? word ) && word.length > 1
 					stem = Lingua.stemmer(word)
 					if freqs[stem] == nil	# If the stem id not already listed
