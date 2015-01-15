@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
+  acts_as_voter
+
   has_attached_file :avatar, :styles => { :large => "200x200>", :medium => "70x70>", :thumb => "48x48>" }, :default_url => "/images/:style/missing.jpeg"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 

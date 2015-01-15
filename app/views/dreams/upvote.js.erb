@@ -1,0 +1,5 @@
+
+
+$("#upvote_"+"<%= @dream.id %>").html("<%= escape_javascript(render('dreams/upvote')) %>")
+$("#downvote_"+"<%= @dream.id %>").html("<%= escape_javascript(render('dreams/no_downvote')) %>")
+$("#counter_" + "<%= @dream.id %>").html("<%= @dream.get_upvotes.size - @dream.get_downvotes.size %>")

@@ -77,13 +77,13 @@ class DreamsController < ApplicationController
 
 		@word_count = Hash.new
 		# Create hash of word frequencies in all relevant dreams
-		@dreams.each do |dream|
-			dream.word_freq.each do |word, frequency|
-				if @word_count[word] == nil
-					@word_count[word] = { freq: frequency, dream_ids: [dream.id] }
+		@dreams_raw.each do |dream|
+			dream.word_freq.each do |stem, info_array|
+				if @word_count[info_array[0]] == nil
+					@word_count[info_array[0]] = { freq: info_array[1], dream_ids: [dream.id] }
 				else
-					@word_count[word][:freq] += frequency
-					@word_count[word][:dream_ids].push(dream.id)
+					@word_count[info_array[0]][:freq] += info_array[1]
+					@word_count[info_array[0]][:dream_ids].push(dream.id)
 				end
 			end
 		end
@@ -102,9 +102,10 @@ class DreamsController < ApplicationController
 		else
 			@min_words_constant = 5
 			@min_assocs_constant = 2
-		end		
+		end
 
 		@nodes = Array.new
+
 		@min_words = [@word_count.length, @min_words_constant].min
 		@min_words.times do |n|
 			@nodes.push(@word_count_sort[n][0])			#@word_count_sort has become an array.
@@ -113,14 +114,14 @@ class DreamsController < ApplicationController
 		@links = Array.new
 
 		@min_words.times do |n|
-			@word = @nodes[n]
+			@word_object_id = @nodes[n]
 			@word_object_assocs = Hash.new(0)
-			@word_object_dreams = @word_count[@word][:dream_ids]
+			@word_object_dreams = @word_count[@word_object_id][:dream_ids]
 
 			@word_object_dreams.each do |dream_id|
-				Dream.find(dream_id).word_freq.each do |word2, freq|
-					if word2 != @word
-						@word_object_assocs[word2] += freq
+				Dream.find(dream_id).word_freq.each do |stem, info_array|
+					if info_array[0] != @word_object_id
+						@word_object_assocs[info_array[0]] += info_array[1]
 					end
 				end
 			end
@@ -129,19 +130,19 @@ class DreamsController < ApplicationController
 			@min_assocs = [@word_object_assocs.length, @min_assocs_constant].min
 			@min_assocs.times do |i|
 				if @nodes.include? @word_object_assocs.keys[i]		# if the association is already a node
-					@links.push([@nodes.index(@word), @nodes.index(@word_object_assocs.keys[i])])	# write the link
+					@links.push([@nodes.index(@word_object_id), @nodes.index(@word_object_assocs.keys[i])])	# write the link
 				else @nodes.include? @word_object_assocs.keys[i]		
 					@nodes.push(@word_object_assocs.keys[i])
-					@links.push([@nodes.index(@word), @nodes.index(@word_object_assocs.keys[i])])
+					@links.push([@nodes.index(@word_object_id), @nodes.index(@word_object_assocs.keys[i])])
 				end
 			end
 		end
 
 
 		@node_text = "["
-		@nodes.each do |word|
+		@nodes.each do |word_id|
 
-			@node_text += "{\"name\":\"#{word}\",\"value\":#{@word_count[word][:freq]}},"
+			@node_text += "{\"name\":\"#{word_id}\",\"value\":#{@word_count[word_id][:freq]}},"
 		end
 		@node_text = @node_text[0..-2] unless @nodes.empty?				# remove extra comma
 
@@ -156,7 +157,9 @@ class DreamsController < ApplicationController
 
 		@link_text += "]"
 
-		@graph_text = "{\"nodes\":#{@node_text},\"links\":#{@link_text}}"		
+		@graph_text = "{\"nodes\":#{@node_text},\"links\":#{@link_text}}"	
+
+	#	end    # What does this end?	
 
 	end
 
@@ -266,20 +269,39 @@ class DreamsController < ApplicationController
 
 	def upvote
 		@dream = Dream.find(params[:id])
+		if user_signed_in?
+			if current_user.voted_as_when_voted_for @dream
+				@dream.unliked_by current_user
+			else
+				@dream.liked_by current_user
+		end
+
+		
+
 		@dream.liked_by current_user
-		redirect_to @dream
+		session[:return_to] ||= request.referer		#Store the requesting url in the session hash
+		respond_to do |format|
+			format.html { redirect_to session.delete(:return_to) }	#redirect to the requesting url
+			format.js
+		end		
 	end
 
 	def downvote
 		@dream = Dream.find(params[:id])
 		@dream.downvote_from current_user
-		redirect_to @dream
+		session[:return_to] ||= request.referer		#Store the requesting url in the session hash
+		respond_to do |format|
+			format.html { redirect_to session.delete(:return_to) }	#redirect to the requesting url
+			format.js
+		end
 	end	
 
 	def destroy
 		@dream.destroy
 		redirect_to root_url
 	end
+
+	end #?
 
 	private
 
@@ -292,4 +314,6 @@ class DreamsController < ApplicationController
 			redirect_to root_url if @dream.nil?
 		end
 		
+
+
 end

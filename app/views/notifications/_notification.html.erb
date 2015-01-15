@@ -5,7 +5,7 @@
 		<span><%= notification.created_at.strftime("%^b") %></span><br />
 		<span><%= notification.created_at.strftime("%d") %></span><br/>
 		<% if notification.created_at.year != Time.now.year %>
-			<span class="year"><%= @dream.dreamed_on.strftime("%Y") %></span>
+			<span class="year"><%= notification.created_at.strftime("%Y") %></span>
 		<% end %>
 	</div>
 	<div class="notify-right">

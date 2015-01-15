@@ -1,18 +1,54 @@
 <% if (dream.private == false) || (current_user == dream.user) %>
 
 
+
+
+
 		<div class="dream">
 			<div class="dream-left-left">
-
-				<%= link_to like_dream_path(dream), method: :put, :class => "vote-div vote-arrow" do %>
-				
-					<%= image_tag('up_arrow.png') %>
+			<% div_id = "upvote_#{dream.id}" %>
+			<div id="<%= div_id %>">				
+				<% if user_signed_in? %>
+					<% if current_user.voted_as_when_voted_for dream  %>
+						<%= link_to like_dream_path(dream), method: :put, :id => "upvote-",:class => "vote-div vote-arrow", :remote => true do %>
+							<%= image_tag('up_arrow_green.png') %>
+						<% end %>
+					<% else %>
+						<%= link_to like_dream_path(dream), method: :put, :class => "vote-div vote-arrow", :remote => true do %>
+							<%= image_tag('up_arrow.png') %>
+						<% end %>								
+					<% end %>
+				<% else %>
+					<%= link_to like_dream_path(dream), method: :put, :class => "vote-div vote-arrow", :remote => true do %>
+						<%= image_tag('up_arrow.png') %>
+					<% end %>				
 				<% end %>
-				<span class="vote-div vote-counter"><%= dream.get_upvotes.size - dream.get_downvotes.size %></span>
-				<%= link_to dislike_dream_path(dream), method: :put, :class => "vote-div vote-arrow"  do %>
-					<%= image_tag('down_arrow.png') %>
-				<% end %>
+			</div>
 
+
+				<% span_id_counter = "counter_#{dream.id}" %>
+				<span id="<%= span_id_counter %>" class="vote-div vote-counter"><%= dream.get_upvotes.size - dream.get_downvotes.size %></span>
+
+
+				<% div_id_downvote = "downvote_#{dream.id}" %>
+				<div id="<%= div_id_downvote %>">						
+
+					<% if user_signed_in? %>
+						<% if current_user.voted_down_on? dream %>
+							<%= link_to dislike_dream_path(dream), method: :put, :class => "vote-div vote-arrow", :remote => true  do %>
+								<%= image_tag('down_arrow_red.png') %>
+							<% end %>
+						<% else %>
+							<%= link_to dislike_dream_path(dream), method: :put, :class => "vote-div vote-arrow", :remote => true  do %>
+								<%= image_tag('down_arrow.png') %>
+							<% end %>					
+						<% end %>
+					<% else %>
+						<%= link_to dislike_dream_path(dream), method: :put, :class => "vote-div vote-arrow", :remote => true  do %>
+							<%= image_tag('down_arrow.png') %>
+						<% end %>
+					<% end %>
+				</div>	
 				
 			</div>
 			<div class="dream-left">
