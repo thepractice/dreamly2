@@ -125,7 +125,43 @@ class Dream < ActiveRecord::Base
 
 		def gather_words
 
-			stopwords = ['starts','someone','gets','saying','kind','others','ll','soon','large','huge', 'talking','ask','start','agree','getting','walk','find','tried','put','couple','quite','ready','goes','anyone','everyone','didn','large','until', 'little','big','much','small','above','over','more','onto','even','suddenly','actually','years', 'same','found','both','away',  'asks', 'wanted','felt','sort','front','each','few','still','woke','came','thing' 'talking','sitting','through','lot','myself','good' 'over','room', 'thought', 'person', 'leave','need','last','night', 'before','now','want','well','look','looks','looked', 'area','show','comes','land',  'type','tell','two','take','left','place','know',  'came','started','knew','think','people','went','time','very','another','first','don' , 'real', 'life','really', 'looked','told','around','next','saw','way','going','see','being','out','remember', 'thee', 'thy', 'thou', 'though', 'thine', 'walking','right','back','outside','doesn','dream','up','down','something','one','go',"re", "ve", "a","able","about","across","after","all","almost","also","am","among","an","and","any","are","as","at","be","because","been","but","by","can","cannot","could","dear","did","do","does","either","else","ever","every","for","from","get","got","had","has","have","he","her","hers","him","his","how","however","i","if","in","into","is","it","its","just","least","let","like","likely","may","me","might","most","must","my","neither","no","nor","not","of","off","often","on","only","or","other","our","own","rather","said","say","says","she","should","since","so","some","than","that","the","their","them","then","there","these","they","this","tis","to","too","twas","us","wants","was","we","were","what","when","where","which","while","who","whom","why","will","with","would","yet","you","your","ain't","aren't","can't","could've","couldn't","didn't","doesn't","don't","hasn't","he'd","he'll","he's","how'd","how'll","how's","i'd","i'll","i'm","i've","isn't","it's","might've","mightn't","must've","mustn't","shan't","she'd","she'll","she's","should've","shouldn't","that'll","that's","there's","they'd","they'll","they're","they've","wasn't","we'd","we'll","we're","weren't","what'd","what's","when'd","when'll","when's","where'd","where'll","where's","who'd","who'll","who's","why'd","why'll","why's","won't","would've","wouldn't","you'd","you'll","you're","you've"]
+			stopwords = ['everyone','someone','starts','someone','gets','saying','kind','others','ll','soon','large','huge', 'talking','ask','start','agree','getting','walk','find','tried','put','couple','quite','ready','goes','anyone','everyone','didn','large','until', 'little','big','much','small','above','over','more','onto','even','suddenly','actually','years', 'same','found','both','away',  'asks', 'wanted','felt','sort','front','each','few','still','woke','came','thing' 'talking','sitting','through','lot','myself','good' 'over','room', 'thought', 'person', 'leave','need','last','night', 'before','now','want','well','look','looks','looked', 'area','show','comes','land',  'type','tell','two','take','left','place','know',  'came','started','knew','think','people','went','time','very','another','first','don' , 'real', 'life','really', 'looked','told','around','next','saw','way','going','see','being','out','remember', 'thee', 'thy', 'thou', 'though', 'thine', 'walking','right','back','outside','doesn','dream','up','down','something','one','go',"re", "ve", "a","able","about","across","after","all","almost","also","am","among","an","and","any","are","as","at","be","because","been","but","by","can","cannot","could","dear","did","do","does","either","else","ever","every","for","from","get","got","had","has","have","he","her","hers","him","his","how","however","i","if","in","into","is","it","its","just","least","let","like","likely","may","me","might","most","must","my","neither","no","nor","not","of","off","often","on","only","or","other","our","own","rather","said","say","says","she","should","since","so","some","than","that","the","their","them","then","there","these","they","this","tis","to","too","twas","us","wants","was","we","were","what","when","where","which","while","who","whom","why","will","with","would","yet","you","your","ain't","aren't","can't","could've","couldn't","didn't","doesn't","don't","hasn't","he'd","he'll","he's","how'd","how'll","how's","i'd","i'll","i'm","i've","isn't","it's","might've","mightn't","must've","mustn't","shan't","she'd","she'll","she's","should've","shouldn't","that'll","that's","there's","they'd","they'll","they're","they've","wasn't","we'd","we'll","we're","weren't","what'd","what's","when'd","when'll","when's","where'd","where'll","where's","who'd","who'll","who's","why'd","why'll","why's","won't","would've","wouldn't","you'd","you'll","you're","you've"]
+
+			happy_words = ['joy', 'cheerful', 'zest', 'contentment', 'optimism', 'optimistic', 'relief', 'relieved', 'amusement', 'bliss', 'cheerfulness', 'gaiety', 'glee', 'jolliness', 'joviality', 'joy', 'delight', 'enjoyment', 'gladness', 'happiness', 'jubilation', 'elation', 'satisfaction', 'satisfying', 'ecstasy', 'ecstatic', 'euphoria', 'euphoric', 'enthusiasm', 'enthusiastic', 'zeal', 'zest', 'thrill', 'exhilaration', 'pleasure', 'pleasing', 'pride', 'proud', 'triumph', 'eagerness', 'hope', 'enthrallment', 'rapture']
+			happy_stems = []
+			happy_words.each do |word|
+				happy_stems.push(Lingua.stemmer(word))
+			end
+			angry_words = ['anger', 'angry', 'irritation', 'expasperation', 'rage', 'contempt', 'envy', 'envious', 'jealousy', 'jealous', 'aggravation', 'irritation', 'agitation', 'annoyance', 'grouchiness', 'grouch', 'grumpiness', 'grump', 'frustration', 'outrage', 'fury', 'furious', 'wrath', 'hostility', 'ferocity', 'ferocious', 'bitterness', 'hate', 'loathing', 'scorn', 'spite', 'vengefulness', 'vengeance', 'dislike', 'resentment', 'torment']
+			angry_stems = []
+			angry_words.each do |word|
+				angry_stems.push(Lingua.stemmer(word))
+			end
+			afraid_words = ['nightmare','spooky','fear', 'afraid', 'petrify', 'terror', 'horror', 'horrify', 'anxiety', 'anxious', 'nervousness', 'surprise', 'alarm', 'shock', 'fright', 'panic', 'hysteria', 'hysterical', 'mortification', 'mortifying', 'tenseness', 'uneasiness', 'apprehension', 'worry', 'distress', 'dread']
+			afraid_stems = []
+			afraid_words.each do |word|
+				afraid_stems.push(Lingua.stemmer(word))
+			end
+			disgusted_words = ['disgust', 'queasiness', 'revulsion', 'revolting', 'contempt', 'contemptuous', 'gross', 'nasty','noxious']
+			disgusted_stems = []
+			disgusted_words.each do |word|
+				disgusted_stems.push(Lingua.stemmer(word))
+			end
+			sad_words = ['sadder','bawl','crying','sad', 'sadden', 'suffering', 'disappointment', 'neglect', 'pity', 'piteous', 'sympathy', 'sympathetic', 'agony', 'agonizing', 'hurt', 'anguish', 'depression', 'despair', 'hopelessness', 'gloom', 'gloomy', 'glumness', 'unhappiness', 'grief', 'grieve', 'sorrow', 'woe', 'misery', 'miserable', 'melancholy', 'dismay', 'displeasure', 'alienation', 'isolation', 'loneliness', 'lonely', 'rejection', 'homesickness', 'defeat', 'dejection', 'insecurity', 'insult']
+			sad_stems = []
+			sad_words.each do |word|
+				sad_stems.push(Lingua.stemmer(word))
+			end
+			desiring_words = ['incest', 'desire', 'lust', 'love', 'affection', 'longing', 'Adoration', 'affection', 'love', 'fondness', 'liking', 'attraction', 'caring', 'tenderness', 'compassion', 'sentimentality', 'Arousal', 'desire', 'lust', 'passion', 'infatuation']
+			desiring_stems = []
+			desiring_words.each do |word|
+				desiring_stems.push(Lingua.stemmer(word))
+			end
+			guilty_words = ['guilty', 'guilt', 'shame', 'regret', 'remorse', 'embarrassment', 'humiliation']
+			guilty_stems = []
+			guilty_words.each do |word|
+				guilty_stems.push(Lingua.stemmer(word))
+			end
 
 			body = self.body
 			words = body.split(/\W+/)								# Split dream body into array of words
@@ -138,13 +174,46 @@ class Dream < ActiveRecord::Base
 			freqs = Hash.new										# Instantiate new hash to hold unique word frequencies
 			words.each do |word|
 				word.downcase!
-		
-				if self.dreamemotions.where(emotion_id: 2).empty?		# Avoid double-creating the dreamtag (? needed)
-					self.dreamemotions.create(emotion_id: 2)	# Create the intermediate relationship
-				end	
 
 				if ( stopwords.exclude? word ) && word.length > 1
 					stem = Lingua.stemmer(word)
+
+					if happy_stems.include? stem
+						if self.dreamemotions.where(emotion_id: 4).empty?		# Avoid double-creating the dreamemotion (? needed)
+							self.dreamemotions.create(emotion_id: 4)	# Create the intermediate relationship
+						end	
+					end
+					if angry_stems.include? stem
+						if self.dreamemotions.where(emotion_id: 1).empty?
+							self.dreamemotions.create(emotion_id: 1)
+						end
+					end
+					if afraid_stems.include? stem
+						if self.dreamemotions.where(emotion_id: 2).empty?
+							self.dreamemotions.create(emotion_id: 2)
+						end
+					end
+					if disgusted_stems.include? stem
+						if self.dreamemotions.where(emotion_id: 3).empty?
+							self.dreamemotions.create(emotion_id: 3)
+						end
+					end
+					if sad_stems.include? stem
+						if self.dreamemotions.where(emotion_id: 5).empty?
+							self.dreamemotions.create(emotion_id: 5)
+						end
+					end
+					if desiring_stems.include? stem
+						if self.dreamemotions.where(emotion_id: 6).empty?
+							self.dreamemotions.create(emotion_id: 6)
+						end
+					end
+					if guilty_stems.include? stem
+						if self.dreamemotions.where(emotion_id: 7).empty?
+							self.dreamemotions.create(emotion_id: 7)
+						end
+					end
+
 					if freqs[stem] == nil	# If the stem id not already listed
 						freqs[stem] = [word, 1]
 					

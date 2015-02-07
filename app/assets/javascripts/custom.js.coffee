@@ -132,6 +132,7 @@ jQuery(document).on "ready page:change", ->
 
 # Enable tooltips. Must come before Impression Slider.
 	$("#full-screen-icon").tooltip()
+	$(".emoticon-image").tooltip()
 
 	# Impression Slider
 

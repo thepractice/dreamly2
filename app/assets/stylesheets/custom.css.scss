@@ -1145,6 +1145,7 @@ body {
 .dream-title {
   h4 {
     margin-bottom: 2px;
+    font-size: 16px;
   }
   a {
     color: rgb(95, 95, 95);
@@ -1153,6 +1154,10 @@ body {
     text-decoration: underline;
     background: $lightYellow;
   }
+}
+
+.emoticon-image {
+  display: inline;
 }
 
 

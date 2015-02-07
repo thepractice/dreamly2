@@ -65,12 +65,30 @@
 			<div class="dream-right">
 				<div class="dream-right-top">
 					<div class="dream-right-top1">
-						<span class="dream-title small-font"><h4><%= link_to dream.title, dream %></h4></span>
-						<% dream.emotions.each do |emotion| %>
-							<% if emotion.id == 2 %>
-								Happy!
-							<% end %>
-						<% end %>
+						<span class="dream-title small-font">
+							<h4>
+								<%= link_to dream.title, dream %>
+
+								<% dream.emotions.each do |emotion| %>
+									<% if emotion.id == 1 %>
+										<%= image_tag("angry.png", width: '20', height: '20', class: "emoticon-image", "data-toggle" => "tooltip", "data-container" => "body", title: "Angry") %>
+									<% elsif emotion.id == 2 %>
+										<%= image_tag("afraid.png", width: '20', height: '20', class: "emoticon-image", "data-toggle" => "tooltip", "data-container" => "body", title: "Afraid") %>
+									<% elsif emotion.id == 3 %>
+										<%= image_tag("disgusted.png", width: '20', height: '20', class: "emoticon-image", "data-toggle" => "tooltip", "data-container" => "body", title: "Disgusted") %>
+									<% elsif emotion.id == 4 %>
+										<%= image_tag("happy.png", width: '20', height: '20', class: "emoticon-image", "data-toggle" => "tooltip", "data-container" => "body", title: "Happy") %>
+									<% elsif emotion.id == 5 %>
+										<%= image_tag("sad.png", width: '20', height: '20', class: "emoticon-image", "data-toggle" => "tooltip", "data-container" => "body", title: "Sad") %>
+									<% elsif emotion.id == 6 %>
+										<%= image_tag("desiring.png", width: '20', height: '20', class: "emoticon-image", "data-toggle" => "tooltip", "data-container" => "body", title: "Desiring") %>
+									<% elsif emotion.id == 7 %>
+										<%= image_tag("guilty.png", width: '20', height: '20', class: "emoticon-image", "data-toggle" => "tooltip", "data-container" => "body", title: "Guilty") %>
+									<% end %>
+								<% end %>
+							</h4>
+						</span>
+						
 						<span class="small-font">dreamed <%= time_ago_in_words(dream.dreamed_on) %> ago by</span>
 						<span class="dreamer1 small-font"><%= link_to dream.user.name, dream.user %></span>
 						<span class="dreamer2 small-font"><%= link_to "@#{dream.user.username}", dream.user %></span>
