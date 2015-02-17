@@ -1,0 +1,342 @@
+DREAMS
+
+<%= form_for_filterrific @filterrific do |f| %>
+	<div>
+		Search
+		<%= f.text_field(
+			:search,
+			class: 'filterrific-periodically-observed'
+		) %>
+	</div>
+	<div>
+		Emotion
+		<%= f.select(
+			:with_emotion_id,
+			@filterrific.select_options[:with_emotion_id],
+			{ include_blank: '- Any -' }
+		) %>
+	</div>
+	<div>
+		Impact
+		<%= f.select(
+			:impression,
+			[['Normal', 1], ['Big', 2], ['Huge', 3]]
+		) %>
+	</div>
+	<div>
+		<%= link_to('Reset filters', reset_filterrific_url) %>
+	</div>
+	<%# add an automated spinner to your form when the list is refreshed %>
+	<%= render_filterrific_spinner %>
+<% end %>
+
+<%= render(
+	partial: 'dreams/list',
+	locals: { dreams: @dreams }
+) %>
+
+
+
+
+
+<% if params[:graph] %>
+	<div id="graph-full" class="white-panel">
+		<h3 class="graph-title"><%= impression_status().titleize %>
+			<% unless params[:impression] %>
+				All
+			<% end %>
+			dreams
+			<% if params[:query] %>
+			about <strong><%= params[:query] %></strong>
+			<% end %>
+		</h3>
+		<%= link_to dreams_path(query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", "data-container" => "body", title: "Minimize"} do %>
+			<%= icon('compress') %>
+		<% end %>	
+	</div>
+	<%= render 'dreams/graph_full' %>
+<% else %>
+
+<% provide(:title, 'All dreams') %>
+
+<div class="row">
+	<div class ="col-md-3">
+		<div id="profile-left-sidebar">
+			<div>
+				<% unless user_signed_in? %>
+
+				<div class="login-box">
+				<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), wrapper: :inline_form) do |f|%>
+				
+						<%= f.input :login, placeholder: 'username', input_html: { :class => "login-form username-login-form" } %>
+						<%= f.input :password, placeholder: 'password', input_html: { :class => "login-form" } %>
+			
+	
+					<div class="login-box-lower">
+				    <%= f.check_box :remember_me %>
+				    <span class ="login-small-words">
+				    	<span style="padding-right: 5px;">remember me</span>
+				    	<%= link_to "reset password", new_password_path(resource_name) %>
+						</span>
+				    <button type="submit" class="btn btn-primary submit-btn-2">
+				      sign in
+				    </button>
+				  </div>
+
+				<% end %>
+			
+<!--
+		<input class="string optional form-control login-form" id="user_login" name="user[login]" placeholder="username" type="text">
+		<input class="password optional form-control login-form" id="user_password" name="user[password]" placeholder="password" type="password">
+-->
+	
+
+    <div id="login_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
+      <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <div id="login_error_explanation"></div>
+    </div>		
+
+
+
+    <span class="login-small-words" style="position: relative; top: 3px; color: #555555">sign in with</span>
+   	<div id="oauth-links">
+      <%= link_to(omniauth_authorize_path(resource_name, :google_oauth2), :class => "btn btn-login-2", :id => "google-login") do %>
+        <%= icon('google') %>
+      <% end %>
+      <%= link_to(user_omniauth_authorize_path(:facebook), :class => "btn btn-login-2", :id => "facebook-login") do %>
+        <%= icon('facebook') %>
+      <% end %>         
+      <%= link_to(omniauth_authorize_path(resource_name, :twitter), :class => "btn btn-login-2", :id => "twitter-login") do %>
+        <%= icon('twitter') %>
+      <% end %>
+      <%= link_to(omniauth_authorize_path(resource_name, :yahoo), :class => "btn btn-login-2", :id => "yahoo-login") do %>
+        <%= icon('yahoo') %>
+      <% end %>
+    </div>
+
+    <%= link_to(new_registration_path(resource_name), { id: "signup_words" }) do %>
+        register
+    <% end %>    
+
+   
+</div>
+
+ 
+  <!--
+
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), remote: true, html: {"data-type" => :json, class: 'form-inline row'}, wrapper: :horizontal_form) do |f| %>
+      
+  
+  			
+  
+
+        <div id="oauth-links">
+          <%= link_to(omniauth_authorize_path(resource_name, :google_oauth2), :class => "btn btn-square btn-login", :id => "google-login") do %>
+            <%= icon('google') %>with Google
+          <% end %>
+          <%= link_to(user_omniauth_authorize_path(:facebook), :class => "btn btn-square btn-login", :id => "facebook-login") do %>
+            <%= icon('facebook') %>with Facebook
+          <% end %>         
+          <%= link_to(omniauth_authorize_path(resource_name, :twitter), :class => "btn btn-square btn-login", :id => "twitter-login") do %>
+            <%= icon('twitter') %>with Twitter
+          <% end %>
+          <%= link_to(omniauth_authorize_path(resource_name, :yahoo), :class => "btn btn-square btn-login", :id => "yahoo-login") do %>
+            <%= icon('yahoo') %>with Yahoo
+          <% end %>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-square submit-btn">
+          <%= icon('unlock') %>Sign in
+        </button>        
+ 
+	      <%= link_to(new_registration_path(resource_name), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-signup', class: "btn btn-square btn-lg btn-gray", id: "signup_button" }) do %>
+	          Create new account
+	      <% end %>
+
+
+    
+          <div id="login_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
+            <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <div id="login_error_explanation"></div>
+          </div>
+          <%= f.input :login, placeholder: 'username' %>
+          <%= f.input :password, placeholder: 'password' %>
+
+          <div class="form-group string optional user_password"><label class="string optional col-sm-2 control-label" for="user_password">Password</label><div class="col-sm-10"><input class="password optional form-control" id="user_password" name="user[password]" type="password">&nbsp;&nbsp;<%= link_to "I forgot my password", new_password_path(resource_name) %></div></div>
+
+        <% end %>
+      -->
+     
+
+
+ 
+
+
+
+				<% end %>
+				<% if @dreams.any? %>
+					<div id="profile-graph" class="white-panel">
+						<%= link_to dreams_path(graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", "data-container" => "body", title: "Fullscreen"} do %>
+							<%= icon('arrows-alt') %>
+						<% end %>
+					</div>
+					<%= render 'dreams/graph' %>
+				<% end %>
+
+				<% @hashes.each do |hashtag_id, freq| %>
+					<%= link_to Hashtag.find(hashtag_id), { :class => "btn user-hash-link hashtag-color" } do %>
+						<%= Hashtag.find(hashtag_id).name %>
+					<% end %>
+				<% end %>	
+
+
+
+				<div id="links-panel" class="white-panel">
+					<%= link_to "Home", root_path %>
+					<%= link_to "About", about_path %>
+					<%= link_to "Contact", contact_path %>
+					<%= image_tag("footer_stripe.jpg", width: '243', height: '10', class: 'rainbow-bar') %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div>
+			<h3 class="content-title">
+				<% if params[:query] %>
+					"<%= params[:query] %>"
+				<% end %>
+			</h3>
+
+			<!--
+			<ul class="nav nav-pills nav-pills-inline" role="tablist">
+				<% if params[:impression] == '2' %>
+					<li><%= link_to "All", dreams_path(query: params[:query]) %></li>
+					<li class="active"><%= link_to "Big", dreams_path(query: params[:query], impression: 2) %></li>
+					<li><%= link_to "Huge", dreams_path(query: params[:query], impression: 3) %></li>
+				<% elsif params[:impression] == '3' %>
+					<li><%= link_to "All", dreams_path(query: params[:query]) %></li>
+					<li><%= link_to "Big", dreams_path(query: params[:query], impression: 2) %></li>
+					<li class="active"><%= link_to "Huge", dreams_path(query: params[:query], impression: 3) %></li>
+				<% else %>
+					<li class="active"><%= link_to "All", dreams_path(query: params[:query]) %></li>
+					<li><%= link_to "Big", dreams_path(query: params[:query], impression: 2) %></li>
+					<li><%= link_to "Huge", dreams_path(query: params[:query], impression: 3) %></li>
+				<% end %>
+			</ul>
+		-->
+
+			<div class="dropdown-title">
+				Trending
+			</div>
+			<div class="dropdown sort-dropdown">
+
+				<% if params[:time] == "24hr" %>
+				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+				    	Today
+				    <%= icon('caret-down') %>
+				  </button>
+				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+				    <li role="presentation"><%= link_to "This week", dreams_path(time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "This month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "This year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				  </ul>
+				<% elsif params[:time] == "week" %>
+				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+				    	This week
+				    <%= icon('caret-down') %>
+				  </button>
+				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+				    <li role="presentation"><%= link_to "Today", dreams_path(time: '24hr'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "This month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "This year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				  </ul>
+				<% elsif params[:time] == "month" %>
+				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+				    	This month
+				    <%= icon('caret-down') %>
+				  </button>
+				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+				    <li role="presentation"><%= link_to "Today", dreams_path(time: '24hr'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "This week", dreams_path(time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "This year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				  </ul>				  
+				<% elsif params[:time] == "year" %>
+				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+				    	This year
+				    <%= icon('caret-down') %>
+				  </button>
+				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+				    <li role="presentation"><%= link_to "Today", dreams_path(time: '24hr'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "This week", dreams_path(time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "This month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				  </ul>
+				<% else %>
+				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+				    	This week
+				    <%= icon('caret-down') %>
+				  </button>
+				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+				    <li role="presentation"><%= link_to "Today", dreams_path(time: '24hr'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "This month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "This year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				  </ul>
+				<% end %>
+			</div>		
+
+			<div class="dropdown-title">
+				Emotion
+			</div>		
+
+
+
+			<div class="dropdown-title">
+				Impact
+			</div>
+
+			<div class="dropdown sort-dropdown">
+				<% if params[:impression] == '2' %>
+				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+				    	Big
+				    <%= icon('caret-down') %>
+				  </button>
+				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+				    <li role="presentation"><%= link_to "Normal", dreams_path(query: params[:query]) %></li>
+				    <li role="presentation"><li><%= link_to "Huge", dreams_path(query: params[:query], impression: 3) %></li></li>
+				  </ul>
+				<% elsif params[:impression] == '3' %>
+				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+				    	Huge
+				    <%= icon('caret-down') %>
+				  </button>
+				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+				    <li role="presentation"><%= link_to "Normal", dreams_path(query: params[:query]) %></li>
+				    <li role="presentation"><%= link_to "Big", dreams_path(query: params[:query], impression: 2) %></li>
+				  </ul>
+				<% else %>
+				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+				    	Normal
+				    <%= icon('caret-down') %>
+				  </button>
+				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+				    <li role="presentation"><%= link_to "Big", dreams_path(query: params[:query], impression: 2) %></li>
+				    <li role="presentation"><%= link_to "Huge", dreams_path(query: params[:query], impression: 3) %></li>
+
+				  </ul>
+				<% end %>
+			</div>						
+
+			<% if current_user %>
+				<%= link_to "Only my dreams", user_path(current_user.id, query: params[:query]), class: "btn btn-danger btn-square", id: "only-my-dreams-button" %>
+			<% end %>
+
+		</div>
+		<ol class="list-unstyled dreams" id ="user-dreams">
+			<%= render @dreams %>
+		</ol>
+		<!-- renderer parameter is needed by will_paginate-boostrap gem -->
+		<%= will_paginate @dreams, renderer: BootstrapPagination::Rails %>
+	</div>
+</div>
+
+<% end %>

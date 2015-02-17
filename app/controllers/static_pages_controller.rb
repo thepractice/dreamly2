@@ -146,12 +146,12 @@ class StaticPagesController < ApplicationController
     @word_count = Hash.new
     # Create hash of word frequencies in all relevant dreams
     @dreams_raw.each do |dream|
-      dream.word_freq.each do |word_id, frequency|
-        if @word_count[word_id] == nil
-          @word_count[word_id] = { freq: frequency, dream_ids: [dream.id] }
+      dream.word_freq.each do |stem, info_array|
+        if @word_count[info_array[0]] == nil
+          @word_count[info_array[0]] = { freq: info_array[1], dream_ids: [dream.id] }
         else
-          @word_count[word_id][:freq] += frequency
-          @word_count[word_id][:dream_ids].push(dream.id)
+          @word_count[info_array[0]][:freq] += info_array[1]
+          @word_count[info_array[0]][:dream_ids].push(dream.id)
         end
       end
     end
@@ -186,9 +186,9 @@ class StaticPagesController < ApplicationController
       @word_object_dreams = @word_count[@word_object_id][:dream_ids]
 
       @word_object_dreams.each do |dream_id|
-        Dream.find(dream_id).word_freq.each do |word_id, freq|
-          if word_id != @word_object_id
-            @word_object_assocs[word_id] += freq
+        Dream.find(dream_id).word_freq.each do |stem, info_array|
+          if info_array[0] != @word_object_id
+            @word_object_assocs[info_array[0]] += info_array[1]
           end
         end
       end

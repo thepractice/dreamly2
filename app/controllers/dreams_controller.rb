@@ -3,12 +3,54 @@ class DreamsController < ApplicationController
 	before_filter :correct_user, only: [:edit, :update, :destroy]
 
 	def index
+
+    # Initialize filterrific with the following params:
+    # * `Student` is the ActiveRecord based model class.
+    # * `params[:filterrific]` are any params submitted via web request.
+    #   If they are blank, filterrific will try params persisted in the session
+    #   next. If those are blank, too, filterrific will use the model's default
+    #   filter settings.
+    # * Options:
+    #     * select_options: You can store any options for `<select>` inputs in
+    #       the filterrific form here. In this example, the `#options_for_...`
+    #       methods return arrays that can be passed as options to `f.select`
+    #       These methods are defined in the model.
+    #     * persistence_id: optional, defaults to "<controller>#<action>" string
+    #       to isolate session persistence of multiple filterrific instances.
+    #       Override this to share session persisted filter params between
+    #       multiple filterrific instances.
+    #     * default_filter_params: optional, to override model defaults
+    #     * available_filters: optional, to further restrict which filters are
+    #       in this filterrific instance.
+    # This method also persists the params in the session and handles resetting
+    # the filterrific params.
+    # In order for reset_filterrific to work, it's important that you add the
+    # `or return` bit after the call to `initialize_filterrific`. Otherwise the
+    # redirect will not work.
+		@filterrific = initialize_filterrific(
+			Dream,
+			params[:filterrific],
+			select_options: {
+				with_emotion_id: Emotion.options_for_select
+			},
+		) or return 
+
+    # Get an ActiveRecord::Relation for all students that match the filter settings.
+    # You can paginate with will_paginate or kaminari.
+    # NOTE: filterrific_find returns an ActiveRecord Relation that can be
+    # chained with other scopes to further narrow down the scope of the list,
+    # e.g., to apply permissions or to hard coded exclude certain types of records.	
+
+		# @dreams = @filterrific.find.page(params[:page])
+		@dreams = @filterrific.find
+
 		
 		if params[:query].present?
 			if params[:impression].present?
 				@dreams_raw = Dream.text_search(params[:query]).impression(params[:impression]).where(private: false)
 			else
 				@dreams_raw = Dream.text_search(params[:query]).where(private: false)
+				@dreams = @dreams.text_search(params[:query])
 			end
 		else
 			if params[:impression].present?
@@ -18,52 +60,72 @@ class DreamsController < ApplicationController
 			end
 		end
 
-		@sorting_array = []
+		@dreams = @dreams.where(private: false)
 
-		if params[:time] == '24hr'
+		if params[:time] == ('today' || 'week' || 'month' || 'year' || 'all')
 
-			@dreams_raw.each do |dream|
-				@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 24.hours.ago..Time.now).size - dream.get_downvotes.where(:created_at => 24.hours.ago..Time.now).size])
-			end		
-			
-		elsif params[:time] == 'week'
+			@sorting_array = []
 
-			@dreams_raw.each do |dream|
-				@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.week.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.week.ago..Time.now).size])
-			end		
+			if params[:time] == 'today'
 
-		elsif params[:time] == 'month'
+				@dreams.each do |dream|
+					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 24.hours.ago..Time.now).size - dream.get_downvotes.where(:created_at => 24.hours.ago..Time.now).size])
+				end		
+				
+			elsif params[:time] == 'week'
 
-			@dreams_raw.each do |dream|
-				@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.month.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.month.ago..Time.now).size])
-			end		
+				@dreams.each do |dream|
+					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.week.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.week.ago..Time.now).size])
+				end		
 
-		elsif params[:time] == 'year'
+			elsif params[:time] == 'month'
 
-			@dreams_raw.each do |dream|
-				@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.year.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.year.ago..Time.now).size])
-			end		
+				@dreams.each do |dream|
+					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.month.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.month.ago..Time.now).size])
+				end		
 
-		elsif params[:time] == 'all'
+			elsif params[:time] == 'year'
 
-			@dreams_raw.each do |dream|
-				@sorting_array.push([dream, dream.get_upvotes.size - dream.get_downvotes.size])
-			end							
+				@dreams.each do |dream|
+					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.year.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.year.ago..Time.now).size])
+				end		
 
+			elsif params[:time] == 'all'
+
+				@dreams.each do |dream|
+					@sorting_array.push([dream, dream.get_upvotes.size - dream.get_downvotes.size])
+				end	
+
+			end					
+			@sorting_array = @sorting_array.reverse.each_with_index.sort_by { |a, idx| [a[1], idx] }.reverse.map(&:first).map { |x| x[0] }
+			@dreams = @sorting_array
+
+		elsif params[:time] == 'submitted'
+			@dreams = @dreams.regular
+		elsif params[:time] == 'dreamed'
+			@dreams = @dreams.chronological
 		else
-
-			@dreams_raw.each do |dream|
+			@sorting_array = []
+			@dreams.each do |dream|
 				@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.week.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.week.ago..Time.now).size])
-			end		
-
+			end
+			@sorting_array = @sorting_array.reverse.each_with_index.sort_by { |a, idx| [a[1], idx] }.reverse.map(&:first).map { |x| x[0] }
+			@dreams = @sorting_array						
 		end
 
-		@dreams_raw = @sorting_array.reverse.each_with_index.sort_by { |a, idx| [a[1], idx] }.reverse.map(&:first).map { |x| x[0] }
+		@dreams_raw = @dreams  # try to get graph to update with filterrific
+		@dreams = @dreams.paginate(page: params[:page],per_page: 40)
 
 
 
 
-		@dreams = @dreams_raw.paginate(page: params[:page], per_page: 40)
+		
+
+
+
+
+
+
 		@hashes = Hash.new
 		@dreams_raw.each do |dream|
 			dream.hashtags.each do |hashtag|
@@ -160,6 +222,20 @@ class DreamsController < ApplicationController
 		@graph_text = "{\"nodes\":#{@node_text},\"links\":#{@link_text}}"	
 
 	#	end    # What does this end?	
+
+		respond_to do |format|
+			format.html
+			format.js
+		end
+
+	  # Recover from invalid param sets, e.g., when a filter refers to the
+	  # database id of a record that doesn’t exist any more.
+	  # In this case we reset filterrific and discard all filter params.
+		rescue ActiveRecord::RecordNotFound => e
+			# There is an issue with the persisted param_set. Reset it.
+			puts "Had to reset filterrific params: #{ e.message }"
+			redirect_to(reset_filterrific_url(format: :html)) and return
+		
 
 	end
 

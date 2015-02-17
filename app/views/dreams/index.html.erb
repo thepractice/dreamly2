@@ -43,11 +43,6 @@
 				  </div>
 
 				<% end %>
-			
-<!--
-		<input class="string optional form-control login-form" id="user_login" name="user[login]" placeholder="username" type="text">
-		<input class="password optional form-control login-form" id="user_password" name="user[password]" placeholder="password" type="password">
--->
 	
 
     <div id="login_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
@@ -80,58 +75,6 @@
    
 </div>
 
- 
-  <!--
-
-        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), remote: true, html: {"data-type" => :json, class: 'form-inline row'}, wrapper: :horizontal_form) do |f| %>
-      
-  
-  			
-  
-
-        <div id="oauth-links">
-          <%= link_to(omniauth_authorize_path(resource_name, :google_oauth2), :class => "btn btn-square btn-login", :id => "google-login") do %>
-            <%= icon('google') %>with Google
-          <% end %>
-          <%= link_to(user_omniauth_authorize_path(:facebook), :class => "btn btn-square btn-login", :id => "facebook-login") do %>
-            <%= icon('facebook') %>with Facebook
-          <% end %>         
-          <%= link_to(omniauth_authorize_path(resource_name, :twitter), :class => "btn btn-square btn-login", :id => "twitter-login") do %>
-            <%= icon('twitter') %>with Twitter
-          <% end %>
-          <%= link_to(omniauth_authorize_path(resource_name, :yahoo), :class => "btn btn-square btn-login", :id => "yahoo-login") do %>
-            <%= icon('yahoo') %>with Yahoo
-          <% end %>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-lg btn-square submit-btn">
-          <%= icon('unlock') %>Sign in
-        </button>        
- 
-	      <%= link_to(new_registration_path(resource_name), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-signup', class: "btn btn-square btn-lg btn-gray", id: "signup_button" }) do %>
-	          Create new account
-	      <% end %>
-
-
-    
-          <div id="login_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
-            <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <div id="login_error_explanation"></div>
-          </div>
-          <%= f.input :login, placeholder: 'username' %>
-          <%= f.input :password, placeholder: 'password' %>
-
-          <div class="form-group string optional user_password"><label class="string optional col-sm-2 control-label" for="user_password">Password</label><div class="col-sm-10"><input class="password optional form-control" id="user_password" name="user[password]" type="password">&nbsp;&nbsp;<%= link_to "I forgot my password", new_password_path(resource_name) %></div></div>
-
-        <% end %>
-      -->
-     
-
-
- 
-
-
-
 				<% end %>
 				<% if @dreams.any? %>
 					<div id="profile-graph" class="white-panel">
@@ -139,12 +82,18 @@
 							<%= icon('arrows-alt') %>
 						<% end %>
 					</div>
-					<%= render 'dreams/graph' %>
+					<div id="profile-graph2">
+						<%= render(
+							partial: 'dreams/graph',
+							locals: { graph_text: @graph_text }
+						) %>
+					</div>
 				<% end %>
 
 				<% @hashes.each do |hashtag_id, freq| %>
 					<%= link_to Hashtag.find(hashtag_id), { :class => "btn user-hash-link hashtag-color" } do %>
-						<%= Hashtag.find(hashtag_id).name %>
+						#<%= Hashtag.find(hashtag_id).name %>
+						(<%= freq %>)
 					<% end %>
 				<% end %>	
 
@@ -167,136 +116,153 @@
 				<% end %>
 			</h3>
 
-			<!--
-			<ul class="nav nav-pills nav-pills-inline" role="tablist">
-				<% if params[:impression] == '2' %>
-					<li><%= link_to "All", dreams_path(query: params[:query]) %></li>
-					<li class="active"><%= link_to "Big", dreams_path(query: params[:query], impression: 2) %></li>
-					<li><%= link_to "Huge", dreams_path(query: params[:query], impression: 3) %></li>
-				<% elsif params[:impression] == '3' %>
-					<li><%= link_to "All", dreams_path(query: params[:query]) %></li>
-					<li><%= link_to "Big", dreams_path(query: params[:query], impression: 2) %></li>
-					<li class="active"><%= link_to "Huge", dreams_path(query: params[:query], impression: 3) %></li>
-				<% else %>
-					<li class="active"><%= link_to "All", dreams_path(query: params[:query]) %></li>
-					<li><%= link_to "Big", dreams_path(query: params[:query], impression: 2) %></li>
-					<li><%= link_to "Huge", dreams_path(query: params[:query], impression: 3) %></li>
-				<% end %>
-			</ul>
-		-->
+			<%= form_for_filterrific @filterrific do |f| %>
+			
+					<div class="dropdown-title">
+						Search
+					</div>					
+					<%= f.text_field(
+						:search,
+						class: 'filterrific-periodically-observed'
+					) %>
 
-			<div class="dropdown-title">
-				Trending
-			</div>
-			<div class="dropdown sort-dropdown">
+					<div class="dropdown-title">
+						Sort by
+					</div>
+					<div class="dropdown sort-dropdown">
 
-				<% if params[:time] == "24hr" %>
-				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-				    	Today
-				    <%= icon('caret-down') %>
-				  </button>
-				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-				    <li role="presentation"><%= link_to "This week", dreams_path(time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				    <li role="presentation"><%= link_to "This month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				    <li role="presentation"><%= link_to "This year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				  </ul>
-				<% elsif params[:time] == "week" %>
-				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-				    	This week
-				    <%= icon('caret-down') %>
-				  </button>
-				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-				    <li role="presentation"><%= link_to "Today", dreams_path(time: '24hr'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				    <li role="presentation"><%= link_to "This month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				    <li role="presentation"><%= link_to "This year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				  </ul>
-				<% elsif params[:time] == "month" %>
-				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-				    	This month
-				    <%= icon('caret-down') %>
-				  </button>
-				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-				    <li role="presentation"><%= link_to "Today", dreams_path(time: '24hr'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				    <li role="presentation"><%= link_to "This week", dreams_path(time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				    <li role="presentation"><%= link_to "This year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				  </ul>				  
-				<% elsif params[:time] == "year" %>
-				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-				    	This year
-				    <%= icon('caret-down') %>
-				  </button>
-				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-				    <li role="presentation"><%= link_to "Today", dreams_path(time: '24hr'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				    <li role="presentation"><%= link_to "This week", dreams_path(time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				    <li role="presentation"><%= link_to "This month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				  </ul>
-				<% else %>
-				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-				    	This week
-				    <%= icon('caret-down') %>
-				  </button>
-				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-				    <li role="presentation"><%= link_to "Today", dreams_path(time: '24hr'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				    <li role="presentation"><%= link_to "This month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				    <li role="presentation"><%= link_to "This year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-				  </ul>
-				<% end %>
-			</div>		
+						<% if params[:time] == "today" %>
+						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+						    Popular today
+						    <%= icon('caret-down') %>
+						  </button>
+						  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+						    <li role="presentation"><%= link_to "Popular today", dreams_path(time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this week", dreams_path(time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "New", dreams_path(time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Date dreamed", dreams_path(time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						  </ul>
+						<% elsif params[:time] == "week" %>
+						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+						    Popular this week
+						    <%= icon('caret-down') %>
+						  </button>
+						  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+						    <li role="presentation"><%= link_to "Popular today", dreams_path(time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this week", dreams_path(time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "New", dreams_path(time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Date dreamed", dreams_path(time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						  </ul>
+						<% elsif params[:time] == "month" %>
+						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+						    Popular this month
+						    <%= icon('caret-down') %>
+						  </button>
+						  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+						    <li role="presentation"><%= link_to "Popular today", dreams_path(time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this week", dreams_path(time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "New", dreams_path(time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Date dreamed", dreams_path(time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						  </ul>				  
+				
+						<% elsif params[:time] == "year" %>
+						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+						    Popular this year
+						    <%= icon('caret-down') %>
+						  </button>
+						  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+						    <li role="presentation"><%= link_to "Popular today", dreams_path(time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this week", dreams_path(time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "New", dreams_path(time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Date dreamed", dreams_path(time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						  </ul>
+						<% elsif params[:time] == "submitted" %>
+						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+						    New
+						    <%= icon('caret-down') %>
+						  </button>
+						  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+						    <li role="presentation"><%= link_to "Popular today", dreams_path(time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this week", dreams_path(time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "New", dreams_path(time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Date dreamed", dreams_path(time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						  </ul>
+						<% elsif params[:time] == "dreamed" %>
+						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+						    Date dreamed
+						    <%= icon('caret-down') %>
+						  </button>
+						  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+						    <li role="presentation"><%= link_to "Popular today", dreams_path(time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this week", dreams_path(time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "New", dreams_path(time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Date dreamed", dreams_path(time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						  </ul>						  				  
+						<% else %>
+						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+						    Popular this week
+						    <%= icon('caret-down') %>
+						  </button>
+						  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+						    <li role="presentation"><%= link_to "Popular today", dreams_path(time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this week", dreams_path(time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this month", dreams_path(time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Popular this year", dreams_path(time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "New", dreams_path(time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						    <li role="presentation"><%= link_to "Date dreamed", dreams_path(time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+						  </ul>
+						<% end %>
+					</div>						
+			
+		
+					<div class="dropdown-title">
+						Emotion
+					</div>
+				
+					<%= f.select(
+						:with_emotion_id,
+						@filterrific.select_options[:with_emotion_id],
+						{ include_blank: '- Any -' },
+						class: "form-control dropdown sort-dropdown"
+					) %>
+	
+			
+					<div class="dropdown-title">
+						Impact
+					</div>
 
-			<div class="dropdown-title">
-				Emotion
-			</div>		
-
-			<div class="dropdown sort-dropdown">
-				<% if params[:emotion]
-			</div>	
-
-			<div class="dropdown-title">
-				Impact
-			</div>
-
-			<div class="dropdown sort-dropdown">
-				<% if params[:impression] == '2' %>
-				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-				    	Big
-				    <%= icon('caret-down') %>
-				  </button>
-				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-				    <li role="presentation"><%= link_to "Normal", dreams_path(query: params[:query]) %></li>
-				    <li role="presentation"><li><%= link_to "Huge", dreams_path(query: params[:query], impression: 3) %></li></li>
-				  </ul>
-				<% elsif params[:impression] == '3' %>
-				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-				    	Huge
-				    <%= icon('caret-down') %>
-				  </button>
-				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-				    <li role="presentation"><%= link_to "Normal", dreams_path(query: params[:query]) %></li>
-				    <li role="presentation"><%= link_to "Big", dreams_path(query: params[:query], impression: 2) %></li>
-				  </ul>
-				<% else %>
-				  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-				    	Normal
-				    <%= icon('caret-down') %>
-				  </button>
-				  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-				    <li role="presentation"><%= link_to "Big", dreams_path(query: params[:query], impression: 2) %></li>
-				    <li role="presentation"><%= link_to "Huge", dreams_path(query: params[:query], impression: 3) %></li>
-
-				  </ul>
-				<% end %>
-			</div>						
-
-			<% if current_user %>
-				<%= link_to "Only my dreams", user_path(current_user.id, query: params[:query]), class: "btn btn-danger btn-square", id: "only-my-dreams-button" %>
+					<%= f.select(
+						:impression,
+						[['Normal', 1], ['Big', 2], ['Huge', 3]],
+						{ },
+						class: "form-control dropdown sort-dropdown"
+					) %>
+	
+				<div>
+					<%= link_to('Reset filters', reset_filterrific_url) %>
+				</div>
+				<%# add an automated spinner to your form when the list is refreshed %>
+				<%= render_filterrific_spinner %>
 			<% end %>
 
-		</div>
-		<ol class="list-unstyled dreams" id ="user-dreams">
-			<%= render @dreams %>
-		</ol>
-		<!-- renderer parameter is needed by will_paginate-boostrap gem -->
-		<%= will_paginate @dreams, renderer: BootstrapPagination::Rails %>
+			<%= render(
+				partial: 'dreams/list',
+				locals: { dreams: @dreams }
+			) %>
+				
+
 	</div>
 </div>
 

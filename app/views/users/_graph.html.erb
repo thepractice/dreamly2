@@ -1,99 +1,102 @@
-<!--
-<script src="http://d3js.org/d3.v3.min.js"></script>
--->
-<script>
+<div id="graph_results">
 
-var width = (window.innerWidth - 135) * 0.25,
-    height = (window.innerHeight - 135) * 0.5,
-    r = 2;
+  <!--
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  -->
+  <script>
 
-//var svg = d3.select("body").append("svg")
-var svg = d3.select("#profile-graph").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+  var width = (window.innerWidth - 135) * 0.25,
+      height = (window.innerHeight - 135) * 0.5,
+      r = 2;
 
-
-  var graph_string = "<%= @graph_text %>";
-
-
-var graph_string = graph_string.replace(/&quot;/ig,'"');
-var graph_json = JSON.parse(graph_string);
-
-var ed_nodes = graph_json.nodes;
-var ed_links = graph_json.links;
-
-var total_value = 0;
-
-for(var i = 0; i < ed_nodes.length; i++) {
-	total_value += ed_nodes[i].value;
-}
-
-//function node_radius(d) { return (d.value / total_value)*100 };
-function node_radius(d) { return (d.value / total_value) *60 + 10 };
-
-function node_url(d) { return "<%= user_path(@user) %>".concat("?query=").concat(d.name)}
-var color = d3.scale.category20();
-
-var k = Math.sqrt(ed_nodes.length / (width * height ));
-
-var force = d3.layout.force()
-    .gravity(150 * k)
- /*   .distance(100) */
-    .charge(-40 / k)
-    .size([width, height])
-    .linkDistance(0)
-    .nodes(ed_nodes)
-    .links(ed_links)
-    .start();
-
-  var link = svg.selectAll(".link")
-      .data(ed_links)
-    .enter().append("line")
-      .attr("class", "link");
-
-  var node = svg.selectAll(".node")
-      .data(ed_nodes)
-    .enter().append("g")
-      .attr("class", "node")
-      .call(force.drag);
-
-  var text = node.append("svg:a")
-    .attr("xlink:href", node_url)
-      .append("text")
-      .attr("x", 0)
-      .attr("dy", ".35em")
-      .attr("text-anchor", "middle")
-      .attr("font-size", node_radius)
-      .attr("fill", function (d,i) { return 'white' })
-      .text(function(d) { return d.name });
-
-  var bbox_array = [];
-  text.each(function (d,i) {
-    bbox_array.push(this.getBBox());
-  });      
-
-  node.insert("rect", "a")
-    .attr("x", function (d,i) { return bbox_array[i].x -5 })
-    .attr("y", function (d,i) { return bbox_array[i].y -3 })
-    .attr("width", function (d,i) { return bbox_array[i].width + 10 })
-    .attr("height", function (d,i) { return bbox_array[i].height + 6 })
-    .style("fill", function (d,i) { return color(i); })
-    .attr("opacity", 1);
-
-  force.on("tick", function() {
-    link.attr("x1", function(d) { return d.source.x; })
-        .attr("y1", function(d) { return d.source.y; })
-        .attr("x2", function(d) { return d.target.x; })
-        .attr("y2", function(d) { return d.target.y; });
-
-   node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-
-// Bounding Box solution
- //node.attr("cx", function(d) { return d.x = Math.max(r, Math.min(width - r, d.x)); })
- //       .attr("cy", function(d) { return d.y = Math.max(r, Math.min(height - r, d.y)); });
+  //var svg = d3.select("body").append("svg")
+  var svg = d3.select("#profile-graph2").append("svg")
+      .attr("width", width)
+      .attr("height", height);
 
 
+    var graph_string = "<%= graph_text %>";
 
-});
-</script>
 
+  var graph_string = graph_string.replace(/&quot;/ig,'"');
+  var graph_json = JSON.parse(graph_string);
+
+  var ed_nodes = graph_json.nodes;
+  var ed_links = graph_json.links;
+
+  var total_value = 0;
+
+  for(var i = 0; i < ed_nodes.length; i++) {
+  	total_value += ed_nodes[i].value;
+  }
+
+  //function node_radius(d) { return (d.value / total_value)*100 };
+  function node_radius(d) { return (d.value / total_value) *60 + 10 };
+
+  function node_url(d) { return "<%= user_path(@user) %>".concat("?query=").concat(d.name)}
+  var color = d3.scale.category20();
+
+  var k = Math.sqrt(ed_nodes.length / (width * height ));
+
+  var force = d3.layout.force()
+      .gravity(150 * k)
+   /*   .distance(100) */
+      .charge(-40 / k)
+      .size([width, height])
+      .linkDistance(0)
+      .nodes(ed_nodes)
+      .links(ed_links)
+      .start();
+
+    var link = svg.selectAll(".link")
+        .data(ed_links)
+      .enter().append("line")
+        .attr("class", "link");
+
+    var node = svg.selectAll(".node")
+        .data(ed_nodes)
+      .enter().append("g")
+        .attr("class", "node")
+        .call(force.drag);
+
+    var text = node.append("svg:a")
+      .attr("xlink:href", node_url)
+        .append("text")
+        .attr("x", 0)
+        .attr("dy", ".35em")
+        .attr("text-anchor", "middle")
+        .attr("font-size", node_radius)
+        .attr("fill", function (d,i) { return 'white' })
+        .text(function(d) { return d.name });
+
+    var bbox_array = [];
+    text.each(function (d,i) {
+      bbox_array.push(this.getBBox());
+    });      
+
+    node.insert("rect", "a")
+      .attr("x", function (d,i) { return bbox_array[i].x -5 })
+      .attr("y", function (d,i) { return bbox_array[i].y -3 })
+      .attr("width", function (d,i) { return bbox_array[i].width + 10 })
+      .attr("height", function (d,i) { return bbox_array[i].height + 6 })
+      .style("fill", function (d,i) { return color(i); })
+      .attr("opacity", 1);
+
+    force.on("tick", function() {
+      link.attr("x1", function(d) { return d.source.x; })
+          .attr("y1", function(d) { return d.source.y; })
+          .attr("x2", function(d) { return d.target.x; })
+          .attr("y2", function(d) { return d.target.y; });
+
+     node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+  // Bounding Box solution
+   //node.attr("cx", function(d) { return d.x = Math.max(r, Math.min(width - r, d.x)); })
+   //       .attr("cy", function(d) { return d.y = Math.max(r, Math.min(height - r, d.y)); });
+
+
+
+  });
+  </script>
+
+</div>

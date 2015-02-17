@@ -24,8 +24,33 @@ class Dream < ActiveRecord::Base
 	scope :regular, -> { order('created_at DESC') }
 	scope :chronological, -> { order('dreamed_on DESC, created_at DESC') }
 	scope :impression, -> (min_impression) { where("impression >= ?", min_impression) }
+#	scope :with_emotion_id2, -> { joins(:emotions).where('emotions.id = ?') }
+#	scope :with_emotion_id, lambda { |emotion_id|
+#		where(emotion: { id: emotion_id }).joins(:emotions)
+#	}
+#	scope :with_emotion_name, lambda { |emotion_name|
+#		where(emotion: { name: emotion_name }).joins(:emotions)
+#	}
+	scope :with_emotion_name, lambda { |emotion_name|
+		where('emotions.name = ?', emotion_name).joins(:emotions)
+	}
+	scope :with_emotion_id, lambda { |emotion_id|
+		where('emotions.id = ?', emotion_id).joins(:emotions)
+	}	
 
+	include PgSearch
+	multisearchable against: [:title, :body]
+	pg_search_scope :search, against: [:title, :body],
+		using: {tsearch: {dictionary: "english", prefix: true}}	
 
+	filterrific(
+		default_filter_params: { },
+		available_filters: [
+			:search,
+			:with_emotion_id,
+			:impression
+		]
+	)
 
 
 
@@ -38,10 +63,7 @@ class Dream < ActiveRecord::Base
 	before_destroy :reverse_dream
 	#before_destroy :update_graph
 
-	include PgSearch
-	multisearchable against: [:title, :body]
-	pg_search_scope :search, against: [:title, :body],
-		using: {tsearch: {dictionary: "english"}}
+
 
 
 

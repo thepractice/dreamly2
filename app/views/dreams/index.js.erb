@@ -1,8 +1,20 @@
-// infinite scrolling
+<% js = escape_javascript(
+	render(partial: 'dreams/list', locals: { dreams: @dreams })
+) %>
+$("#filterrific_results").waitForImages(function() {
+	$(this).html("<%= js %>");
+});
 
-$('#all-dreams').append('<%= j render(@dreams) %>'); // escape with 'j'
-<% if @dreams.next_page %>
-	$('.pagination').replaceWith('<%= j will_paginate(@dreams) %>');
-<% else %>
-	$('.pagination').remove();
-<% end %>
+<% js2 = escape_javascript(
+	render(partial: 'dreams/graph', locals: { graph_text: @graph_text })
+) %>
+$("#profile-graph2").html("<%= js2 %>");
+
+// infinite scrolling
+//
+//$('#all-dreams').append('<%= j render(@dreams) %>'); // escape with 'j'
+//<% if @dreams.next_page %>
+//	$('.pagination').replaceWith('<%= j will_paginate(@dreams) %>');
+//<% else %>
+//	$('.pagination').remove();
+//<% end %>

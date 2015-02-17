@@ -29,6 +29,80 @@ $offBlack: #2E2E2E;
     }
 }
 
+.afraid, .angry, .desiring, .disgusted, .guilty, .happy, .sad, .down_arrow, .down_arrow_red, .up_arrow, .up_arrow_green{
+  background: url(sprites.png) no-repeat;
+}
+
+.afraid{
+  background-position: -1px 0;
+  width: 20px;
+  height: 20px;
+}
+
+.angry{
+  background-position: -2px -24px ;
+  width: 20px;
+  height: 20px;
+}
+
+.desiring{
+  background-position: -2px -49px ;
+  width: 20px;
+  height: 20px;
+}
+
+.disgusted{
+  background-position: -3px -73px ;
+  width: 20px;
+  height: 20px;
+}
+
+.guilty{
+  background-position: -2px -95px ;
+  width: 20px;
+  height: 20px;
+}
+
+.happy{
+  background-position: -1px -118px ;
+  width: 20px;
+  height: 20px;
+}
+
+.sad{
+  background-position: -1px -142px ;
+  width: 20px;
+  height: 20px;
+}
+
+.down_arrow{
+  background-position: 0 -167px ;
+  width: 18px;
+  height: 16px;
+}
+
+.down_arrow_red{
+  background-position: -1px -185px ;
+  width: 18px;
+  height: 16px;
+}
+
+.up_arrow{
+  background-position: 0 -204px ;
+  width: 18px;
+  height: 16px;
+}
+
+.up_arrow_green{
+  background-position: -2px -224px ;
+  width: 18px;
+  height: 16px;
+}
+
+
+
+
+
 /* universal */
 
 body{
@@ -754,6 +828,7 @@ label {
   border-color: #adadad;
 }
 
+
 .modal-content {
   border-radius: 0;
 }
@@ -773,11 +848,7 @@ label {
   }
 }
 
-.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle {
-  color: $offBlack;
-  background-color: $lightBlue;
-  border-color: #adadad;
-}
+
 
 .modal-content {
   border-radius: 0;
@@ -1157,7 +1228,7 @@ body {
 }
 
 .emoticon-image {
-  display: inline;
+  display: inline-block;
 }
 
 
@@ -1364,6 +1435,7 @@ a:hover {
   border-radius: 0;
 }
 
+
 .dropdown-menu {
   margin: 0;
   border-top: none;
@@ -1568,18 +1640,41 @@ a:hover {
 
 .sort-dropdown {
   display: inline-block;
-  .dropdown-toggle {
-    border-radius: 0 4px 4px 0;
-    border-left: 0;
-  }
+
+  border-radius: 0 4px 4px 0;
+  border-left: 0;
+ 
   .fa {
     margin-right: 0 !important;
     margin-left: 4px;
   }
-  top: -1px;
   left: -3px;
 }
 
+/* Put around f.select inputs */
+.select-dropdown {
+  display: inline;
+  select{
+    font-size: 14px;
+   -webkit-appearance: none;
+  }
+}
+
+.sort-dropdown:hover, .sort-dropdown:focus, .sort-dropdown:active, .sort-dropdown.active {
+  color: $offBlack;
+  background-color: $lightBlue;
+  border-color: #adadad;
+  option {
+    background-color: white;
+  }
+}
+
+#filterrific_search {
+  position: relative;
+  height: 34px;
+  width: 170px;
+  left: -3px;
+}
 
 
 .dropdown-title {

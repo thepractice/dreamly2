@@ -11,7 +11,15 @@ class UsersController < ApplicationController
 			@user = User.find(params[:id])
 		end
 
+		@filterrific = initialize_filterrific(
+			@user.dreams,
+			params[:filterrific],
+			select_options: {
+				with_emotion_id: Emotion.options_for_select
+			},
+		) or return 
 
+		@dreams = @filterrific.find
 
 #		@dreams = @user.dreams.regular.paginate(page: params[:page])
 		
@@ -65,10 +73,62 @@ class UsersController < ApplicationController
 
 		if @user != current_user
 			@dreams_raw = @dreams_raw.where(private: false)
+			@dreams = @dreams.where(private: false)
 		end
 
-	
-			@dreams = @dreams_raw.paginate(page: params[:page])
+		if params[:time] == ('today' || 'week' || 'month' || 'year' || 'all')
+
+			@sorting_array = []
+
+			if params[:time] == 'today'
+
+				@dreams.each do |dream|
+					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 24.hours.ago..Time.now).size - dream.get_downvotes.where(:created_at => 24.hours.ago..Time.now).size])
+				end		
+				
+			elsif params[:time] == 'week'
+
+				@dreams.each do |dream|
+					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.week.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.week.ago..Time.now).size])
+				end		
+
+			elsif params[:time] == 'month'
+
+				@dreams.each do |dream|
+					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.month.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.month.ago..Time.now).size])
+				end		
+
+			elsif params[:time] == 'year'
+
+				@dreams.each do |dream|
+					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.year.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.year.ago..Time.now).size])
+				end		
+
+			elsif params[:time] == 'all'
+
+				@dreams.each do |dream|
+					@sorting_array.push([dream, dream.get_upvotes.size - dream.get_downvotes.size])
+				end							
+			end
+			@sorting_array = @sorting_array.reverse.each_with_index.sort_by { |a, idx| [a[1], idx] }.reverse.map(&:first).map { |x| x[0] }
+			@dreams = @sorting_array
+
+		elsif params[:time] == 'submitted'
+			@dreams = @dreams.regular
+		elsif params[:time] == 'dreamed'
+			@dreams = @dreams.chronological
+		else
+			@dreams = @dreams.chronological
+		end
+
+
+		@dreams_raw = @dreams  # try to get graph to update with filterrific
+		@dreams = @dreams.paginate(page: params[:page],per_page: 40)
+
+		
+
+
+	#		@dreams = @dreams_raw.paginate(page: params[:page])
 		
 
 
