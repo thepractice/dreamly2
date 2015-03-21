@@ -20,7 +20,6 @@ jQuery(document).on "ready page:change", ->
 		$('#filterrific_results div').last().load url+' #filterrific_results'
 		$.getScript(url)
 
-
 # Ajax dream form
 
 	# New version of turbolinks made it so modal forms only submit after refresh.

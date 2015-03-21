@@ -138,9 +138,9 @@
 				</ul>		
 			<% else %>	
 				<ul class="nav nav-tabs">
-			    <li role="presentation"><%= link_to "Trending", dreams_path(sort: 'trending'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+			    <li role="presentation" class="active"><%= link_to "Trending", dreams_path(sort: 'trending'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
 			    <li role="presentation"><%= link_to "New", dreams_path(sort: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-			    <li role="presentation" class="active"><%= link_to "Dreamed", dreams_path(sort: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+			    <li role="presentation"><%= link_to "Dreamed", dreams_path(sort: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
 				</ul>										
 			<% end %>
 		</div>
@@ -194,11 +194,11 @@
 				partial: 'dreams/list',
 				locals: { dreams: @dreams, dreams2: @dreams2, page_number: @page_number }
 			) %>
-
-			<%= button_tag(:id => "load-more2", :class => "btn btn-primary") do %>
-				<%= icon('plus') %>
-				<span id="load-more-text">load more</span>
-			<% end %>				
+	
+				<%= button_tag(:id => "load-more2", :class => "btn btn-primary") do %>
+					<%= icon('plus') %>
+					<span id="load-more-text">load more</span>
+				<% end %>	
 				
 
 	</div>
