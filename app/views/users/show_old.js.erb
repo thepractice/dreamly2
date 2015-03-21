@@ -1,0 +1,30 @@
+<% js = escape_javascript(
+	render(partial: 'users/list', locals: { dreams: @dreams })
+) %>
+$("#filterrific_results").waitForImages(function() {
+	$(this).html("<%= js %>");
+});
+
+<% js2 = escape_javascript(
+	render(partial: 'users/graph', locals: { graph_text: @graph_text })
+) %>
+$("#profile-graph2").html("<%= js2 %>");
+
+<% js3 = escape_javascript(
+	render(partial: 'dreams/tags', locals: { hashes: @hashes })
+) %>
+$("#hash-listing").html("<%= js3 %>");
+
+<% js4 = escape_javascript(
+	render(partial: 'dreams/screennames', locals: { screennames: @screennames })
+) %>
+$("#name-listing").html("<%= js4 %>");
+
+// infinite scrolling
+
+//$('#user-dreams').append('<%= j render(@dreams) %>'); // escape with 'j'
+//<% if @dreams.next_page %>
+//	$('.pagination').replaceWith('<%= j will_paginate(@dreams) %>');
+//<% else %>
+//	$('.pagination').remove();
+//<% end %>

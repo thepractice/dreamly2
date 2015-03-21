@@ -5,10 +5,56 @@
 	<div class="row">
 		<div class ="col-md-3">
 			<div id="profile-left-sidebar">
-				<div data-spy="affix" data-offset-top="23">
+				<div>
 					<div id="profile-graph" class="white-panel">
 					</div>
 					<%= render 'dreams/graph_single' %>
+					<div id="emotion-listing">
+
+						<% @dream.emotions.each do |emotion| %>
+
+							<% size = 40 %>
+
+							<% if emotion.id == 1 %>
+
+									<%= image_tag("angry40.png", size: "#{size}x#{size}") %>
+								</a>
+							<% elsif emotion.id == 2 %>
+
+									<%= image_tag("afraid40.png", size: "#{size}x#{size}") %>
+								</a>
+							<% elsif emotion.id == 3 %>
+				
+									<%= image_tag("disgusted40.png", size: "#{size}x#{size}") %>
+								</a>
+							<% elsif emotion.id == 4 %>
+
+									<%= image_tag("happy40.png", size: "#{size}x#{size}") %>
+								</a>
+							<% elsif emotion.id == 5 %>
+
+									<%= image_tag("sad40.png", size: "#{size}x#{size}") %>
+								</a>
+							<% elsif emotion.id == 6 %>
+
+									<%= image_tag("desiring40.png", size: "#{size}x#{size}") %>
+								</a>
+							<% elsif emotion.id == 7 %>
+
+									<%= image_tag("guilty40.png", size: "#{size}x#{size}") %>
+								</a>
+							<% end %>
+
+						<% end %>
+					</div>
+				
+
+					<% @dream.hashtags.each do |hashtag_id, freq| %>
+						<%= link_to Hashtag.find(hashtag_id), { :class => "btn user-hash-link hashtag-color" } do %>
+							#<%= Hashtag.find(hashtag_id).name %>
+						<% end %>
+					<% end %>	
+
 					<div id="links-panel" class="white-panel">
 						<%= link_to "Home", root_path %>
 						<%= link_to "About", about_path %>
@@ -20,6 +66,57 @@
 		</div>
 		<div class="col-md-9">
 			<div class="dream white-panel" id="indiv-dream">
+
+				<div class="dream-left-left">
+					<% if @dream.private %>
+						<%= icon('lock') %>
+					<% else %>					
+						<% div_id = "upvote_#{@dream.id}" %>
+						<div id="<%= div_id %>">				
+							<% if user_signed_in? %>
+								<% if current_user.voted_as_when_voted_for @dream  %>
+									<%= link_to like_dream_path(@dream), method: :put, :id => "upvote-",:class => "vote-div vote-arrow", :remote => true do %>
+										<div class="up_arrow_green"></div>
+									<% end %>
+								<% else %>
+									<%= link_to like_dream_path(@dream), method: :put, :class => "vote-div vote-arrow", :remote => true do %>
+										<div class="up_arrow"></div>
+									<% end %>								
+								<% end %>
+							<% else %>
+								<%= link_to like_dream_path(@dream), method: :put, :class => "vote-div vote-arrow", :remote => true do %>
+									<div class="up_arrow"></div>
+								<% end %>				
+							<% end %>
+						</div>
+
+
+							<% span_id_counter = "counter_#{@dream.id}" %>
+							<span id="<%= span_id_counter %>" class="vote-div vote-counter"><%= @dream.get_upvotes.size - @dream.get_downvotes.size %></span>
+
+
+							<% div_id_downvote = "downvote_#{@dream.id}" %>
+							<div id="<%= div_id_downvote %>">						
+
+								<% if user_signed_in? %>
+									<% if current_user.voted_down_on? @dream %>
+										<%= link_to dislike_dream_path(@dream), method: :put, :class => "vote-div vote-arrow", :remote => true  do %>
+											<div class="down_arrow_red"></div>
+										<% end %>
+									<% else %>
+										<%= link_to dislike_dream_path(@dream), method: :put, :class => "vote-div vote-arrow", :remote => true  do %>
+											<div class="down_arrow"></div>
+										<% end %>					
+									<% end %>
+								<% else %>
+									<%= link_to dislike_dream_path(@dream), method: :put, :class => "vote-div vote-arrow", :remote => true  do %>
+										<div class="down_arrow"></div>
+									<% end %>
+								<% end %>
+							</div>	
+						<% end %>
+				</div>
+
 				<div class="dream-left">
 					<% if @dream.user.avatar_file_name.nil? %>
 						<div class="dream-avatar-default">
@@ -37,49 +134,83 @@
 				<div class="dream-right">
 					<div class="dream-right-top">
 						<div class="dream-right-top1">
-							<span class="dream-title"><h4><%= @dream.title %></h4></span>
+							<span class="dream-title">
 
-							<%= link_to @dream.user do %>
-								<span class="dreamer1"><%= @dream.user.name %></span>
-								<span class="dreamer2">@<%= @dream.user.username %></span>
-							<% end %>
+									<% if @dream.user == current_user %>
+										<% if @dream.impression == 2 %>
+											<%= link_to @dream.title, @dream, :class => "big-dream-link" %>
+										<% elsif @dream.impression == 3 %>
+											<%= link_to @dream.title, @dream, :class => "huge-dream-link" %>
+										<% else %>
+											<%= link_to @dream.title, @dream %>
+										<% end %>
+									<% else %>
+										<% if @dream.impression == 2 %>
+											<%= link_to @dream.title.gsub(/([@])\w+/, "@name"), @dream, :class => "big-dream-link" %>
+										<% elsif @dream.impression == 3 %>
+											<%= link_to @dream.title.gsub(/([@])\w+/, "@name"), @dream, :class => "huge-dream-link" %>
+										<% else %>
+											<%= link_to @dream.title.gsub(/([@])\w+/, "@name"), @dream %>
+										<% end %>										
+										
+									<% end %>
+
+									<% @dream.emotions.each do |emotion| %>
+										<% if emotion.id == 1 %>
+											<div class="angry emoticon-image" data-toggle="tooltip" data-container="body" title="Angry" ></div>
+										<% elsif emotion.id == 2 %>
+											<div class="afraid emoticon-image" data-toggle="tooltip" data-container="body" title="Afraid" ></div>
+										<% elsif emotion.id == 3 %>
+									
+											<div class="disgusted emoticon-image" data-toggle="tooltip" data-container="body" title="Disgusted" ></div>
+										<% elsif emotion.id == 4 %>
+							
+											<div class="happy emoticon-image" data-toggle="tooltip" data-container="body" title="Happy" ></div>
+										<% elsif emotion.id == 5 %>
+									
+											<div class="sad emoticon-image" data-toggle="tooltip" data-container="body" title="Sad" ></div>
+										<% elsif emotion.id == 6 %>
+								
+											<div class="desiring emoticon-image" data-toggle="tooltip" data-container="body" title="Desiring" ></div>
+										<% elsif emotion.id == 7 %>
+					
+											<div class="guilty emoticon-image" data-toggle="tooltip" data-container="body" title="Guilty" ></div>
+										<% end %>
+									<% end %>
+					
+							</span>		
+
+							<div class="dream-info-small dream-show-byline">
+								<span class="small-font">dreamed <%= time_ago_in_words(@dream.dreamed_on) %> ago by</span>
+								<span class="dreamer1 small-font"><%= link_to @dream.user.name, @dream.user %></span>
+								<span class="dreamer2 small-font"><%= link_to "@#{@dream.user.username}", @dream.user %></span>
+								<span class="small-font"> and submitted <%= time_ago_in_words(@dream.created_at) %> ago</span>		
+							</div>												
 
 						</div>
-						<div class="dream-right-top2">
-							<% if @dream.impression == 2 %>
-								<div class="big-dream">
-									Big <%= icon('star') %>
-								</div>
-							<% elsif @dream.impression == 3 %>
-								<div class="huge-dream">
-									Huge <%= icon('star') %>
-								</div>
-							<% end %>
-
-							<% if @dream.private %>
-								<%= icon('lock') %>
-							<% else %>
-								<%= icon('unlock') %>
-							<% end %>
-						</div>
+	
 					</div>
 
 
-
-					<span class="body"><%= simple_format(auto_link(@dream.body, hashtag_url_base: hashtags_path+"/")) %></span>
+					<% if @dream.user == current_user %>
+						<span class="body"><%= simple_format(auto_link(@dream.body, hashtag_url_base: hashtags_path+"/", username_url_base: screennames_path+"/", username_include_symbol: true)) %></span>
+					<% else %>
+						<span class="body"><%= simple_format(auto_link_hashtags(@dream.body.gsub(/([@])\w+/, "@name"), hashtag_url_base: hashtags_path+"/")) %></span>
+					<% end %>
 					<% if current_user == @dream.user %>
-						<%= link_to(edit_dream_path(@dream.id), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-edit-dream', :class => 'btn btn-primary btn-square-small', :id => "edit-dream-button"}) do %>
-							<%= icon('pencil-square-o') %>
-							Edit
+						<%= link_to(edit_dream_path(@dream.id), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-edit-dream', :class => 'edit-link'}) do %>
+							edit
 						<% end %>
 
-						<%= link_to(@dream, method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger btn-square-small') do %>
-							<%= icon('trash-o') %>
-							Delete
+						<%= link_to(@dream, method: :delete, data: { confirm: "Are you sure?" }, class: 'edit-link') do %>
+							delete
 						<% end %>
 
 					<% end %> 
 				</div>
+			</div>
+			<div id="comment-listing">
+				<%= pluralize(comment_count(@dream), 'comment') %>
 			</div>
 
 			<div class="comment-box">
@@ -92,30 +223,25 @@
 	            <div class="comment_error_explanation"></div>
 	          </div>
 
-						<%= f.input :body, label: 'hey', placeholder: 'Add your comment.' %>
+						<%= f.input :body, label: 'hey', placeholder: 'add your comment...' %>
             <div class="btn-group btn-toggle" data-toggle="buttons">
               <label class="btn btn-default active">
-                <input type="radio" name="comment[private]" value="false" checked> Public
+                <input type="radio" name="comment[private]" value="false" checked> public
               </label>
               <label class="btn btn-default">
-                <input type="radio" name="comment[private]" value="true"> Private
+                <input type="radio" name="comment[private]" value="true"> private
               </label>                
             </div>
 
 						<button type="submit" class="btn btn-primary btn-square">
-							<%= icon('comments') %>
-				      Post Comment
+				      post
 				    </button>
-
 					<% end %>
+					
 				<% end %>
 			</div>
-			<div class="comment-listing">
-				<% if comment_count(@dream) > 0 %>
-					<h3><%= icon('comments') %> Comments (<%= comment_count(@dream) %>)</h3>
-				<% end %>
-					<%= render partial: "comments/comment", collection: @dream.comments.regular %>
-	
+			<div>
+				<%= render partial: "comments/comment", collection: @dream.comments.regular %>
 			</div>		
 		</div>
 	</div>

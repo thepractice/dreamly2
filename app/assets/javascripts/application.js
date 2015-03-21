@@ -29,5 +29,6 @@
 //= require waitforimages.js
 //= require turbolinks
 //= require filterrific/filterrific-jquery
+//= require select2
 
 Turbolinks.enableProgressBar();

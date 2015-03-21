@@ -1,21 +1,25 @@
 jQuery(document).on "ready page:change", ->
 
-	# Infinite scroll
+	# Load more JS
 
-	# It doesn't listen for scroll unless there is pagination class
-#	if $('.pagination').length
-#		$(window).scroll ->
-#			# Finds achor tag in pagination with rel attribute = 'next'
-#			$next = $('.pagination a[rel="next"]')
-#			# Sets url variable to the href value of that anchor tag
-#			url = $($next).attr('href')
-#			if url && $(window).scrollTop() > $(document).height() - $(window).height() - 100
-#				# Since this replaces whole pagination with this text, it prevents loading of too many records.
-#				# This line is immediately followed by this getScript() which triggers another operation on .pagination
-#				$('.pagination').text('Loading...')
-#				# Triggers the js.erb file
-#				$.getScript(url)
-#			$(window).scroll
+	$('#load-more').unbind('click').on 'click', ->
+		$('#load-more-text').text('loading...')
+		$next = $('.pagination a[rel="next"]').last()
+		url = $($next).attr('href')
+		$('#filterrific_results').append('<div>')
+		$('#filterrific_results div').last().load url+' #filterrific_results'
+
+	$(document).ajaxComplete ->
+		$('#load-more-text').text('load more')
+
+	$('#load-more2').unbind('click').on 'click', ->
+		$('#load-more-text').text('loading...')
+		$next = $('.pagination a[rel="next"]').last()
+		url = $($next).attr('href')
+		$('#filterrific_results').append('<div>')
+		$('#filterrific_results div').last().load url+' #filterrific_results'
+		$.getScript(url)
+
 
 # Ajax dream form
 
@@ -133,6 +137,31 @@ jQuery(document).on "ready page:change", ->
 # Enable tooltips. Must come before Impression Slider.
 	$("#full-screen-icon").tooltip()
 	$(".emoticon-image").tooltip()
+
+	$('#hash-listing').on 'click', '.more-tags-class-more', ->
+		$("#extra-hashes").css("display", "inline")
+		$("#extra-hashes").show()
+		$("#more-tags-button").hide()
+		$("#less-tags-button").show()
+
+
+	$('#hash-listing').on 'click', '.more-tags-class-less', ->
+		$("#extra-hashes").hide()
+		$("#more-tags-button").show()
+		$("#less-tags-button").hide()
+
+	$('#more-screennames-button').on 'click', ->
+		$("#extra-screennames").css("display", "inline")
+		$("#extra-screennames").show()
+		$("#more-screennames-button").hide()
+		$("#less-screennames-button").show()
+
+	$('#less-screennames-button').on 'click', ->
+		$("#extra-screennames").hide()
+		$("#more-screennames-button").show()
+		$("#less-screennames-button").hide()
+
+	$(".select-js").select2 minimumResultsForSearch: 10
 
 	# Impression Slider
 

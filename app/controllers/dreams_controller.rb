@@ -4,6 +4,7 @@ class DreamsController < ApplicationController
 
 	def index
 
+
     # Initialize filterrific with the following params:
     # * `Student` is the ActiveRecord based model class.
     # * `params[:filterrific]` are any params submitted via web request.
@@ -33,6 +34,7 @@ class DreamsController < ApplicationController
 			select_options: {
 				with_emotion_id: Emotion.options_for_select
 			},
+			default_filter_params: { search: params[:search] },
 		) or return 
 
     # Get an ActiveRecord::Relation for all students that match the filter settings.
@@ -44,7 +46,9 @@ class DreamsController < ApplicationController
 		# @dreams = @filterrific.find.page(params[:page])
 		@dreams = @filterrific.find
 
-		
+
+
+=begin
 		if params[:query].present?
 			if params[:impression].present?
 				@dreams_raw = Dream.text_search(params[:query]).impression(params[:impression]).where(private: false)
@@ -58,80 +62,78 @@ class DreamsController < ApplicationController
 			else
 				@dreams_raw = Dream.regular.where(private: false)
 			end
-		end
+		end		
+=end
+		
 
+
+		#@dreams = @dreams.joins(:user).where("private = ? OR users.id = ?", false, current_user)
 		@dreams = @dreams.where(private: false)
+	
 
-		if params[:time] == ('today' || 'week' || 'month' || 'year' || 'all')
 
-			@sorting_array = []
-
-			if params[:time] == 'today'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 24.hours.ago..Time.now).size - dream.get_downvotes.where(:created_at => 24.hours.ago..Time.now).size])
-				end		
-				
-			elsif params[:time] == 'week'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.week.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.week.ago..Time.now).size])
-				end		
-
-			elsif params[:time] == 'month'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.month.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.month.ago..Time.now).size])
-				end		
-
-			elsif params[:time] == 'year'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.year.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.year.ago..Time.now).size])
-				end		
-
-			elsif params[:time] == 'all'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.size - dream.get_downvotes.size])
-				end	
-
-			end					
-			@sorting_array = @sorting_array.reverse.each_with_index.sort_by { |a, idx| [a[1], idx] }.reverse.map(&:first).map { |x| x[0] }
-			@dreams = @sorting_array
-
-		elsif params[:time] == 'submitted'
+		if params[:sort] == 'trending'
+			@dreams = @dreams.hot
+		elsif params[:sort] == 'submitted'
 			@dreams = @dreams.regular
-		elsif params[:time] == 'dreamed'
+		elsif params[:sort] == 'dreamed'
 			@dreams = @dreams.chronological
 		else
-			@sorting_array = []
-			@dreams.each do |dream|
-				@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.week.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.week.ago..Time.now).size])
-			end
-			@sorting_array = @sorting_array.reverse.each_with_index.sort_by { |a, idx| [a[1], idx] }.reverse.map(&:first).map { |x| x[0] }
-			@dreams = @sorting_array						
+			@dreams = @dreams.hot
 		end
 
-		@dreams_raw = @dreams  # try to get graph to update with filterrific
-		@dreams = @dreams.paginate(page: params[:page],per_page: 40)
+		#@dreams_raw = @dreams  # try to get graph to update with filterrific
 
-
-
-
+		@dreams2 = @dreams.paginate(page: params[:page],per_page: 15)
+		
+		@page_number = params[:page].to_i
+		if params[:page].nil?
+			@dreams = @dreams.paginate(page: params[:page],per_page: 15)
+		elsif params[:page] == 1
+			@dreams = @dreams.paginate(page: params[:page],per_page: 15)
+		else
+			@cumul = @dreams.paginate(page: 1,per_page: 15)
+			(@page_number - 1).times do |i|
+				@dreams.paginate(page: i + 2,per_page: 15).each do |dream|
+					@cumul = @cumul << dream
+				end
+			end
+			@dreams = @cumul
+		end
 		
 
 
 
-
-
-
 		@hashes = Hash.new
-		@dreams_raw.each do |dream|
+		@screennames = Hash.new
+		@emotions = Hash.new
+
+		@dreams.each do |dream|
+
+
+			dream.emotions.each do |emotion|
+				if @emotions[emotion.id].nil?
+					@emotions[emotion.id] = 1
+				else
+					@emotions[emotion.id] += 1
+				end
+			end			
+
 			dream.hashtags.each do |hashtag|
-				@hashes[hashtag.id] =+ 1
+				if @hashes[hashtag.id].nil?
+					@hashes[hashtag.id] = 1
+				else
+					@hashes[hashtag.id] += 1
+				end
 			end
 		end
+
+		@screennames = @screennames.sort_by { |k, v| v }
+		@screennames.reverse!
+
+		@emotions = @emotions.sort_by { |k, v| v }
+		@emotions.reverse!			
+
 		@hashes = @hashes.sort_by { |k, v| v }
 		@hashes.reverse!
 
@@ -139,7 +141,7 @@ class DreamsController < ApplicationController
 
 		@word_count = Hash.new
 		# Create hash of word frequencies in all relevant dreams
-		@dreams_raw.each do |dream|
+		@dreams.each do |dream|
 			dream.word_freq.each do |stem, info_array|
 				if @word_count[info_array[0]] == nil
 					@word_count[info_array[0]] = { freq: info_array[1], dream_ids: [dream.id] }
@@ -262,22 +264,42 @@ class DreamsController < ApplicationController
 			@min_words_constant = 5
 		end				
 
+		@links = Array.new		
 		@nodes = Array.new
 		@min_words = [@word_count.length, @min_words_constant].min
 		@min_words.times do |n|
 			@nodes.push(@word_count.keys[n])
+
+			if n == 1
+				@links.push([0,n])
+			elsif n > 1
+				@links.push([n,0],[n,1])
+			end
+
 		end
+
+
 
 		@node_text = "["
 		@nodes.each do |word|
 
-			@node_text += "{\"name\":\"#{word}\",\"value\":#{@word_count[word]}},"
+			@node_text += "{\"name\":\"#{@word_count[word][0]}\",\"value\":#{@word_count[word][1]}},"
 		end
 		@node_text = @node_text[0..-2] unless @nodes.empty?				# remove extra comma
 
 		@node_text += "]"
 
-		@graph_text = "{\"nodes\":#{@node_text}}"
+		@link_text = "["
+		@links.each do |link|
+			@link_text += "{\"source\":#{link[0]},\"target\":#{link[1]}},"
+		end
+
+		@link_text = @link_text[0..-2] unless @links.empty?		# remove extra comma
+
+		@link_text += "]"
+
+		@graph_text = "{\"nodes\":#{@node_text},\"links\":#{@link_text}}"			
+
 
 	end
 
@@ -299,6 +321,8 @@ class DreamsController < ApplicationController
 		end
 
 
+
+
 		respond_to do |format|
 			if @dream.save
 				flash[:success] = "Dream saved."
@@ -308,6 +332,9 @@ class DreamsController < ApplicationController
 				format.json { render json: @dream, status: :created, location: @dream }
 				#format.json { render json: "window.location.pathname='#{help_path}'"}
 				#redirect_to @dream, format: 'json'
+				@dream.liked_by current_user
+				@rating = update_rating(@dream)
+				@dream.update_columns(rating: @rating) 
 			else
 				format.html { render 'dreams/new' }
 				format.json { render json: @dream.errors.full_messages, status: :unprocessable_entity }
@@ -345,16 +372,16 @@ class DreamsController < ApplicationController
 
 	def upvote
 		@dream = Dream.find(params[:id])
-		if user_signed_in?
-			if current_user.voted_as_when_voted_for @dream
-				@dream.unliked_by current_user
-			else
-				@dream.liked_by current_user
+
+		if current_user.voted_as_when_voted_for @dream
+			@dream.unliked_by current_user
+		else
+			@dream.liked_by current_user
 		end
 
-		
+		@rating = update_rating(@dream)
+		@dream.update_columns(rating: @rating) 
 
-		@dream.liked_by current_user
 		session[:return_to] ||= request.referer		#Store the requesting url in the session hash
 		respond_to do |format|
 			format.html { redirect_to session.delete(:return_to) }	#redirect to the requesting url
@@ -364,7 +391,13 @@ class DreamsController < ApplicationController
 
 	def downvote
 		@dream = Dream.find(params[:id])
-		@dream.downvote_from current_user
+		if (current_user.voted_as_when_voted_for @dream) == false
+			@dream.undisliked_by current_user
+		else
+			@dream.downvote_from current_user
+		end
+		@rating = update_rating(@dream)
+		@dream.update_columns(rating: @rating) 
 		session[:return_to] ||= request.referer		#Store the requesting url in the session hash
 		respond_to do |format|
 			format.html { redirect_to session.delete(:return_to) }	#redirect to the requesting url
@@ -377,7 +410,7 @@ class DreamsController < ApplicationController
 		redirect_to root_url
 	end
 
-	end #?
+
 
 	private
 
@@ -389,7 +422,24 @@ class DreamsController < ApplicationController
 			@dream = current_user.dreams.find_by(id: params[:id])
 			redirect_to root_url if @dream.nil?
 		end
-		
 
+		def update_rating(dream)
+			t = dream.created_at - 1001.days.ago
+			x = dream.get_upvotes.size - dream.get_downvotes.size
+			if x > 0
+				y = 1
+			elsif x == 0
+				y = 0
+			else
+				y = -1
+			end
+			if x.abs >= 1
+				z = x.abs
+			else
+				z = 1
+			end
+			@rating = Math.log10(z) + y * t / 45000
+			return @rating
+		end	
 
 end

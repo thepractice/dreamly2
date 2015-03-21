@@ -82,11 +82,29 @@ module ApplicationHelper
 			end
 		end
 		if user_signed_in? && current_page?(dream)
-			@comment_counter = @comment_counter - 1
+		#	@comment_counter = @comment_counter - 1
 		end
 		@comment_counter
 	end
 
+	def update_rating(dream)
+		t = dream.created_at - 1001.days.ago
+		x = dream.get_upvotes.size - dream.get_downvotes.size
+		if x > 0
+			y = 1
+		elsif x == 0
+			y = 0
+		else
+			y = -1
+		end
+		if x.abs >= 1
+			z = x.abs
+		else
+			z = 1
+		end
+		@rating = Math.log10(z) + y * t / 45000
+		return @rating
+	end		
 
 
 end

@@ -23,15 +23,35 @@
 <div class="row">
 	<div class ="col-md-3">
 		<div id="profile-left-sidebar">
-			<div data-spy="affix" data-offset-top="23">
+			<div>
 				<% if @dreams.any? %>
 					<div id="profile-graph" class="white-panel">
 						<%= link_to hashtag_path(@hashtag.id, graph: true, impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", "data-container" => "body", title: "Fullscreen"} do %>
 							<%= icon('arrows-alt') %>
 						<% end %>
 					</div>
-					<%= render 'dreams/graph' %>
+					<div id="profile-graph2">
+						<%= render(
+							partial: 'dreams/graph',
+							locals: { graph_text: @graph_text }
+						) %>
+					</div>
 				<% end %>
+
+				<div id="emotion-listing">
+					<%= render(
+						partial: 'dreams/emotions',
+						locals: { emotions: @emotions }
+					) %>
+				</div>					
+
+				<div id="hash-listing">
+					<%= render(
+						partial: 'dreams/tags',
+						locals: { hashes: @hashes }
+					) %>
+				</div>
+
 				<div id="links-panel" class="white-panel">
 					<%= link_to "Home", root_path %>
 					<%= link_to "About", about_path %>
@@ -44,35 +64,87 @@
 	<div class="col-md-9">
 		<div>
 			<h3 class="content-title">#<%= @hashtag.name %></h3>
-			<ul class="nav nav-pills nav-pills-inline" role="tablist">
-				<% if params[:impression] == '2' %>
-					<li><%= link_to "All", hashtag_path(@hashtag.id) %></li>
-					<li class="active"><%= link_to "Big", hashtag_path(@hashtag.id, impression: 2) %></li>
-					<li><%= link_to "Huge", hashtag_path(@hashtag.id, impression: 3) %></li>
-				<% elsif params[:impression] == '3' %>
-					<li><%= link_to "All", hashtag_path(@hashtag.id) %></li>
-					<li><%= link_to "Big", hashtag_path(@hashtag.id, impression: 2) %></li>
-					<li class="active"><%= link_to "Huge", hashtag_path(@hashtag.id, impression: 3) %></li>
-				<% else %>
-					<li class="active"><%= link_to "All", hashtag_path(@hashtag.id) %></li>
-					<li><%= link_to "Big", hashtag_path(@hashtag.id, impression: 2) %></li>
-					<li><%= link_to "Huge", hashtag_path(@hashtag.id, impression: 3) %></li>
+
+			<div class="dream-tabs">
+				<% if params[:sort] == "trending" %>
+					<ul class="nav nav-tabs">
+				    <li role="presentation" class="active"><%= link_to "Trending", dreams_path(sort: 'trending'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "New", dreams_path(sort: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "Dreamed", dreams_path(sort: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+					</ul>
+				<% elsif params[:sort] == "submitted" %>	
+					<ul class="nav nav-tabs">
+				    <li role="presentation"><%= link_to "Trending", dreams_path(sort: 'trending'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation" class="active"><%= link_to "New", dreams_path(sort: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "Dreamed", dreams_path(sort: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+					</ul>
+				<% elsif params[:sort] == "dreamed" %>	
+					<ul class="nav nav-tabs">
+				    <li role="presentation"><%= link_to "Trending", dreams_path(sort: 'trending'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "New", dreams_path(sort: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation" class="active"><%= link_to "Dreamed", dreams_path(sort: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+					</ul>		
+				<% else %>	
+					<ul class="nav nav-tabs">
+				    <li role="presentation"><%= link_to "Trending", dreams_path(sort: 'trending'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation"><%= link_to "New", dreams_path(sort: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				    <li role="presentation" class="active"><%= link_to "Dreamed", dreams_path(sort: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+					</ul>										
 				<% end %>
-			</ul>
+			</div>			
 
+			<div id ="filter-block">
+			<%= form_for_filterrific @filterrific do |f| %>
+			
+					<%= f.text_field(
+						:search,
+						placeholder: 'Search...',
+						class: 'filterrific-periodically-observed'
+					) %>									
+			
+		
+					<%= f.select(
+						:with_emotion_id,
+						@filterrific.select_options[:with_emotion_id],
+						{ include_blank: 'Emotion' },
+						class: "select-js"
+					) %>
+	
+			
+					<%= f.select(
+						:impression,
+						[['Normal', 1], ['Big', 2], ['Huge', 3]],
+						{ include_blank: 'Impact' },
+						class: "select-js"
+					) %>
+	
+					<%= link_to(reset_filterrific_url) do %>
+						<%= icon('times') %>
+					<% end %>	
 
-
-
-			<% if current_user %>
-				<%= link_to "Only my dreams", user_path(current_user, hashtag: @hashtag.name), class: "btn btn-danger btn-square", id: "only-my-dreams-button" %>
+				<div>
+					<%= render_filterrific_spinner %>
+				</div>
+		
 			<% end %>
 
+			<%= render(
+				partial: 'dreams/list',
+				locals: { dreams: @dreams, dreams2: @dreams2, page_number: @page_number }
+			) %>
+
+			<%= button_tag(:id => "load-more2", :class => "btn btn-primary") do %>
+				<%= icon('plus') %>
+				<span id="load-more-text">load more</span>
+			<% end %>		
+
+
+
 		</div>
-		<ol class="list-unstyled dreams" id ="user-dreams">
-			<%= render partial: "dreams/dream", collection: @dreams %>
-		</ol>
-		<!-- renderer parameter is needed by will_paginate-boostrap gem -->
-		<%= will_paginate @dreams, renderer: BootstrapPagination::Rails %>
+
+
+
+
 	</div>
 </div>
 

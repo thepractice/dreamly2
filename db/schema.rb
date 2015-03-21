@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150115015251) do
+ActiveRecord::Schema.define(version: 20150320224048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,14 @@ ActiveRecord::Schema.define(version: 20150115015251) do
     t.text     "word_freq"
     t.integer  "impression", default: 1
     t.boolean  "private",    default: false
+    t.decimal  "rating",     default: 0.0
+  end
+
+  create_table "dreamscreennames", force: true do |t|
+    t.integer  "dream_id"
+    t.integer  "screenname_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "dreamtags", force: true do |t|
@@ -111,6 +119,14 @@ ActiveRecord::Schema.define(version: 20150115015251) do
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+
+  create_table "screennames", force: true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "dreams_count", default: 0
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

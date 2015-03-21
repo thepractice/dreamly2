@@ -12,4 +12,6 @@
  *= require_tree .
  *= require bootstrap-datepicker
  *= require font-awesome
+ *= require select2
+ *= require select2-bootstrap
  */

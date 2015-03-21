@@ -16,23 +16,95 @@ class HashtagsController < ApplicationController
 	def show
 		@hashtag = Hashtag.friendly.find(params[:id])
 
-		if params[:impression].present?
-			@dreams_raw = @hashtag.dreams.regular.impression(params[:impression])
+		#@dreams = @hashtag.dreams.joins(:user).where("private = ? OR users.id =?", false, current_user)
+		@dreams = @hashtag.dreams.where(private: false)
+		#@dreams = @dreams.joins(:user).where("private = ? OR users.id = ?", false, current_user)
+
+		@filterrific = initialize_filterrific(
+			@dreams,
+			params[:filterrific],
+			select_options: {
+				with_emotion_id: Emotion.options_for_select
+			},
+			default_filter_params: { search: params[:search] },
+		) or return 
+
+		@dreams = @filterrific.find		
+
+#		if params[:impression].present?
+#			@dreams_raw = @hashtag.dreams.regular.impression(params[:impression])
+#		else
+#			@dreams_raw = @hashtag.dreams.regular
+#		end
+
+#		if params[:onlyme]
+#			@dreams_raw = @dreams_raw.where(user: current_user)
+#		end
+
+		if params[:sort] == 'trending'
+			@dreams = @dreams.hot
+		elsif params[:sort] == 'submitted'
+			@dreams = @dreams.regular
+		elsif params[:sort] == 'dreamed'
+			@dreams = @dreams.chronological
 		else
-			@dreams_raw = @hashtag.dreams.regular
+			@dreams = @dreams.hot
 		end
 
-		if params[:onlyme]
-			@dreams_raw = @dreams_raw.where(user: current_user)
-		end
+		#@dreams_raw = @dreams  # try to get graph to update with filterrific
+		#@dreams = @dreams.paginate(page: params[:page],per_page: 40)
+
 		
-		@dreams = @dreams_raw.paginate(page: params[:page])
+		#@dreams = @dreams_raw.paginate(page: params[:page])
+
+		@dreams2 = @dreams.paginate(page: params[:page],per_page: 15)
+		@page_number = params[:page].to_i
+		if params[:page].nil?
+			@dreams = @dreams.paginate(page: params[:page],per_page: 15)
+		elsif params[:page] == 1
+			@dreams = @dreams.paginate(page: params[:page],per_page: 15)
+		else
+			@cumul = @dreams.paginate(page: 1,per_page: 15)
+			(@page_number - 1).times do |i|
+				@dreams.paginate(page: i + 2,per_page: 15).each do |dream|
+					@cumul = @cumul << dream
+				end
+			end
+			@dreams = @cumul
+		end
+
+		@hashes = Hash.new
+		@emotions = Hash.new
+
+		@dreams.each do |dream|
+
+			dream.emotions.each do |emotion|
+				if @emotions[emotion.id].nil?
+					@emotions[emotion.id] = 1
+				else
+					@emotions[emotion.id] += 1
+				end
+			end		
+
+			dream.hashtags.each do |hashtag|
+				if @hashes[hashtag.id].nil?
+					@hashes[hashtag.id] = 1
+				else
+					@hashes[hashtag.id] += 1
+				end
+			end
+		end
+		@hashes = @hashes.sort_by { |k, v| v }
+		@hashes.reverse!
+
+		@emotions = @emotions.sort_by { |k, v| v }
+		@emotions.reverse!			
 
 	# Graph logic
 
 		@word_count = Hash.new
 		# Create hash of word frequencies in all relevant dreams
-		@dreams_raw.each do |dream|
+		@dreams.each do |dream|
 			if (dream.private == false) || dream.user = current_user
 				dream.word_freq.each do |stem, info_array|
 					if @word_count[info_array[0]] == nil

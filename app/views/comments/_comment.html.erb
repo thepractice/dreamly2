@@ -1,5 +1,5 @@
 <% unless comment.private && ( (current_user != comment.user) && (current_user != comment.dream.user) ) %>
-	<div class="dream white-panel" id="indiv-dream">
+	<div class="dream white-panel indiv-comment">
 		<div class="dream-left">
 			<% if comment.user.avatar_file_name.nil? %>
 				<div class="dream-avatar-default">
@@ -8,13 +8,8 @@
 			<% else %>
 				<%= image_tag comment.user.avatar.url(:thumb) %>
 			<% end %>					
-			<span><%= comment.created_at.strftime("%^b") %></span><br />
-			<span><%= comment.created_at.strftime("%d") %></span><br/>
-			<% if comment.created_at.year != Time.now.year %>
-				<span class="year"><%= comment.created_at.strftime("%Y") %></span>
-			<% end %>
 		</div>
-		<div class="dream-right">
+		<div class="comment-right">
 			<div class="dream-right-top">
 				<div class="dream-right-top1">
 					<%= link_to comment.user do %>
@@ -31,16 +26,19 @@
 					<% end %>
 				</div>
 			</div>
-			<span class="body"><%= simple_format(comment.body) %></span>
+
+			<div class="dream-info-small">
+				<span class="small-font">submitted <%= time_ago_in_words(@dream.created_at) %> ago</span>		
+			</div>			
+
+			<span class="comment-body"><%= simple_format(comment.body) %></span>
 			<% if current_user == comment.user %>
-				<%= link_to(edit_dream_comment_path(comment.dream.id, comment.id), { :class => 'btn btn-primary btn-square-small', :id => "edit-dream-button"}) do %>
-					<%= icon('pencil-square-o') %>
-					Edit
+				<%= link_to(edit_dream_comment_path(comment.dream.id, comment.id), { :class => 'edit-link' }) do %>
+					edit
 				<% end %>
 
-				<%= link_to([comment.dream, comment], method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger btn-square-small') do %>
-					<%= icon('trash-o') %>
-					Delete
+				<%= link_to([comment.dream, comment], method: :delete, data: { confirm: "Are you sure?" }, class: 'edit-link') do %>
+					delete
 				<% end %>
 
 			<% end %> 

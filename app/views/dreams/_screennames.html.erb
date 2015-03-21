@@ -1,0 +1,28 @@
+<% screennames.take(10).each do |screenname_id, freq| %>
+	<%= link_to Screenname.find(screenname_id), { :class => "btn user-hash-link screenname-color" } do %>
+		@<%= Screenname.find(screenname_id).name %>
+		(<%= freq %>)
+	<% end %>
+<% end %>
+
+<% number = screennames.length - 10 %>
+<% if number > 0 %>
+	<div id="extra-screennames">
+
+		<% screennames.last(number).each do |screenname_id, freq| %>
+			<%= link_to Screenname.find(screenname_id), { :class => "btn user-hash-link screenname-color" } do %>
+				@<%= Screenname.find(screenname_id).name %>
+				(<%= freq %>)
+			<% end %>
+		<% end %>
+	</div>
+
+	<%= button_tag(:id => "more-screennames-button", :class => "btn more-tags-class") do %>
+		<%= icon('plus') %>
+		more
+	<% end %>
+	<%= button_tag(:id => "less-screennames-button", :class => "btn more-tags-class") do %>
+		<%= icon('minus') %>
+		less
+	<% end %>
+<% end %>

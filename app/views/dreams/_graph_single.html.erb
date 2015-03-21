@@ -3,8 +3,8 @@
 -->
 <script>
 
-var width = 250,
-    height = 250,
+var width = (window.innerWidth - 135) * 0.25,
+    height = (window.innerHeight - 135) * 0.5,
     r = 2;
 
 //var svg = d3.select("body").append("svg")
@@ -20,17 +20,21 @@ var graph_string = graph_string.replace(/&quot;/ig,'"');
 var graph_json = JSON.parse(graph_string);
 
 var ed_nodes = graph_json.nodes;
+var ed_links = graph_json.links;
 
 var total_value = 0;
+var max_value = 0;
 
 for(var i = 0; i < ed_nodes.length; i++) {
 	total_value += ed_nodes[i].value;
+  max_value = Math.max(max_value, ed_nodes[i].value)
 }
 
 //function node_radius(d) { return (d.value / total_value)*100 };
-function node_radius(d) { return (d.value / total_value) *60 + 10 };
+//function node_radius(d) { return (d.value / total_value) *60 + 10 };
+function node_radius(d) { return Math.max(12,Math.pow(d.value / max_value, 2) * 20) };
 
-function node_url(d) { return "<%= dreams_path %>".concat("?query=").concat(d.name)}
+function node_url(d) { return "<%= dreams_path %>".concat("?filterrific%5Bsearch%5D=").concat(d.name)}
 var color = d3.scale.category20();
 
 var k = Math.sqrt(ed_nodes.length / (width * height ));
@@ -40,8 +44,15 @@ var force = d3.layout.force()
  /*   .distance(100) */
     .charge(-40 / k)
     .size([width, height])
+    .linkDistance(0)
     .nodes(ed_nodes)
+    .links(ed_links)
     .start();
+
+  var link = svg.selectAll(".link")
+      .data(ed_links)
+    .enter().append("line")
+      .attr("class", "link");    
 
   var node = svg.selectAll(".node")
       .data(ed_nodes)
@@ -56,7 +67,7 @@ var force = d3.layout.force()
       .attr("dy", ".35em")
       .attr("text-anchor", "middle")
       .attr("font-size", node_radius)
-      .attr("fill", function (d,i) { return color(i); })
+      .attr("fill", function (d,i) { return 'white'; })
       .text(function(d) { return d.name });
 
   var bbox_array = [];
@@ -65,11 +76,11 @@ var force = d3.layout.force()
   });      
 
   node.insert("rect", "a")
-    .attr("x", function (d,i) { return bbox_array[i].x })
-    .attr("y", function (d,i) { return bbox_array[i].y })
-    .attr("width", function (d,i) { return bbox_array[i].width })
-    .attr("height", function (d,i) { return bbox_array[i].height })
-    .style("fill", function (d,i) { return 'white'; })
+    .attr("x", function (d,i) { return bbox_array[i].x - 5 })
+    .attr("y", function (d,i) { return bbox_array[i].y - 3 })
+    .attr("width", function (d,i) { return bbox_array[i].width + 10 })
+    .attr("height", function (d,i) { return bbox_array[i].height + 6 })
+    .style("fill", function (d,i) { return color(i); })
     .attr("opacity", 1);
 
 /*
@@ -82,6 +93,10 @@ var force = d3.layout.force()
     */
 
   force.on("tick", function() {
+    link.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });    
 
 
    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });

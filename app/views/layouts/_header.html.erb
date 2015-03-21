@@ -60,7 +60,9 @@
     </div><!-- /.navbar-collapse -->
 
 
-				<%= link_to "just had a dream", current_user, class: "cloud_header" %>
+				<%= link_to(current_user, class: "cloud_header") do %>
+					<%= image_tag("dream_journal_logo4.png") %>
+				<% end %>
 		
 			
 

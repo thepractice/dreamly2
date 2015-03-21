@@ -23,99 +23,17 @@ class UsersController < ApplicationController
 
 #		@dreams = @user.dreams.regular.paginate(page: params[:page])
 		
-		if params[:query].present?
-			if params[:impression].present?
-				@dreams_raw = Dream.text_search(params[:query]).impression(params[:impression]).where(user: @user)
-			else
-				@dreams_raw = Dream.text_search(params[:query]).where(user: @user)
-			end
-		else
-			if params[:impression].present?
-				@hashtag = Hashtag.find_by name: (params[:hashtag])
-				if params[:hashtag].present?
-					if @hashtag == nil
-						@dreams_raw = @user.dreams.where("impression = 5")	#hack to get empty collection of dreams
-					else
-						if @user == current_user
-							@dreams_raw = @hashtag.dreams.chronological.where(user: @user).impression(params[:impression])
-						else
-							@dreams_raw = @hashtag.dreams.regular.where(user: @user).impression(params[:impression])
-						end
-					end
-				else
-					if @user == current_user
-						@dreams_raw = @user.dreams.chronological.impression(params[:impression])
-					else					
-						@dreams_raw = @user.dreams.regular.impression(params[:impression])
-					end
-				end
-			else
-				if params[:hashtag].present?
-					@hashtag = Hashtag.find_by name: (params[:hashtag])
-					if @hashtag == nil
-						@dreams_raw = @user.dreams.where("impression = 5")	#hack to get empty collection of dreams
-					else
-						if @user == current_user
-							@dreams_raw = @hashtag.dreams.chronological.where(user: @user)
-						else						
-							@dreams_raw = @hashtag.dreams.regular.where(user: @user)
-						end
-					end
-				else
-					if @user == current_user
-						@dreams_raw = @user.dreams.chronological
-					else					
-						@dreams_raw = @user.dreams.regular
-					end
-				end
-			end
-		end
+	
 
 		if @user != current_user
-			@dreams_raw = @dreams_raw.where(private: false)
 			@dreams = @dreams.where(private: false)
 		end
 
-		if params[:time] == ('today' || 'week' || 'month' || 'year' || 'all')
-
-			@sorting_array = []
-
-			if params[:time] == 'today'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 24.hours.ago..Time.now).size - dream.get_downvotes.where(:created_at => 24.hours.ago..Time.now).size])
-				end		
-				
-			elsif params[:time] == 'week'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.week.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.week.ago..Time.now).size])
-				end		
-
-			elsif params[:time] == 'month'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.month.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.month.ago..Time.now).size])
-				end		
-
-			elsif params[:time] == 'year'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.year.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.year.ago..Time.now).size])
-				end		
-
-			elsif params[:time] == 'all'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.size - dream.get_downvotes.size])
-				end							
-			end
-			@sorting_array = @sorting_array.reverse.each_with_index.sort_by { |a, idx| [a[1], idx] }.reverse.map(&:first).map { |x| x[0] }
-			@dreams = @sorting_array
-
-		elsif params[:time] == 'submitted'
+		if params[:sort] == 'trending'
+			@dreams = @dreams.hot
+		elsif params[:sort] == 'submitted'
 			@dreams = @dreams.regular
-		elsif params[:time] == 'dreamed'
+		elsif params[:sort] == 'dreamed'
 			@dreams = @dreams.chronological
 		else
 			@dreams = @dreams.chronological
@@ -123,7 +41,7 @@ class UsersController < ApplicationController
 
 
 		@dreams_raw = @dreams  # try to get graph to update with filterrific
-		@dreams = @dreams.paginate(page: params[:page],per_page: 40)
+		@dreams = @dreams.paginate(page: params[:page],per_page: 15)
 
 		
 
@@ -138,6 +56,47 @@ class UsersController < ApplicationController
 #			@dreams = Dream.text_search(params[:query]).paginate(page: params[:page]).where(user: @user)
 	#		@dreams = Dream.text_search(params[:query]).page(params[:page])
 #		end
+
+		@hashes = Hash.new
+		@screennames = Hash.new
+		@emotions = Hash.new
+
+		@dreams_raw.each do |dream|
+			dream.screennames.each do |screenname|
+				if @screennames[screenname.id].nil?
+					@screennames[screenname.id] = 1
+				else
+					@screennames[screenname.id] += 1
+				end
+			end
+
+			dream.emotions.each do |emotion|
+				if @emotions[emotion.id].nil?
+					@emotions[emotion.id] = 1
+				else
+					@emotions[emotion.id] += 1
+				end
+			end
+
+			dream.hashtags.each do |hashtag|
+				if @hashes[hashtag.id].nil?
+					@hashes[hashtag.id] = 1
+				else
+					@hashes[hashtag.id] += 1
+				end
+			end
+		end
+
+		@screennames = @screennames.sort_by { |k, v| v }
+		@screennames.reverse!
+
+		@emotions = @emotions.sort_by { |k, v| v }
+		@emotions.reverse!		
+
+		@hashes = @hashes.sort_by { |k, v| v }
+		@hashes.reverse!
+
+		
 
 
 	# Graph logic
@@ -270,5 +229,6 @@ class UsersController < ApplicationController
 		@users = @user.followers.paginate(page: params[:page])
 		render 'show_follow'
 	end
+
 
 end

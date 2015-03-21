@@ -1,11 +1,15 @@
 Jhad::Application.routes.draw do
 
-  root 'dreams#index'
+  
 
   authenticated :user do
     # Rails 4 users must specify the 'as' option to give it a unique name
     root :to => "static_pages#home", :as => "authenticated_root"
-  end  
+  end 
+
+  unauthenticated do
+    root 'static_pages#home'
+  end
 
   devise_for :users, path_names: { sign_in: "login", sign_out: "logout" },
                      controllers: { omniauth_callbacks: "omniauth_callbacks", sessions: 'sessions', registrations: 'registrations' }
@@ -24,6 +28,7 @@ Jhad::Application.routes.draw do
   
   resources :notifications
   resources :hashtags
+  resources :screennames
   resources :relationships, only: [:create, :destroy]
 
   match '/help',    to: 'static_pages#help',    via: 'get'

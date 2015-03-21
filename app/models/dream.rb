@@ -14,6 +14,8 @@ class Dream < ActiveRecord::Base
 	has_many :hashtags, through: :dreamtags
 	has_many :dreamemotions
 	has_many :emotions, through: :dreamemotions
+	has_many :dreamscreennames
+	has_many :screennames, through: :dreamscreennames
 
 	acts_as_votable
 
@@ -24,6 +26,7 @@ class Dream < ActiveRecord::Base
 	scope :regular, -> { order('created_at DESC') }
 	scope :chronological, -> { order('dreamed_on DESC, created_at DESC') }
 	scope :impression, -> (min_impression) { where("impression >= ?", min_impression) }
+	scope :hot, -> { order('rating DESC') }
 #	scope :with_emotion_id2, -> { joins(:emotions).where('emotions.id = ?') }
 #	scope :with_emotion_id, lambda { |emotion_id|
 #		where(emotion: { id: emotion_id }).joins(:emotions)
@@ -36,7 +39,7 @@ class Dream < ActiveRecord::Base
 	}
 	scope :with_emotion_id, lambda { |emotion_id|
 		where('emotions.id = ?', emotion_id).joins(:emotions)
-	}	
+	}
 
 	include PgSearch
 	multisearchable against: [:title, :body]
@@ -57,6 +60,7 @@ class Dream < ActiveRecord::Base
 	before_update :reverse_dream
 	before_save :init_data
 	after_save :set_hashtags
+	after_save :set_screennames
 	after_save :gather_words
 	#after_save :update_graph
 	#after_save :update_graph_public
@@ -142,6 +146,41 @@ class Dream < ActiveRecord::Base
 
 
 
+		end
+
+		def set_screennames
+			screennames = extract_mentioned_screen_names(self.body).uniq
+			unless extract_mentioned_screen_names(self.title).empty?
+				extract_mentioned_screen_names(self.title).uniq.each do |screenname|
+					screennames.push(screenname)
+				end
+			end
+
+			screennames.each do |screenname|
+				screenname.downcase!
+				screenname_record = Screenname.find_or_create_by(name: screenname, user_id: self.user.id)
+				screenname_record.dreams_count += 1
+				screenname_record.save
+
+				if self.dreamscreennames.where(screenname_id: screenname_record.id).empty?	# Avoid double-creating the dreamscreenname (? needed)
+					self.dreamscreennames.create(screenname_id: screenname_record.id)					# Create the intermediate relationship
+				end
+
+
+			end
+
+#			user_names = self.user.names
+
+#			names.each do |name|
+#				if user_names[name] == nil
+#					user_names[name] = 1
+#				else
+#					user_names[name] += 1
+#				end
+#			end
+
+#			user_names = Hash[user_names.sort_by { |k, v| v }.reverse]
+#			self.user.update_columns(names: user_names)
 		end
 
 
@@ -240,12 +279,12 @@ class Dream < ActiveRecord::Base
 						freqs[stem] = [word, 1]
 					
 					else
-						freqs[stem][1] + freqs[stem][1] + 1 	
+						freqs[stem][1] = freqs[stem][1] + 1 	
 					end
 				end
 			end	
 
-			freqs = Hash[freqs.sort_by{ |k, v| v[0] }.reverse]	
+			freqs = Hash[freqs.sort_by{ |k, v| v[1] }.reverse]	
 
 			self.word_freq = freqs
 			self.update_columns(word_freq: self.word_freq)		# save Dream word_freq hash
@@ -420,6 +459,14 @@ class Dream < ActiveRecord::Base
 				self.user.hash_freq[hashtag.id] -= 1	# Decrement the User's hash count
 
 
+			end
+
+			self.screennames.each do |screenname|
+				screenname.dreams_count -= 1
+				if screenname.dreams_count < 1
+					screenname.destroy
+				end
+				self.dreamscreennames.where(screenname: screenname).destroy_all
 			end
 
 		end

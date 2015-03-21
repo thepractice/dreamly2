@@ -30,6 +30,7 @@ gem 'jquery-turbolinks'
 gem 'acts_as_votable', '~> 0.10.0'
 gem 'ruby-stemmer', :require => 'lingua/stemmer'
 gem 'filterrific'
+gem 'select2-rails'
 
 
 group :development do

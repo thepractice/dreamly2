@@ -1,20 +1,36 @@
+console.log("activated");
+
 <% js = escape_javascript(
 	render(partial: 'users/list', locals: { dreams: @dreams })
 ) %>
-$("#filterrific_results").waitForImages(function() {
-	$(this).html("<%= js %>");
-});
+$("#filterrific_results").html("<%= js %>");
+<% if @dreams.next_page %>
+	$('.pagination').replaceWith('<%= j will_paginate(@dreams) %>');
+<% else %>
+	$('.pagination').remove();
+<% end %>
+
 
 <% js2 = escape_javascript(
 	render(partial: 'users/graph', locals: { graph_text: @graph_text })
 ) %>
 $("#profile-graph2").html("<%= js2 %>");
 
-// infinite scrolling
+<% js3 = escape_javascript(
+	render(partial: 'dreams/tags', locals: { hashes: @hashes })
+) %>
+$("#hash-listing").html("<%= js3 %>");
 
-//$('#user-dreams').append('<%= j render(@dreams) %>'); // escape with 'j'
-//<% if @dreams.next_page %>
-//	$('.pagination').replaceWith('<%= j will_paginate(@dreams) %>');
-//<% else %>
-//	$('.pagination').remove();
-//<% end %>
+<% js4 = escape_javascript(
+	render(partial: 'dreams/screennames', locals: { screennames: @screennames })
+) %>
+$("#name-listing").html("<%= js4 %>");
+
+<% js5 = escape_javascript(
+	render(partial: 'dreams/emotions', locals: { emotions: @emotions })
+) %>
+
+$("#emotion-listing").waitForImages(function() {
+	$(this).html("<%= js5 %>");
+});
+

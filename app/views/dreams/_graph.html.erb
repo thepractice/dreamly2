@@ -34,7 +34,7 @@ for(var i = 0; i < ed_nodes.length; i++) {
 //function node_radius(d) { return (d.value / total_value) *60 + 10 };
 function node_radius(d) { return Math.max(12,Math.pow(d.value / max_value, 2) * 20) };
 
-function node_url(d) { return "<%= dreams_path %>".concat("?query=").concat(d.name)}
+function node_url(d) { return "<%= dreams_path %>".concat("?filterrific%5Bsearch%5D=").concat(d.name)}
 
 var color = d3.scale.category20();
 

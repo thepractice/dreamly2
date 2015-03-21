@@ -1,10 +1,9 @@
 <div id="filterrific_results">
-
 	<div>
-		<%= page_entries_info @dreams %> 
+		<%= page_entries_info @dreams2, model: "dream" %> 
 	</div>
 
-	<% dreams.each do |dream| %>
+	<% dreams2.each do |dream| %>
 
 		<% if (dream.private == false) || (current_user == dream.user) %>
 
@@ -71,9 +70,24 @@
 						<div class="dream-right-top">
 							<div class="dream-right-top1">
 								<span class="dream-title small-font">
-									<h4>
-										<%= link_to dream.title, dream %>
-
+										<% if dream.user == current_user %>
+											<% if dream.impression == 2 %>
+												<%= link_to dream.title, dream, :class => "big-dream-link" %>
+											<% elsif dream.impression == 3 %>
+												<%= link_to dream.title, dream, :class => "huge-dream-link" %>
+											<% else %>
+												<%= link_to dream.title, dream %>
+											<% end %>
+										<% else %>
+											<% if dream.impression == 2 %>
+												<%= link_to dream.title.gsub(/([@])\w+/, "@name"), dream, :class => "big-dream-link" %>
+											<% elsif dream.impression == 3 %>
+												<%= link_to dream.title.gsub(/([@])\w+/, "@name"), dream, :class => "huge-dream-link" %>
+											<% else %>
+												<%= link_to dream.title.gsub(/([@])\w+/, "@name"), dream %>
+											<% end %>										
+											
+										<% end %>
 										<% dream.emotions.each do |emotion| %>
 											<% if emotion.id == 1 %>
 												<div class="angry emoticon-image" data-toggle="tooltip" data-container="body" title="Angry" ></div>
@@ -96,53 +110,39 @@
 												<div class="guilty emoticon-image" data-toggle="tooltip" data-container="body" title="Guilty" ></div>
 											<% end %>
 										<% end %>
-									</h4>
+							
 								</span>
-								
-								<span class="small-font">dreamed <%= time_ago_in_words(dream.dreamed_on) %> ago by</span>
-								<span class="dreamer1 small-font"><%= link_to dream.user.name, dream.user %></span>
-								<span class="dreamer2 small-font"><%= link_to "@#{dream.user.username}", dream.user %></span>
-								<span class="small-font"> and submitted <%= time_ago_in_words(dream.created_at) %> ago</span>					
-							</div>
-							<div class="dream-right-top2">
-								<% if dream.impression == 2 %>
-									<div class="big-dream">
-										Big <%= icon('star') %>
-									</div>
-								<% elsif dream.impression == 3 %>
-									<div class="huge-dream">
-										Huge <%= icon('star') %>
-									</div>
-								<% end %>
 
-								<% if dream.private %>
-									<%= icon('lock') %>
-								<% else %>
-									<%= icon('unlock') %>
-								<% end %>
+							
+								<div class="dream-info-small">
+									<span class="small-font">dreamed <%= time_ago_in_words(dream.dreamed_on) %> ago by</span>
+									<span class="dreamer1 small-font"><%= link_to dream.user.name, dream.user %></span>
+									<span class="dreamer2 small-font"><%= link_to "@#{dream.user.username}", dream.user %></span>
+									<span class="small-font"> and submitted <%= time_ago_in_words(dream.created_at) %> ago</span>		
+								</div>			
 							</div>
+
 
 						</div>
-				
-						<% if comment_count(dream) > 0 %>
-							<%= link_to(dream, html_options = { :class => "comment-link" }) do %>
-								<%= icon('comments') %>
-								<%= pluralize(comment_count(dream), 'comment') %>
-									<% if user_signed_in? %>
-										<% if dream.notifications.where(user: current_user, seen: false).present? %>
-											(<%= dream.notifications.where(user: current_user, seen: false).length %> new)
-										<% end %>				
-									<% end %>
-							<% end %>		
-						<% end %>
+						<div class="dream-info-small">
+							<% if comment_count(dream) > 0 %>
+								<%= link_to(dream, html_options = { :class => "comment-link" }) do %>
+									<%= pluralize(comment_count(dream), 'comment') %>
+										<% if user_signed_in? %>
+											<% if dream.notifications.where(user: current_user, seen: false).present? %>
+												(<%= dream.notifications.where(user: current_user, seen: false).length %> new)
+											<% end %>				
+										<% end %>
+								<% end %>		
+							<% end %>
+						</div>
 					</div>
 				</div>
 
 		<% end %>
 
 	<% end %>
-
+<%= will_paginate @dreams2, renderer: BootstrapPagination::Rails %>
 </div>
 
 
-<%= will_paginate @dreams, renderer: BootstrapPagination::Rails %>

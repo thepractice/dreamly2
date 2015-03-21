@@ -17,7 +17,7 @@
 <% provide(:title, @user.username) %>
 
 <div class="row">
-	<div class ="col-md-3 shave-right">
+	<div class ="col-md-3">
 		<div id="profile-left-sidebar">
 			<div class="dashboard white-panel dashboard-avatar-container">
 				<div class ="profile-upper-background">
@@ -102,6 +102,30 @@
 
 				<% end %>
 
+				<div id="emotion-listing">
+					<%= render(
+						partial: 'users/emotions',
+						locals: { emotions: @emotions }
+					) %>
+				</div>
+
+				<div id="hash-listing">
+					<%= render(
+						partial: 'users/tags',
+						locals: { hashes: @hashes }
+					) %>
+				</div>
+
+				<% if @user == current_user %>
+					<div id="name-listing">
+						<%= render(
+							partial: 'dreams/screennames',
+							locals: { screennames: @screennames }
+						) %>
+					</div>
+				<% end %>
+	
+<!--
 					<% if @user == current_user %>
 
 						<% @user.hash_freq.each do |hashtag_id, freq| %>
@@ -121,7 +145,7 @@
 						<% end %>
 
 					<% end %>	
-
+-->
 	
 				<div id="links-panel" class="white-panel">
 					<%= link_to "Home", root_path %>
@@ -132,149 +156,74 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-9 shave-left">
-			<div class="right-content">
+	<div class="col-md-9">
 
+		<div class="dream-tabs">
+			<% if params[:sort] == "trending" %>
+				<ul class="nav nav-tabs">
+			    <li role="presentation" class="active"><%= link_to "Trending", user_path(@user.id, sort: 'trending'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+			    <li role="presentation"><%= link_to "New", user_path(@user.id, sort: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+			    <li role="presentation"><%= link_to "Dreamed", user_path(@user.id, sort: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				</ul>
+			<% elsif params[:sort] == "submitted" %>	
+				<ul class="nav nav-tabs">
+			    <li role="presentation"><%= link_to "Trending", user_path(@user.id, sort: 'trending'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+			    <li role="presentation" class="active"><%= link_to "New", user_path(@user.id, sort: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+			    <li role="presentation"><%= link_to "Dreamed", user_path(@user.id, sort: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				</ul>
+			<% elsif params[:sort] == "dreamed" %>	
+				<ul class="nav nav-tabs">
+			    <li role="presentation"><%= link_to "Trending", user_path(@user.id, sort: 'trending'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+			    <li role="presentation"><%= link_to "New", user_path(@user.id, sort: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+			    <li role="presentation" class="active"><%= link_to "Dreamed", user_path(@user.id, sort: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				</ul>		
+			<% else %>	
+				<ul class="nav nav-tabs">
+			    <li role="presentation"><%= link_to "Trending", user_path(@user.id, sort: 'trending'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+			    <li role="presentation"><%= link_to "New", user_path(@user.id, sort: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+			    <li role="presentation" class="active"><%= link_to "Dreamed", user_path(@user.id, sort: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
+				</ul>										
+			<% end %>
+		</div>
 
+			<div id="filter-block">
 				<%= form_for_filterrific @filterrific do |f| %>
 				
-						<div class="dropdown-title">
-							Search
-						</div>					
+						
 						<%= f.text_field(
 							:search,
+							placeholder: "Search...",
 							class: 'filterrific-periodically-observed'
 						) %>
 
-						<div class="dropdown-title">
-							Sort by
-						</div>
-						<div class="dropdown sort-dropdown">
-
-							<% if params[:time] == "today" %>
-							  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-							    	Popular today
-							    <%= icon('caret-down') %>
-							  </button>
-							  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-							    <li role="presentation"><%= link_to "Popular today", user_path(@user.id, time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this week", user_path(@user.id, time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this month", user_path(@user.id, time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this year", user_path(@user.id, time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "New", user_path(@user.id, time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Date dreamed", user_path(@user.id, time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							  </ul>
-							<% elsif params[:time] == "week" %>
-							  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-							    	Popular this week
-							    <%= icon('caret-down') %>
-							  </button>
-							  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-							    <li role="presentation"><%= link_to "Popular today", user_path(@user.id, time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this week", user_path(@user.id, time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this month", user_path(@user.id, time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this year", user_path(@user.id, time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "New", user_path(@user.id, time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Date dreamed", user_path(@user.id, time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							  </ul>
-							<% elsif params[:time] == "month" %>
-							  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-							    	Popular this month
-							    <%= icon('caret-down') %>
-							  </button>
-							  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-							    <li role="presentation"><%= link_to "Popular today", user_path(@user.id, time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this week", user_path(@user.id, time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this month", user_path(@user.id, time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this year", user_path(@user.id, time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "New", user_path(@user.id, time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Date dreamed", user_path(@user.id, time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							  </ul>				  
-							<% elsif params[:time] == "year" %>
-							  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-							    	Popular this year
-							    <%= icon('caret-down') %>
-							  </button>
-							  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-							    <li role="presentation"><%= link_to "Popular today", user_path(@user.id, time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this week", user_path(@user.id, time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this month", user_path(@user.id, time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this year", user_path(@user.id, time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "New", user_path(@user.id, time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Date dreamed", user_path(@user.id, time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							  </ul>
-							<% elsif params[:time] == "submitted" %>
-							  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-							    	New
-							    <%= icon('caret-down') %>
-							  </button>
-							  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-							    <li role="presentation"><%= link_to "Popular today", user_path(@user.id, time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this week", user_path(@user.id, time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this month", user_path(@user.id, time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this year", user_path(@user.id, time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "New", user_path(@user.id, time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Date dreamed", user_path(@user.id, time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							  </ul>	
-							<% elsif params[:time] == "dreamed" %>
-							  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-							    	Date dreamed
-							    <%= icon('caret-down') %>
-							  </button>
-							  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-							    <li role="presentation"><%= link_to "Popular today", user_path(@user.id, time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this week", user_path(@user.id, time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this month", user_path(@user.id, time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this year", user_path(@user.id, time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "New", user_path(@user.id, time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Date dreamed", user_path(@user.id, time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							  </ul>								  						  
-							<% else %>
-							  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-							    	Date dreamed
-							    <%= icon('caret-down') %>
-							  </button>
-							  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-							    <li role="presentation"><%= link_to "Popular today", user_path(@user.id, time: 'today'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this week", user_path(@user.id, time: 'week'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this month", user_path(@user.id, time: 'month'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Popular this year", user_path(@user.id, time: 'year'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "New", user_path(@user.id, time: 'submitted'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							    <li role="presentation"><%= link_to "Date dreamed", user_path(@user.id, time: 'dreamed'), html_options = { :role => "menuitem", :tabindex => "-1" } %></li>
-							  </ul>
-							<% end %>
-						</div>						
-				
-			
-						<div class="dropdown-title">
-							Emotion
-						</div>
 					
 						<%= f.select(
 							:with_emotion_id,
 							@filterrific.select_options[:with_emotion_id],
-							{ include_blank: '- Any -' },
-							class: "form-control dropdown sort-dropdown"
+							{ include_blank: 'Emotion' },
+							class: "select-js"
 						) %>
-		
-				
-						<div class="dropdown-title">
-							Impact
-						</div>
 
+				
 						<%= f.select(
 							:impression,
 							[['Normal', 1], ['Big', 2], ['Huge', 3]],
-							{ },
-							class: "form-control dropdown sort-dropdown"
+							{ include_blank: 'Impact' },
+							class: "select-js",
 						) %>
-		
+				
+						<%= link_to(reset_filterrific_url) do %>
+							<%= icon('times') %>
+						<% end %>
 					<div>
-						<%= link_to('Reset filters', reset_filterrific_url) %>
+						
+						<%= render_filterrific_spinner %>
 					</div>
 					<%# add an automated spinner to your form when the list is refreshed %>
-					<%= render_filterrific_spinner %>
+					
 				<% end %>
+			</div>
+			
 
 				<%= render(
 					partial: 'users/list',
@@ -283,12 +232,20 @@
 
 
 
+
+			<%= button_tag(:id => "load-more", :class => "btn btn-primary") do %>
+				<%= icon('plus') %>
+				<span id="load-more-text">load more</span>
+			<% end %>		
+
+
+
 				<% if @user.dreams.any? %>
 				
 				<% elsif current_user == @user %>
 					<%= render 'dreams/firstnew' %>
 				<% end %>
-			</div>
+		
 	</div>
 </div>
 

@@ -1,0 +1,35 @@
+<% emotions.each do |emotion_id, freq| %>
+
+	<% size = [20, ( (freq.to_f / emotions.first[1])**0.5 * 40).to_int].max %>
+
+	<% if emotion_id == 1 %>
+		<a href="/users/<%= @user.id %>?filterrific%5Bwith_emotion_id=<%= emotion_id %>" data-toggle="tooltip" data-container="body" title="Angry">
+			<%= image_tag("angry40.png", size: "#{size}x#{size}") %>
+		</a>
+	<% elsif emotion_id == 2 %>
+		<a href="/users/<%= @user.id %>?filterrific%5Bwith_emotion_id=<%= emotion_id %>" data-toggle="tooltip" data-container="body" title="Afraid">
+			<%= image_tag("afraid40.png", size: "#{size}x#{size}") %>
+		</a>
+	<% elsif emotion_id == 3 %>
+		<a href="/users/<%= @user.id %>?filterrific%5Bwith_emotion_id=<%= emotion_id %>" data-toggle="tooltip" data-container="body" title="Disgusted">
+			<%= image_tag("disgusted40.png", size: "#{size}x#{size}") %>
+		</a>
+	<% elsif emotion_id == 4 %>
+		<a href="/users/<%= @user.id %>?filterrific%5Bwith_emotion_id=<%= emotion_id %>" data-toggle="tooltip" data-container="body" title="Happy">
+			<%= image_tag("happy40.png", size: "#{size}x#{size}") %>
+		</a>
+	<% elsif emotion_id == 5 %>
+		<a href="/users/<%= @user.id %>?filterrific%5Bwith_emotion_id=<%= emotion_id %>" data-toggle="tooltip" data-container="body" title="Sad">
+			<%= image_tag("sad40.png", size: "#{size}x#{size}") %>
+		</a>
+	<% elsif emotion_id == 6 %>
+		<a href="/users/<%= @user.id %>?filterrific%5Bwith_emotion_id=<%= emotion_id %>" data-toggle="tooltip" data-container="body" title="Desiring">
+			<%= image_tag("desiring40.png", size: "#{size}x#{size}") %>
+		</a>
+	<% elsif emotion_id == 7 %>
+		<a href="/users/<%= @user.id %>?filterrific%5Bwith_emotion_id=<%= emotion_id %>" data-toggle="tooltip" data-container="body" title="Guilty">
+			<%= image_tag("guilty40.png", size: "#{size}x#{size}") %>
+		</a>
+	<% end %>
+
+<% end %>

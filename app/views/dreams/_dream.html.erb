@@ -67,8 +67,11 @@
 					<div class="dream-right-top1">
 						<span class="dream-title small-font">
 							<h4>
-								<%= link_to dream.title, dream %>
-
+								<% if dream.user == current_user %>
+									<%= link_to dream.title, dream %>
+								<% else %>
+									<%= link_to dream.title.gsub(/([@])\w+/, "@name"), dream %>
+								<% end %>
 								<% dream.emotions.each do |emotion| %>
 									<% if emotion.id == 1 %>
 										<%= image_tag("angry.png", width: '20', height: '20', class: "emoticon-image", "data-toggle" => "tooltip", "data-container" => "body", title: "Angry") %>

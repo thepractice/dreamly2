@@ -1,0 +1,30 @@
+<% hashes.take(10).each do |hashtag_id, freq| %>
+	<%= link_to Hashtag.find(hashtag_id), { :class => "btn user-hash-link hashtag-color" } do %>
+		#<%= Hashtag.find(hashtag_id).name %>
+		(<%= freq %>)
+	<% end %>
+<% end %>
+
+
+<% number = hashes.length - 10 %>
+<% if number > 0 %>
+	<div id="extra-hashes">
+		<% hashes.last(number).each do |hashtag_id, freq| %>
+			<%= link_to Hashtag.find(hashtag_id), { :class => "btn user-hash-link hashtag-color" } do %>
+				#<%= Hashtag.find(hashtag_id).name %>
+				(<%= freq %>)
+			<% end %>
+		<% end %>
+	</div>
+
+	<%= button_tag(:id => "more-tags-button", :class => "btn more-tags-class more-tags-class-more") do %>
+		<%= icon('plus') %>
+		more
+	<% end %>
+	<%= button_tag(:id => "less-tags-button", :class => "btn more-tags-class more-tags-class-less") do %>
+		<%= icon('minus') %>
+		less
+	<% end %>
+	
+<% end %>
+

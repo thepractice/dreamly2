@@ -1,0 +1,12 @@
+<% hashes.each do |hashtag_id, freq| %>
+	<%= link_to Hashtag.find(hashtag_id), { :class => "btn user-hash-link hashtag-color" } do %>
+		#<%= Hashtag.find(hashtag_id).name %>
+		(<%= freq %>)
+	<% end %>
+<% end %>
+
+
+<%= link_to "More", { :controller => "users", :action => "more_tags" }, :remote => true %>
+<%= button_tag :onclick => "moreTags()", class: "btn", id: "more-tags-button" do %>
+	more
+<% end %>	
