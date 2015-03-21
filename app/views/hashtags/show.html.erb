@@ -122,6 +122,12 @@
 						<%= icon('times') %>
 					<% end %>	
 
+					<%= render(
+						partial: 'dreams/list_count',
+						locals: { dreams: @dreams }
+					) %>			
+					
+
 				<div>
 					<%= render_filterrific_spinner %>
 				</div>

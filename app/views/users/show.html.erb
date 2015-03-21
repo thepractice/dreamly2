@@ -215,7 +215,15 @@
 						<%= link_to(reset_filterrific_url) do %>
 							<%= icon('times') %>
 						<% end %>
+						<%= render(
+							partial: 'dreams/list_count',
+							locals: { dreams: @dreams }
+						) %>	
+
+						
 					<div>
+
+
 						
 						<%= render_filterrific_spinner %>
 					</div>
@@ -224,6 +232,7 @@
 				<% end %>
 			</div>
 			
+
 
 				<%= render(
 					partial: 'users/list',

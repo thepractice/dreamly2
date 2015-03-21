@@ -175,6 +175,12 @@
 					<%= link_to(reset_filterrific_url) do %>
 						<%= icon('times') %>
 					<% end %>	
+
+					<%= render(
+						partial: 'dreams/list_count',
+						locals: { dreams: @dreams }
+					) %>			
+					
 	
 				<div>
 					<%# add an automated spinner to your form when the list is refreshed %>
@@ -182,7 +188,6 @@
 				</div>
 		
 			<% end %>
-
 
 
 			<%= render(

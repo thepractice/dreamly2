@@ -76,6 +76,31 @@
 </div>
 
 				<% end %>
+
+
+				<div class="feed-following">
+					<%= link_to following_user_path(@user) do %>
+						<span class="stat-header">FOLLOWING: <%= @user.following.count %></span> <br />
+					<% end %>
+				</div>
+				<div>
+					<% @user.following.each do |user| %>
+						<%= link_to user do %>
+							<% if user.avatar_file_name.nil? %>
+								<div class="dashboard-avatar-default-thumb">
+									<p><%= user.username.first.upcase %></p>
+								</div>
+							<% else %>
+								<div class="dashboard-avatar-thumb">
+									<%= image_tag user.avatar.url(:thumb), class: "img-center" %>
+								</div>
+							<% end %>
+						<% end %>
+					<% end %>	
+				</div>			
+
+
+
 				<% if @dreams.any? %>
 					<div id="profile-graph" class="white-panel">
 						<%= link_to dreams_path(graph: true, query: params[:query], impression: params[:impression]), { id: 'full-screen-icon', "data-toggle" => "tooltip", "data-container" => "body", title: "Fullscreen"} do %>
@@ -173,7 +198,12 @@
 					<%= link_to(reset_filterrific_url) do %>
 						<%= icon('times') %>
 					<% end %>	
-					<%# add an automated spinner to your form when the list is refreshed %>
+
+					<%= render(
+						partial: 'dreams/list_count',
+						locals: { dreams: @dreams }
+					) %>		
+				
 					<div>
 						<%= render_filterrific_spinner %>
 					</div>

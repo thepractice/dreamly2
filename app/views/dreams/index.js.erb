@@ -6,6 +6,12 @@ if (pagenumber <= 1) {
 	$("#filterrific_results").waitForImages(function() {
 		$(this).html("<%= js %>");
 	});
+
+	<% js6 = escape_javascript(
+		render(partial: 'dreams/list_count', locals: { dreams: @dreams })
+	) %>
+	$("#list-count").html("<%= js6 %>");
+
 }
 
 <% js2 = escape_javascript(

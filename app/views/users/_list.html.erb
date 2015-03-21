@@ -1,6 +1,6 @@
 
 <div id="filterrific_results">
-	<%= page_entries_info @dreams, model: "dream" %>
+
 	<% dreams.each do |dream| %>
 
 		<% if (dream.private == false) || (current_user == dream.user) %>

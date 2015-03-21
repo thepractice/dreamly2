@@ -20,4 +20,16 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  will_paginate:
+    page_entries_info:
+      single_page:
+        zero:  "0 %{model} found"
+        one:   "1 %{model} found"
+        other: "%{count} %{model} found"
+      single_page_html:
+        zero:  "0 %{model} found"
+        one:   "<b>1</b> %{model} found"
+        other: "<b>%{count}</b> %{model} found"
+
+      multi_page: "<b>%{count}</b> %{model} found"
+      multi_page_html: "<b>%{count}</b> %{model} found"

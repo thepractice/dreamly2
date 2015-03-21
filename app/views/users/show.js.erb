@@ -1,5 +1,3 @@
-console.log("activated");
-
 <% js = escape_javascript(
 	render(partial: 'users/list', locals: { dreams: @dreams })
 ) %>
@@ -9,6 +7,11 @@ $("#filterrific_results").html("<%= js %>");
 <% else %>
 	$('.pagination').remove();
 <% end %>
+
+<% js6 = escape_javascript(
+	render(partial: 'dreams/list_count', locals: { dreams: @dreams })
+) %>
+$("#list-count").html("<%= js6 %>");
 
 
 <% js2 = escape_javascript(
