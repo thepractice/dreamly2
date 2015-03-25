@@ -1,5 +1,6 @@
 <% hashes.take(10).each do |hashtag_id, freq| %>
-	<%= link_to Hashtag.find(hashtag_id), { :class => "btn user-hash-link hashtag-color" } do %>
+	<% hash_name = Hashtag.find(hashtag_id).name %>
+	<%= link_to user_path(@user, hashtag: hash_name), { :class => "btn user-hash-link hashtag-color" } do %>
 		#<%= Hashtag.find(hashtag_id).name %>
 		(<%= freq %>)
 	<% end %>
@@ -10,7 +11,8 @@
 <% if number > 0 %>
 	<div id="extra-hashes">
 		<% hashes.last(number).each do |hashtag_id, freq| %>
-			<%= link_to Hashtag.find(hashtag_id), { :class => "btn user-hash-link hashtag-color" } do %>
+			<% hash_name = Hashtag.find(hashtag_id).name %>
+			<%= link_to user_path(@user, hashtag: hash_name), { :class => "btn user-hash-link hashtag-color" } do %>
 				#<%= Hashtag.find(hashtag_id).name %>
 				(<%= freq %>)
 			<% end %>

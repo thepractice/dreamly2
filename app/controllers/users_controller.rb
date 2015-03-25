@@ -11,8 +11,19 @@ class UsersController < ApplicationController
 			@user = User.find(params[:id])
 		end
 
+		if params[:hashtag]
+			@hashtag = Hashtag.find_by(name: params[:hashtag])
+			if @hashtag == nil
+				@dreams = @user.dreams.where(title: 'asdf7vx')
+			else
+				@dreams = @hashtag.dreams.where(user: @user)
+			end
+		else
+			@dreams = @user.dreams
+		end
+
 		@filterrific = initialize_filterrific(
-			@user.dreams,
+			@dreams,
 			params[:filterrific],
 			select_options: {
 				with_emotion_id: Emotion.options_for_select

@@ -1,4 +1,5 @@
 class ScreennamesController < ApplicationController
+	before_filter :correct_user
 
 	def show
 		@screenname = Screenname.find(params[:id])
@@ -15,67 +16,40 @@ class ScreennamesController < ApplicationController
 
 		@dreams = @filterrific.find
 
-		if params[:time] == ('today' || 'week' || 'month' || 'year' || 'all')
-
-			@sorting_array = []
-
-			if params[:time] == 'today'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 24.hours.ago..Time.now).size - dream.get_downvotes.where(:created_at => 24.hours.ago..Time.now).size])
-				end		
-				
-			elsif params[:time] == 'week'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.week.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.week.ago..Time.now).size])
-				end		
-
-			elsif params[:time] == 'month'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.month.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.month.ago..Time.now).size])
-				end		
-
-			elsif params[:time] == 'year'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.year.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.year.ago..Time.now).size])
-				end		
-
-			elsif params[:time] == 'all'
-
-				@dreams.each do |dream|
-					@sorting_array.push([dream, dream.get_upvotes.size - dream.get_downvotes.size])
-				end	
-
-			end					
-			@sorting_array = @sorting_array.reverse.each_with_index.sort_by { |a, idx| [a[1], idx] }.reverse.map(&:first).map { |x| x[0] }
-			@dreams = @sorting_array
-
-		elsif params[:time] == 'submitted'
+		if params[:sort] == 'trending'
+			@dreams = @dreams.hot
+		elsif params[:sort] == 'submitted'
 			@dreams = @dreams.regular
-		elsif params[:time] == 'dreamed'
+		elsif params[:sort] == 'dreamed'
 			@dreams = @dreams.chronological
 		else
-			@sorting_array = []
-			@dreams.each do |dream|
-				@sorting_array.push([dream, dream.get_upvotes.where(:created_at => 1.week.ago..Time.now).size - dream.get_downvotes.where(:created_at => 1.week.ago..Time.now).size])
-			end
-			@sorting_array = @sorting_array.reverse.each_with_index.sort_by { |a, idx| [a[1], idx] }.reverse.map(&:first).map { |x| x[0] }
-			@dreams = @sorting_array						
+			@dreams = @dreams.chronological
 		end
 
-		@dreams_raw = @dreams  # try to get graph to update with filterrific
-		@dreams = @dreams.paginate(page: params[:page],per_page: 40)
-
+		@dreams2 = @dreams.paginate(page: params[:page],per_page: 15)
 		
-		@dreams = @dreams_raw.paginate(page: params[:page])
+		@page_number = params[:page].to_i
+		if params[:page].nil?
+			@dreams = @dreams.paginate(page: params[:page],per_page: 15)
+		elsif params[:page] == 1
+			@dreams = @dreams.paginate(page: params[:page],per_page: 15)
+		else
+			@cumul = @dreams.paginate(page: 1,per_page: 15)
+			(@page_number - 1).times do |i|
+				@dreams.paginate(page: i + 2,per_page: 15).each do |dream|
+					@cumul = @cumul << dream
+				end
+			end
+			@dreams = @cumul
+		end
+
+	
 
 		@hashes = Hash.new
 		@screennames = Hash.new
+		@emotions = Hash.new
 
-		@dreams_raw.each do |dream|
+		@dreams.each do |dream|
 			dream.screennames.each do |screenname|
 				if @screennames[screenname.id].nil?
 					@screennames[screenname.id] = 1
@@ -83,6 +57,14 @@ class ScreennamesController < ApplicationController
 					@screennames[screenname.id] += 1
 				end
 			end
+
+			dream.emotions.each do |emotion|
+				if @emotions[emotion.id].nil?
+					@emotions[emotion.id] = 1
+				else
+					@emotions[emotion.id] += 1
+				end
+			end					
 
 			dream.hashtags.each do |hashtag|
 				if @hashes[hashtag.id].nil?
@@ -96,6 +78,9 @@ class ScreennamesController < ApplicationController
 		@screennames = @screennames.sort_by { |k, v| v }
 		@screennames.reverse!
 
+		@emotions = @emotions.sort_by { |k, v| v }
+		@emotions.reverse!		
+
 		@hashes = @hashes.sort_by { |k, v| v }
 		@hashes.reverse!
 
@@ -103,7 +88,7 @@ class ScreennamesController < ApplicationController
 
 		@word_count = Hash.new
 		# Create hash of word frequencies in all relevant dreams
-		@dreams_raw.each do |dream|
+		@dreams.each do |dream|
 			if (dream.private == false) || dream.user = current_user
 				dream.word_freq.each do |stem, info_array|
 					if @word_count[info_array[0]] == nil
@@ -188,4 +173,15 @@ class ScreennamesController < ApplicationController
 		
 	end
 
+	private
+
+		def correct_user
+			@dream = current_user.dreams.find_by(id: params[:id])
+			redirect_to root_url if @dream.nil?
+		end
+
+
+
+
 end
+

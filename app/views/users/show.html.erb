@@ -157,6 +157,9 @@
 		</div>
 	</div>
 	<div class="col-md-9">
+		<% if params[:hashtag] %>
+			<h3 class="content-title">#<%= params[:hashtag] %></h3>
+		<% end %>
 
 		<div class="dream-tabs">
 			<% if params[:sort] == "trending" %>

@@ -20,6 +20,11 @@ class HashtagsController < ApplicationController
 		@dreams = @hashtag.dreams.where(private: false)
 		#@dreams = @dreams.joins(:user).where("private = ? OR users.id = ?", false, current_user)
 
+		# If there are no public hashes, raise 404 error (to mask the existence of private hashes)
+		if @dreams.length == 0
+			raise ActionController::RoutingError.new('Not Found')
+		end
+
 		@filterrific = initialize_filterrific(
 			@dreams,
 			params[:filterrific],
