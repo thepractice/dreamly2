@@ -29,6 +29,9 @@ Jhad::Application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
+  # Needed to send emails in development
+  config.action_mailer.perform_deliveries = true
+
   # Change mail delievery to either :smpt, :sendmail, :file, :test
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {

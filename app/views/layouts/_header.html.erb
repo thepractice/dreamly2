@@ -32,6 +32,10 @@
 							<span><%= current_user.notifications.where(seen: false).length %></span>
 						<% end %>	
 					<% end %>
+
+					<%= link_to(conversations_path, :class => 'btn btn-default btn-alt notification-button', :id => "notification-button") do %>
+						<%= icon('envelope') %>
+					<% end %>
 					
 				<% else %>
 					<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login', :class => "btn btn-primary btn-square", :id => "signin-button"}) do %>

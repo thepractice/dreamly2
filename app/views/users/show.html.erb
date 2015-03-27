@@ -1,3 +1,5 @@
+
+
 <% if params[:graph] %>
 	<div id="graph-full" class="white-panel">
 		<h3 class="graph-title"><%= @user.name %>'s <%= impression_status() %> dreams
@@ -81,6 +83,7 @@
 
 				</div>
 				<%= render 'follow_form' if user_signed_in? %>
+			
 			</div>
 	
 	<!--
@@ -248,7 +251,9 @@
 			<%= button_tag(:id => "load-more", :class => "btn btn-primary") do %>
 				<%= icon('plus') %>
 				<span id="load-more-text">load more</span>
-			<% end %>		
+			<% end %>	
+
+<p>hi there</p>				
 
 
 
@@ -262,3 +267,4 @@
 </div>
 
 <% end %>
+

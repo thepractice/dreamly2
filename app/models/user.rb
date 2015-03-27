@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :followers, through: :passive_relationships, source: :follower
 
   acts_as_voter
+  acts_as_messageable
 
   has_attached_file :avatar, :styles => { :large => "200x200>", :medium => "70x70>", :thumb => "48x48>" }, :default_url => "/images/:style/missing.jpeg"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
@@ -148,6 +149,11 @@ class User < ActiveRecord::Base
   # Returns a user's status feed
   def feed
     Dream.from_users_followed_by(self)
+  end
+
+  # For Mailboxer
+  def mailboxer_email(object)
+    self.email
   end
 
 end
