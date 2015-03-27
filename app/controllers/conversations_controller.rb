@@ -17,7 +17,7 @@ class ConversationsController < ApplicationController
 	end
 
 	def show
-		@conversation = @mailbox.inbox.find(params[:id])
+		@conversation = @mailbox.conversations.find(params[:id])
 	end
 
 	def reply
