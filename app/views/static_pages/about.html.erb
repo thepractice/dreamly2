@@ -1,3 +1,51 @@
+<div id="home-top-panel" class="text-center">
+	<div id="home-header">just had a dream</div>	
+	<div id="home-byline">Your dream journal app</div>
+	<div id="home-byline2">
+		<%= link_to "free | private | social", about_path %>
+	</div>
+	<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login'}) do %>
+		<button type="button" id="signup-button" class="btn btn-primary btn-lg">
+			<span>Sign up!</span>
+		</button>
+	<% end %>
+</div>
+
+<div id="home-panel1">
+	<span>Merrily, merrily, merrily,</span><br/>
+	<span>merrily; life is but a dream.</span>
+</div>
+
+<div id="home-panel2">
+	<div id="home-panel2-inner">
+		<div id="panel2-1" class="col-md-3 col-md-offset-2 white-panel">
+			<h3>Automatic word association</h3>
+			<p>Discover hidden trends, patterns and associations in your unconscious mind.</p>
+		</div>	
+		<div id="panel2-2" class="col-md-3 col-md-offset-2 white-panel">
+			<h3>Smartphone friendly</h3>
+			<p>Journal your dreams without getting up from your bed! Just had a dream was designed to be used with your smartphone - no need to download an 'app'.</p>
+			<%= image_tag("iphone.png", alt: "Mobile friendly") %>
+		</div>
+		<%= render 'shared/graph' %>
+	</div>
+
+</div>
+
+<div id="home-panel3">
+	<div id="home-panel3-inner">
+		<div id="panel3-1" class="col-md-3 col-md-offset-2 white-panel">
+			<h3><span class="glyphicon glyphicon-user"></span> Social</h3>
+			<p>Follow the dreams of your friends and favorite celebrities. Share comments and interpretations.</p>
+		</div>	
+		<div id="panel3-2" class="col-md-3 col-md-offset-2 white-panel">
+			<h3><span class="glyphicon glyphicon-eye-open"></span> Private</h3>
+			<p>Keep any dream private or public - it's your choice.</p>
+		</div>
+	</div>	
+</div>
+<%= render 'layouts/footer' %>
+
 <% provide(:title, 'About') %>
 
 <div class="container">

@@ -1,45 +1,74 @@
-<h4>Conversation</h4>
+<div class="row">
 
-<p>Chatting with
-	<%= render 'conversations/participants', conversation: @conversation %>
-</p>
 
-<div class="panel panel-default">
-	<div class="panel-heading"><%= @conversation.subject %></div>
+	<div class="col-sm-3">
 
-	<div class="panel-body">
-		<div class="messages">
-			<% @conversation.receipts_for(current_user).each do |receipt| %>
-				<div class="media">
-					<% message = receipt.message %>
-					<div class="media-left">
-						<div class="dream-left">
-							<%= link_to message.sender do %>
-								<% if message.sender.avatar_file_name.nil? %>
-									<div class="dream-avatar-default">
-										<p><%= message.sender.username.first.upcase %></p>
-									</div>						
-								<% else %>
-									<%= image_tag message.sender.avatar.url(:thumb) %>
-								<% end %>
-							<% end %>
+		<p><%= link_to 'Start conversaton', new_message_path, class: 'btn btn-lg btn-primary' %></p>
+
+		<ul class="nav nav-tabs">
+			<%= mailbox_section 'inbox', @box %>
+<!--			<%= mailbox_section 'sent', @box %>	-->
+			<%= mailbox_section 'trash', @box %>
+		</ul>		
+
+		<% if @box == 'trash' %>
+			<p><%= link_to 'Empty trash', empty_trash_conversations_path, class: 'btn btn-danger', method: :delete,
+											data: {confirm: 'Are you sure?'} %></p>
+		<% end %>
+		<ul class="list-group">
+			<%= render partial: 'conversations/conversation', collection: @conversations %>
+		</ul>
+
+		<%= will_paginate %>
+
+	</div>
+
+	<div class="col-sm-9">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+
+				<% @conversation.participants.each do |participant| %>
+					<% unless participant == current_user %>
+						<span class="message-username"><%= participant.username %></span>
+					<% end %>
+				<% end %>
+			</div>
+			<div class="panel-body">
+				<div class="messages">
+					<% @conversation.receipts_for(current_user).reverse.each do |receipt| %>
+						<div class="media">
+							<% message = receipt.message %>
+							<div class="media-left">
+								<div class="dream-left">
+									<%= link_to message.sender do %>
+										<% if message.sender.avatar_file_name.nil? %>
+											<div class="dream-avatar-default">
+												<p><%= message.sender.username.first.upcase %></p>
+											</div>						
+										<% else %>
+											<%= image_tag message.sender.avatar.url(:thumb) %>
+										<% end %>
+									<% end %>
+								</div>
+							</div>
+
+							<div class="media-body">
+								<h6 class="media-heading"><%= message.sender.username %>
+									says at <%= message.created_at.strftime("%-d %B %Y, %H:%M:%S") %></h6>
+								<%= message.body %>
+							</div>
 						</div>
-					</div>
-
-					<div class="media-body">
-						<h6 class="media-heading"><%= message.sender.username %>
-							says at <%= message.created_at.strftime("%-d %B %Y, %H:%M:%S") %></h6>
-						<%= message.body %>
-					</div>
+					<% end %>
 				</div>
-			<% end %>
+			</div>
 		</div>
+
+		<%= form_tag reply_conversation_path(@conversation), method: :post do %>
+			<div class="form-group">
+				<%= text_area_tag 'body', nil, cols: 3, class: 'form-control message-reply-box', placeholder: 'Type something...', required: true %>
+			</div>
+			<%= submit_tag "Send message", class: 'btn btn-primary' %>
+		<% end %>		
+
 	</div>
 </div>
-
-<%= form_tag reply_conversation_path(@conversation), method: :post do %>
-	<div class="form-group">
-		<%= text_area_tag 'body', nil, cols: 3, class: 'form-control message-reply-box', placeholder: 'Type something...', required: true %>
-	</div>
-	<%= submit_tag "Send message", class: 'btn btn-primary' %>
-<% end %>

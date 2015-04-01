@@ -28,7 +28,7 @@ Jhad::Application.routes.draw do
     end
   end
   
-  resources :conversations, only: [:index, :show, :destroy] do
+  resources :conversations, only: [:index, :show, :destroy, :new] do
     member do
       post :reply
       post :restore

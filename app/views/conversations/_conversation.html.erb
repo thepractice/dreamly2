@@ -1,17 +1,45 @@
-<li class="list-group-item clearfix">
-	<%= link_to conversation.subject, conversation_path(conversation) %>
+<%= link_to conversation_path(conversation), class: "message-link" do %>
 
-	<div class="btn-group-vertical pull-right">
-		<% if conversation.is_trashed?(current_user) %>
-			<%= link_to 'Restore', restore_conversation_path(conversation), class: 'btn btn-xs btn-info', method: :post %>
-		<% else %>
-			<%= link_to 'Move to trash', conversation_path(conversation), class: 'btn btn-xs btn-danger', method: :delete,
-									data: {confirm: 'Are you sure?'} %>
-		<% end %>
-	</div>
+		<li class="list-group-item clearfix">
 
-	<p><%= render 'conversations/participants', conversation: conversation %></p>
+			<div class="message-left">
+				<% if conversation.participants[0] == current_user %>
+					<% participant = conversation.participants[1] %>
+				<% else %>
+					<% participant = conversation.participants[0] %>
+				<% end %>
 
-	<p><%= conversation.last_message.body %>
-		<small>(<span class="text-muted"><%= conversation.last_message.created_at.strftime("%-d %B %Y, %H:%M:%S") %></span>)</small></p>
-</li>
+				<% if participant.avatar_file_name.nil? %>
+					<div class="dream-avatar-default">
+						<p><%= participant.username.first.upcase %></p>
+					</div>						
+				<% else %>
+					<%= image_tag participant.avatar.url(:thumb) %>
+				<% end %>
+			</div>
+
+			<div class="message-right">
+				<% conversation.participants.each do |participant| %>
+					<% unless participant == current_user %>
+						<span class="message-username"><%= participant.username %></span>
+					<% end %>
+				<% end %>
+
+
+				<span class="message-teaser"><%= truncate(conversation.last_message.body) %></span>
+					<small>(<span class="text-muted"><%= conversation.last_message.created_at.strftime("%-d %B %Y, %H:%M:%S") %></span>)</small>
+			</div>
+		</li>
+
+<% end %>
+
+			<div class="btn-group-vertical pull-right trash-button">
+				<% if conversation.is_trashed?(current_user) %>
+					<%= link_to 'Restore', restore_conversation_path(conversation), class: 'btn btn-xs btn-info', method: :post %>
+				<% else %>
+					<%= link_to conversation_path(conversation), class: 'btn btn-xs', method: :delete,
+											data: {confirm: 'Are you sure?'} do %>
+						<%= icon('times') %>
+					<% end %>
+				<% end %>
+			</div>

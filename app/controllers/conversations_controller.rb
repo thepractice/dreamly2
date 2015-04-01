@@ -1,28 +1,35 @@
 class ConversationsController < ApplicationController
 	before_action :authenticate_user!
 	before_action :get_mailbox
-	before_action :get_conversation, except: [:index, :empty_trash]
+	before_action :get_conversation, except: [:index, :empty_trash, :new]
 	before_action :get_box, only: [:index]
+
 
 	def index
 		if @box.eql? "inbox"
-			@conversations = @mailbox.inbox
-		elsif @box.eql? "sent"
-			@conversations = @mailbox.sentbox
+			@conversations = @mailbox.conversations
+#		elsif @box.eql? "sent"
+#			@conversations = @mailbox.sentbox
 		else
 			@conversations = @mailbox.trash
 		end
 
+		@conversation = Mailboxer::Conversation.participant(current_user).order('updated_at DESC').first
+
 		@conversations = @conversations.paginate(page: params[:page], per_page: 10)
+
 	end
 
 	def show
 		@conversation = @mailbox.conversations.find(params[:id])
+
+		@conversations = @mailbox.conversations
+		@conversations = @conversations.paginate(page: params[:page], per_page: 10)
 	end
 
 	def reply
 		current_user.reply_to_conversation(@conversation, params[:body])
-		flash[:succerss] = 'Replay sent'
+		flash[:success] = 'Reply sent'
 		redirect_to conversation_path(@conversation)
 	end
 

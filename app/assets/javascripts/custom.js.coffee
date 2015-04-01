@@ -20,6 +20,7 @@ jQuery(document).on "ready page:change", ->
 		$('#filterrific_results div').last().load url+' #filterrific_results'
 		$.getScript(url)
 
+
 # Ajax dream form
 
 	# New version of turbolinks made it so modal forms only submit after refresh.
@@ -161,6 +162,9 @@ jQuery(document).on "ready page:change", ->
 		$("#less-screennames-button").hide()
 
 	$(".select-js").select2 minimumResultsForSearch: 10
+
+	# Messaing div default bottom scroll
+	$('.messages').scrollTop($('.messages')[0].scrollHeight)	
 
 	# Impression Slider
 

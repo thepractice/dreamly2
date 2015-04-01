@@ -9,22 +9,19 @@
 -->
 
 	<%= hidden_field(:message, "subject", value: "ok") %>
-	
+
 	<% if params[:recipient] %>
 
-		<%= hidden_field(:message, "recipients", value: "#{params[:recipient]}" %>
+		<%= hidden_field(:message, "recipients", value: params[:recipient] %>
 
 		<h4>Toshr: <%= User.find(params[:recipient]).username %></h4>
 
 	<% else %>	
-
 		<div class="form-group">
 			<%= label_tag 'recipients', 'To:' %>
 			<%= select_tag 'recipients', recipients_options, multiple: true, class: 'form-control select-js' %>
 		</div>
-
 	<% end %>
-
 
 	<div class="form-group">
 		<%= label_tag 'message[body]', 'Message' %>

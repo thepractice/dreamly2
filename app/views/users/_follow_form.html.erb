@@ -7,4 +7,18 @@
 			<%= render 'users/follow' %>
 		<% end %>
 	</div>
+	<div id="user-show-message">
+		<% conv_check_1 = Mailboxer::Conversation.participant(@user) %>
+		<% conv_check_2 = Mailboxer::Conversation.participant(current_user) %>
+		<% @dialog = (conv_check_1 & conv_check_2).first %>
+		<% if @dialog.nil? or !@dialog.is_participant?(current_user) %>
+			<%= link_to new_message_path(recipient: @user) do %>
+				<%= icon('envelope') %>
+			<% end %>
+		<% else %>
+			<%= link_to conversation_path(@dialog) do %>
+				<%= icon('envelope') %>
+			<% end %>
+		<% end %>		
+	</div>
 <% end %>
