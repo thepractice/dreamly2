@@ -48,7 +48,7 @@ class SessionsController < Devise::SessionsController
       http = Net::HTTP.new(uri.host, uri.port)
       form_data = {
         "api_key" => "13abd32a53efe06d789c5ef513459ef54ab10231523c871afbc3a90866fafff6",
-        "api_username" => "thepractice11"
+        "api_username" => "dallas"
       }
       request = Net::HTTP::Post.new(uri.request_uri)
       request.set_form_data(form_data)
