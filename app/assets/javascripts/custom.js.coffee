@@ -8,9 +8,30 @@ jQuery(document).on "ready page:change", ->
 		url = $($next).attr('href')
 		$('#filterrific_results').append('<div>')
 		$('#filterrific_results div').last().load url+' #filterrific_results'
+		#gets page number of old next link
+		page_number1 = url.slice(-1)
+		last_link = $('.pagination a').eq(-2)
+		url = $(last_link).attr('href')
+		page_number2 = url.slice(-1)
+		console.log page_number2
+		console.log page_number1
+		if page_number2 == page_number1
+			$('#load-more').hide()
+
+	$next = $('.pagination a[rel="next"]').last()
+	if $next == []
+		$('#load-more2').hide()
 
 	$(document).ajaxComplete ->
 		$('#load-more-text').text('load more')
+		$next = $('.pagination a[rel="next"]').last()
+		url = $($next).attr('href')
+		page_number1 = url.slice(-1)
+		last_link = $('.pagination a').eq(-2)
+		url2 = $(last_link).attr('href')
+		page_number2 = url2.slice(-1)
+		if page_number2 < page_number1
+			$('#load-more2').hide()		
 
 	$('#load-more2').unbind('click').on 'click', ->
 		$('#load-more-text').text('loading...')
@@ -19,7 +40,6 @@ jQuery(document).on "ready page:change", ->
 		$('#filterrific_results').append('<div>')
 		$('#filterrific_results div').last().load url+' #filterrific_results'
 		$.getScript(url)
-
 
 # Ajax dream form
 

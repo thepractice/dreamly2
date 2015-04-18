@@ -422,17 +422,17 @@ body{
 .dashboard-avatar-container {
   width: 100%;
   padding: 0;
-
 }
 
 .dashboard-avatar {
   position: relative;
-  top: -30px;
+  top: -26px;
   left: 8px;
   display: inline-block;
   img {
     border: 3px solid white;
   }
+  margin-bottom: 6px;
 }
 
 .dashboard-avatar-default {

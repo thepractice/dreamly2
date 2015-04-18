@@ -195,10 +195,12 @@
 				locals: { dreams: @dreams, dreams2: @dreams2, page_number: @page_number }
 			) %>
 	
+			<% if @dreams.total_pages > 1 %>
 				<%= button_tag(:id => "load-more2", :class => "btn btn-primary") do %>
 					<%= icon('plus') %>
 					<span id="load-more-text">load more</span>
 				<% end %>	
+			<% end %>
 				
 
 	</div>

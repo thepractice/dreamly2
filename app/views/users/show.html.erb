@@ -27,7 +27,7 @@
 				
 <!--					<%= gravatar_for @user %>	-->
 					<% if current_user == @user %>
-						<%= link_to edit_user_registration_path do %>
+						<%= link_to @user do %>
 							<% if @user.avatar_file_name.nil? %>
 								<div class="dashboard-avatar-default">
 									<p><%= @user.username.first.upcase %></p>
@@ -39,14 +39,16 @@
 							<% end %>
 						<% end %>
 					<% else %>
-						<% if @user.avatar_file_name.nil? %>
-							<div class="dashboard-avatar-default">
-								<p><%= @user.username.first.upcase %></p>
-							</div>
-						<% else %>
-							<div class="dashboard-avatar">
-								<%= image_tag @user.avatar.url(:medium), class: "img-center" %>
-							</div>
+						<%= link_to @user do %>
+							<% if @user.avatar_file_name.nil? %>
+								<div class="dashboard-avatar-default">
+									<p><%= @user.username.first.upcase %></p>
+								</div>
+							<% else %>
+								<div class="dashboard-avatar">
+									<%= image_tag @user.avatar.url(:medium), class: "img-center" %>
+								</div>
+							<% end %>
 						<% end %>
 					<% end %>
 				
@@ -247,11 +249,12 @@
 
 
 
-
-			<%= button_tag(:id => "load-more", :class => "btn btn-primary") do %>
-				<%= icon('plus') %>
-				<span id="load-more-text">load more</span>
-			<% end %>			
+			<% if @dreams.total_pages > 1 %>
+				<%= button_tag(:id => "load-more", :class => "btn btn-primary") do %>
+					<%= icon('plus') %>
+					<span id="load-more-text">load more</span>
+				<% end %>
+			<% end %>	
 
 
 
