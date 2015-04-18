@@ -35,7 +35,7 @@ class SessionsController < Devise::SessionsController
   # Override devise sign_out method to sign out of Discourse
   def sign_out(resource_or_scope=nil)
     # Get Discourse User ID 
-    url = URI.parse("http://forum.dreamly.io/users/by-external/#{current_user.id}.json")
+    url = URI.parse("http://community.dreamly.io/users/by-external/#{current_user.id}.json")
     request = Net::HTTP::Get.new(url)
     resource = Net::HTTP.start(url.host, url.port) do |http|
       http.request(request)
