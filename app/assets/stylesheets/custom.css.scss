@@ -583,7 +583,28 @@ img{
 
 .btn-follow {
   width: 100%;
-  border-radius: 0 0 5px 5px;
+  border-radius: 0 0 0 5px;
+}
+
+.follow-button {
+  display: inline-block;
+  width: 80%;
+}
+
+.user-show-message {
+  display: inline-block;
+  width: 20%;
+  margin-left: -3px;
+}
+
+.btn-message {
+  border-radius: 0 0 5px 0;
+  width: 100%;
+  background-color: #A0C5E4;
+  border-color: #A0C5E4;
+  .fa {
+    font-size: 17px;
+  }
 }
 
 #profile-graph {
@@ -1498,7 +1519,7 @@ a:hover {
 }
 
 .btn .fa {
-  margin-right: 7px;
+/*  margin-right: 7px; */
 }
 
 /* Comments */

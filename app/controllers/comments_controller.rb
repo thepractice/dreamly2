@@ -26,6 +26,7 @@ class CommentsController < ApplicationController
 			Notification.create(dream: @dream, user: user, other_user_id: @comment.user.id, subject: 'comment')
 		end
 
+
 	end
 
 	def edit

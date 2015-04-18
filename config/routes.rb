@@ -15,6 +15,11 @@ Jhad::Application.routes.draw do
 
   devise_for :users, path_names: { sign_in: "login", sign_out: "logout" },
                      controllers: { omniauth_callbacks: "omniauth_callbacks", sessions: 'sessions', registrations: 'registrations' }
+
+  devise_scope :user do
+    match '/sso',    to: 'discourse_sso#sso',    via: 'get'
+  end
+
   resources :users do
     member do
       get :following, :followers
@@ -50,6 +55,7 @@ Jhad::Application.routes.draw do
   match '/graph', to: 'static_pages#graph', via: 'get'
   match '/test', to: 'static_pages#test', via: 'get'
   match '/search', to: 'static_pages#search', via: 'get'
+  
 
 #  match "/users/:id/big", to: 'users#show', impression: 2, via: 'get'
 #  match "/users/:id/huge", to: 'users#show', impression: 3, via: 'get'

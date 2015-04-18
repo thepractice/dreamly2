@@ -1,24 +1,26 @@
 <% unless current_user == @user %>
-	<% div_id = "follow_form_#{@user.id}" %>
-	<div id="<%= div_id %>">
-		<% if current_user.following?(@user) %>
-			<%= render 'users/unfollow' %>
-		<% else %>
-			<%= render 'users/follow' %>
-		<% end %>
-	</div>
-	<div id="user-show-message">
-		<% conv_check_1 = Mailboxer::Conversation.participant(@user) %>
-		<% conv_check_2 = Mailboxer::Conversation.participant(current_user) %>
-		<% @dialog = (conv_check_1 & conv_check_2).first %>
-		<% if @dialog.nil? or !@dialog.is_participant?(current_user) %>
-			<%= link_to new_message_path(recipient: @user) do %>
-				<%= icon('envelope') %>
+	<div>
+		<% div_id = "follow_form_#{@user.id}" %>
+		<div id="<%= div_id %>" class="follow-button">
+			<% if current_user.following?(@user) %>
+				<%= render 'users/unfollow' %>
+			<% else %>
+				<%= render 'users/follow' %>
 			<% end %>
-		<% else %>
-			<%= link_to conversation_path(@dialog) do %>
-				<%= icon('envelope') %>
-			<% end %>
-		<% end %>		
+		</div>
+		<div class="user-show-message">
+			<% conv_check_1 = Mailboxer::Conversation.participant(@user) %>
+			<% conv_check_2 = Mailboxer::Conversation.participant(current_user) %>
+			<% @dialog = (conv_check_1 & conv_check_2).first %>
+			<% if @dialog.nil? or !@dialog.is_participant?(current_user) %>
+				<%= link_to new_message_path(recipient: @user), class: "btn btn-primary btn-message" do %>
+					<%= icon('envelope') %>
+				<% end %>
+			<% else %>
+				<%= link_to conversation_path(@dialog), class: "btn btn-primary btn-message" do %>
+					<%= icon('envelope') %>
+				<% end %>
+			<% end %>		
+		</div>
 	</div>
 <% end %>

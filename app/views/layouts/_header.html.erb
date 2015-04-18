@@ -7,9 +7,15 @@
       	<% if user_signed_in? %>
         	<%= nav_link "Me", "user", current_user %>
         	<%= nav_link "Feed", "flash", feed_path %>
+        	<%= nav_link "Hashtags", "slack", hashtags_path %>
+        	<%= nav_link "Forum", "comments", "http://forum.dreamly.io/session/sso?return_path=%2F" %>
+        <% else %>
+        	<%= nav_link "Hashtags", "slack", hashtags_path %>
+        	<%= nav_link "Forum", "comments", "http://forum.dreamly.io" %>
         <% end %>
   <!--      <%= nav_link "All dreams", "rocket", dreams_path %>	-->
-        <%= nav_link "Hashtags", "slack", hashtags_path %>
+        
+
       </ul>     
 
       <ul class="nav navbar-nav navbar-right">
@@ -58,7 +64,7 @@
 						<% if user_signed_in? %>
 							<li><%= link_to "Notifications", notifications_path %></li>
 					    <li><%= link_to "Edit account", edit_user_registration_path %></li>	  
-					    <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+					    <li><%= link_to "Logout", destroy_user_session_path%></li>
 					  <% end %>
 					</ul>
 				</div>

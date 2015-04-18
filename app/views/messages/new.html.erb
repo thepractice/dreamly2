@@ -12,9 +12,10 @@
 	
 	<% if params[:recipient] %>
 
-		<%= hidden_field(:message, "recipients", value: "#{params[:recipient]}" %>
+		<%= hidden_field(:recipients, '', value: "#{params[:recipient]}") %>
 
-		<h4>Toshr: <%= User.find(params[:recipient]).username %></h4>
+
+		<h4>To: <%= User.find(params[:recipient]).username %></h4>
 
 	<% else %>	
 

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
 	def index
-		@users = User.paginate(page: params[:page], per_page: 40).order('dream_count DESC')
+		@users = User.paginate(page: params[:page], per_page: 100).order('dream_count DESC')
 	end
 
 	def show

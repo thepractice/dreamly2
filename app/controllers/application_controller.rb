@@ -7,9 +7,9 @@ class ApplicationController < ActionController::Base
 
 
   # Override devise method to get omniauth logins to redirect to user page.
-  def after_sign_in_path_for(resource)
-    current_user
-  end
+  #def after_sign_in_path_for(resource)
+  #  current_user
+  #end
 
   # Mailboxer
 #  rescue_from ActiveRecord::RecordNotFound do
