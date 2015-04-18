@@ -20,7 +20,7 @@ class SessionsController < Devise::SessionsController
     respond_to do |format|
       format.html do
         if params[:forum] == "true"
-          redirect_to "http://forum.dreamly.io/session/sso?return_path=%2F"
+          redirect_to "http://community.dreamly.io/session/sso?return_path=%2F"
         else
           redirect_to after_sign_in_path_for(resource)
         end
@@ -44,7 +44,7 @@ class SessionsController < Devise::SessionsController
     unless data["user"].nil?
       discourse_id = data["user"]["id"]
       # Post to Discourse API to logout
-      uri = URI.parse("http://forum.dreamly.io/admin/users/#{discourse_id}/log_out")
+      uri = URI.parse("http://community.dreamly.io/admin/users/#{discourse_id}/log_out")
       http = Net::HTTP.new(uri.host, uri.port)
       form_data = {
         "api_key" => "13abd32a53efe06d789c5ef513459ef54ab10231523c871afbc3a90866fafff6",

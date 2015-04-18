@@ -105,7 +105,7 @@ end
 class DiscourseSsoController < ApplicationController
   def sso
     if current_user == nil
-      session[:user_return_to] = "http://forum.dreamly.io/session/sso?return_path=%2F"
+      session[:user_return_to] = "http://community.dreamly.io/session/sso?return_path=%2F"
       redirect_to new_user_session_path
     else
       secret = "secret_string_is_good"
@@ -118,7 +118,7 @@ class DiscourseSsoController < ApplicationController
       sso.avatar_url = "https://boiling-plateau-6855.herokuapp.com" + current_user.avatar.url
       sso.avatar_force_update = 1
 
-      redirect_to sso.to_url("http://forum.dreamly.io/session/sso_login")
+      redirect_to sso.to_url("http://community.dreamly.io/session/sso_login")
     end
   end
 end

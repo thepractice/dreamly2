@@ -8,10 +8,10 @@
         	<%= nav_link "Me", "user", current_user %>
         	<%= nav_link "Feed", "flash", feed_path %>
         	<%= nav_link "Hashtags", "slack", hashtags_path %>
-        	<%= nav_link "Forum", "comments", "http://forum.dreamly.io/session/sso?return_path=%2F" %>
+        	<%= nav_link "Community", "comments", "http://community.dreamly.io/session/sso?return_path=%2F" %>
         <% else %>
         	<%= nav_link "Hashtags", "slack", hashtags_path %>
-        	<%= nav_link "Forum", "comments", "http://forum.dreamly.io" %>
+        	<%= nav_link "Community", "comments", "http://community.dreamly.io" %>
         <% end %>
   <!--      <%= nav_link "All dreams", "rocket", dreams_path %>	-->
         
