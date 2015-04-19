@@ -106,7 +106,7 @@ class DiscourseSsoController < ApplicationController
   def sso
     if current_user == nil
       session[:user_return_to] = "http://community.dreamly.io/session/sso?return_path=%2F"
-      redirect_to new_user_session_path
+      redirect_to new_user_session_path(forum: 'true')
     else
       secret = "secret_string_is_good"
       sso = SingleSignOn.parse(request.query_string, secret)
