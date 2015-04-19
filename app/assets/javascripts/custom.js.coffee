@@ -184,7 +184,7 @@ jQuery(document).on "ready page:change", ->
 	$(".select-js").select2 minimumResultsForSearch: 10
 
 	# Messaing div default bottom scroll
-	if $('.messages') != []
+	if typeof $('.messages')[0] != 'undefined'
 		$('.messages').scrollTop($('.messages')[0].scrollHeight)
 
 	$("#impression").slider()

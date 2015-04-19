@@ -1,7 +1,4 @@
-<% if current_user == @user %>
-	<div style="height: 34px;">
-	</div>
-<% else %>
+<% unless current_user == @user %>
 	<div>
 		<% div_id = "follow_form_#{@user.id}" %>
 		<div id="<%= div_id %>" class="follow-button">
