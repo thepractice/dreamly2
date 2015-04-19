@@ -17,15 +17,15 @@ class SessionsController < Devise::SessionsController
     flash[:success] = "Logged in"
 #    redirect_to after_sign_in_path_for(resource)
 
- #   respond_to do |format|
-  #    format.html do
-   #     if params[:forum] == "true"
+    respond_to do |format|
+      format.html do
+        if params[:forum] == "true"
           redirect_to "http://community.dreamly.io/session/sso?return_path=%2F"
-    #    else
-    #      redirect_to after_sign_in_path_for(resource)
-    #    end
-    #  end
-    #  format.json { render :json => {:success => true, :current_user_id => current_user.id}}
+        else
+          redirect_to after_sign_in_path_for(resource)
+        end
+      end
+      format.json { render :json => {:success => true, :current_user_id => current_user.id}}
     end
 
    # return render :json => {:success => true, :current_user_id => current_user.id}
