@@ -1993,7 +1993,7 @@ a:hover {
 
 
 .pagination {
-  display: none;
+  display: none; 
 }
 
 .dream-show-byline {
@@ -2052,4 +2052,17 @@ a:hover {
 .message-teaser {
   color: rgb(102, 102, 102);
   display: block;
+}
+
+.static-sign-in {
+  width: 502px;
+  margin: auto;
+}
+
+.sign-in-modal {
+  width: 502px;
+}
+
+.sign-up-modal {
+  width: 600px;
 }
