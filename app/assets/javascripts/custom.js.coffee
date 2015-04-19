@@ -184,19 +184,9 @@ jQuery(document).on "ready page:change", ->
 	$(".select-js").select2 minimumResultsForSearch: 10
 
 	# Messaing div default bottom scroll
-	$('.messages').scrollTop($('.messages')[0].scrollHeight)	
+	if $('.messages') != []
+		$('.messages').scrollTop($('.messages')[0].scrollHeight)
 
-	# Impression Slider
-
-#	$("#impression").slider formater: (value) ->
-#		if value == 1
-#			"Normal"
-#		else if value == 2
-#			"Big"
-#		else
-#			"Huge"
-
-	
 	$("#impression").slider()
 	$("#impression").on "slide", (slideEvt) ->
 		label = "Normal"
