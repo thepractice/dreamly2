@@ -19,11 +19,9 @@ class SessionsController < Devise::SessionsController
 
     respond_to do |format|
       format.html do
-        if params[:forum] == "true"
-          redirect_to "http://community.dreamly.io/session/sso?return_path=%2F"
-        else
-          redirect_to after_sign_in_path_for(resource)
-        end
+      
+          redirect_to params[:target] || after_sign_in_path_for(resource)
+      
       end
       format.json { render :json => {:success => true, :current_user_id => current_user.id}}
     end
@@ -70,8 +68,8 @@ class SessionsController < Devise::SessionsController
   def failure
     respond_to do |format|
       format.html do
-        flash[:error] = "wrong password"
-        redirect_to root_path
+        flash[:error] = "wrong username or password"
+        redirect_to user_path(:login)
       end
       format.json { return render :json => {:success => false, :errors => ["Login failed."]} }
      # return render json: @user.errors.full_messages, status: :unprocessable_entity
