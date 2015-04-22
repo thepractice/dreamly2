@@ -75,7 +75,7 @@ class User < ActiveRecord::Base
         user.username = auth.info.first_name + '.' + auth.info.last_name
         user.name = auth.info.name
         user.email = auth.info.email
-      elsif user.provider == 'google'
+      elsif user.provider == 'google_oauth2'
         user.username = auth.info.first_name + '.' + auth.info.last_name
         user.name = auth.info.name
         user.email = auth.info.email      
