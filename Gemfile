@@ -1,5 +1,5 @@
 # changed from https for dokku
-source 'http://rubygems.org'
+# source 'http://rubygems.org'
 
 ruby '2.1.0'
 #ruby-gemset=jhad_rails_4_0
