@@ -78,7 +78,7 @@ Jhad::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.action_mailer.default_url_options = { host: 'http://boiling-plateau-6855.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'http://dreamly.io' }
 
   # Change mail delievery to either :smpt, :sendmail, :file, :test
   config.action_mailer.delivery_method = :smtp
