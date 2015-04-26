@@ -19,6 +19,7 @@ class MessagesController < ApplicationController
 			flash[:success] = "Message has been sent!"
 			redirect_to conversation_path(@dialog)
 		end
+		user2.notify(user2, 'notification')
 		
 	end
 
