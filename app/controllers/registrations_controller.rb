@@ -33,7 +33,12 @@ class RegistrationsController < Devise::RegistrationsController
         set_flash_message :notice, :signed_up if is_flashing_format?
         sign_up(resource_name, resource)
         if current_user == nil
-          return render root_path
+          #render :js => "window.location.pathname = '#{root_path}'"
+          #return render :json => {
+          #  :location => url_for(:controller => 'dreams', :action => 'index'),
+          #  :flash => {:notice => 'Confirm via email'}
+          #}
+          return render :json => {:success => true, :current_user_id => 0}
         else
           return render :json => {:success => true, :current_user_id => current_user.id}
         end
@@ -42,7 +47,12 @@ class RegistrationsController < Devise::RegistrationsController
         set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
         expire_data_after_sign_in!
         if current_user == nil
-          return render root_path
+          #render :js => "window.location.pathname = '#{root_path}'"
+          #return render :json => {
+          #  :location => url_for(:controller => 'dreams', :action => 'index'),
+          #  :flash => {:notice => 'Confirm via email'}
+          #}  
+          return render :json => {:success => true, :current_user_id => 0}        
         else
           return render :json => {:success => true, :current_user_id => current_user.id}
         end      

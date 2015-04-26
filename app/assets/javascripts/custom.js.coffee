@@ -133,7 +133,10 @@ jQuery(document).on "ready page:change", ->
 	$("form#signup_form").on "ajax:success", (event, data, status, xhr) ->
 		if data.success
 			current_user_id = xhr.responseJSON.current_user_id
-			window.location.pathname = "/users/#{current_user_id}"
+			if current_user_id == 0
+				window.location.pathname = "/"
+			else
+				window.location.pathname = "/users/#{current_user_id}"
 		else
 			console.log('dumb')
 			console.log(xhr.responseText)
