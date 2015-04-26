@@ -161,7 +161,11 @@ class User < ActiveRecord::Base
 
   # For Mailboxer
   def mailboxer_email(object)
-    self.email
+    if object.class==Mailboxer::Notification
+      return nil
+    else
+      self.email
+    end
   end
 
 end
