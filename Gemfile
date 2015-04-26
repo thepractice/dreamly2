@@ -1,5 +1,5 @@
 # changed from https for dokku
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 ruby '2.1.0'
 #ruby-gemset=jhad_rails_4_0
@@ -33,6 +33,7 @@ gem 'ruby-stemmer', :require => 'lingua/stemmer'
 gem 'filterrific'
 gem 'select2-rails'
 gem 'mailboxer'
+gem 'aws-sdk', '< 2.0'
 
 
 group :development do
