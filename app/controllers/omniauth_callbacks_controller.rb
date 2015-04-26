@@ -4,6 +4,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 		# To see request hash, use 'render :text => "<pre>#{request.env["omniauth.auth"].to_yaml}</pre>"''
 		#render :text => "<pre>#{request.env["omniauth.auth"].to_yaml}</pre>"
 		user = User.from_omniauth(request.env["omniauth.auth"])
+		user.skip_confirmation!
 		if user.persisted?
 			flash[:success] = "Signed in!"
 			sign_in_and_redirect user
