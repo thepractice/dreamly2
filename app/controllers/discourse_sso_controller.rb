@@ -116,7 +116,7 @@ class DiscourseSsoController < ApplicationController
       sso.external_id = current_user.id
       sso.sso_secret = secret
       unless current_user.avatar_file_name.nil?
-        sso.avatar_url = "https://boiling-plateau-6855.herokuapp.com" + current_user.avatar.url
+        sso.avatar_url = "http://dreamly.io" + current_user.avatar.url
         sso.avatar_force_update = 0
       end
 
