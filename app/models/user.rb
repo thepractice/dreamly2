@@ -79,10 +79,9 @@ class User < ActiveRecord::Base
         user.username = auth.info.first_name + '.' + auth.info.last_name
         user.name = auth.info.name
         user.email = auth.info.email      
-      else  
+      else  # yahoo
         user.username = auth.info.name
         user.name = auth.info.name
-        user.email = auth.info.email
       end
     end
   end
