@@ -58,6 +58,10 @@ class RegistrationsController < Devise::RegistrationsController
         end      
         #respond_with resource, location: after_inactive_sign_up_path_for(resource)
       end
+
+    User.find(1).send_message(resource, "Welcome to dreamly!", "New message")
+
+
     else
       clean_up_passwords resource
       return render :json => {:success => false, :errors => resource.errors.full_messages}
