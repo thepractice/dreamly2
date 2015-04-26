@@ -40,6 +40,9 @@
 
 					<%= link_to(conversations_path, :class => 'btn btn-default btn-alt notification-button', :id => "notification-button") do %>
 						<%= icon('envelope') %>
+						<% if current_user.mailbox.notifications(:read => false).length > 0 %>
+							<span><%= current_user.mailbox.notifications.length %></span>
+						<% end %>							
 					<% end %>
 					
 				<% else %>

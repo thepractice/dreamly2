@@ -18,6 +18,10 @@ class ConversationsController < ApplicationController
 
 		@conversations = @conversations.paginate(page: params[:page], per_page: 10)
 
+		current_user.mailbox.notifications.each do |notif|
+			notif.mark_as_read(current_user)
+		end
+
 	end
 
 	def show
@@ -29,6 +33,11 @@ class ConversationsController < ApplicationController
 
 	def reply
 		current_user.reply_to_conversation(@conversation, params[:body])
+		user2 = @conversation.recipients[0]
+		if user2 == current_user
+			user2 = @conversation.recipients[1]
+		end
+		user2.notify('Message', 'You received a message')
 		flash[:success] = 'Reply sent'
 		redirect_to conversation_path(@conversation)
 	end
