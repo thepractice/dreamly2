@@ -1,6 +1,6 @@
 <div class="row">
 
-
+<p>welcome http://community.dreamly.io <a href="http://community.dreamly.io">forum</a><p>
 	<div class="col-sm-3">
 
 		<p><%= link_to 'Start conversaton', new_message_path, class: 'btn btn-lg btn-primary' %></p>
@@ -55,7 +55,7 @@
 							<div class="media-body">
 								<h6 class="media-heading"><%= message.sender.username %>
 									says at <%= message.created_at.strftime("%-d %B %Y, %H:%M:%S") %></h6>
-								<%= message.body %>
+								<%= message.body.html_safe %>
 							</div>
 						</div>
 					<% end %>

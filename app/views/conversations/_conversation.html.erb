@@ -9,12 +9,14 @@
 					<% participant = conversation.participants[0] %>
 				<% end %>
 
-				<% if participant.avatar_file_name.nil? %>
-					<div class="dream-avatar-default">
-						<p><%= participant.username.first.upcase %></p>
-					</div>						
-				<% else %>
-					<%= image_tag participant.avatar.url(:thumb) %>
+				<% unless participant == nil %>
+					<% if participant.avatar_file_name.nil? %>
+						<div class="dream-avatar-default">
+							<p><%= participant.username.first.upcase %></p>
+						</div>						
+					<% else %>
+						<%= image_tag participant.avatar.url(:thumb) %>
+					<% end %>
 				<% end %>
 			</div>
 

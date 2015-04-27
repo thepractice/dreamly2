@@ -59,7 +59,7 @@ class RegistrationsController < Devise::RegistrationsController
         #respond_with resource, location: after_inactive_sign_up_path_for(resource)
       end
 
-    User.find(1).send_message(resource, "Welcome to dreamly!", "New message")
+      #User.find(1).send_message(User.find(2), "Welcome to dreamlyx!", "New messagex")
 
 
     else
