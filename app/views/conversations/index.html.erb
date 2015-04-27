@@ -57,7 +57,7 @@
 								<div class="media-body">
 									<h6 class="media-heading"><%= message.sender.username %>
 										says at <%= message.created_at.strftime("%-d %B %Y, %H:%M:%S") %></h6>
-									<%= message.body %>
+									<%= message.body.html_safe %>
 								</div>
 							</div>
 						<% end %>
