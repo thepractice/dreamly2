@@ -177,25 +177,25 @@ class User < ActiveRecord::Base
 
   def send_welcome_message
 
-    User.find_by(username: 'dreamly').send_message(self, "Welcome to the Collective Unconscious. Welcome to Dreamly.
+    User.find_by(username: 'dreamly').send_message(self, "Welcome to the Collective Unconscious. Welcome to Dreamly.<br/><br/>
 
-We invite you to participate in our social experiment. We invite you to find yourself through others.
+We invite you to participate in our social experiment. We invite you to find yourself through others.<br/><br/>
 
-Dreamly is a social dream journal designed to help you better understand yourself, particularly on an unconscious level. Having the functionality to post and keep track of your dreams on a private and personal level, as well as interact publically with other users through dream comparison and messaging features, Dreamly is a uniquely designed platform aiming to cut through the illusion.
+Dreamly is a social dream journal designed to help you better understand yourself, particularly on an unconscious level. Having the functionality to post and keep track of your dreams on a private and personal level, as well as interact publically with other users through dream comparison and messaging features, Dreamly is a uniquely designed platform aiming to cut through the illusion.<br/><br/>
 
-Social Media, up to this point, has been a testament to the exterior self. Innovations of our generation like Facebook and Twitter have allowed us to express the physical conceptions of ourselves to the online community. Whether a quick selfie or an elaborately constructed status post, . But what about the matter beneath the surface? What about the underlying layers of the psyche not receiving attention—the core emotional and psychological desires for wellbeing sewn deeply within the self?
+Social Media, up to this point, has been a testament to the exterior self. Innovations of our generation like Facebook and Twitter have allowed us to express the physical conceptions of ourselves to the online community. Whether a quick selfie or an elaborately constructed status post, . But what about the matter beneath the surface? What about the underlying layers of the psyche not receiving attention—the core emotional and psychological desires for wellbeing sewn deeply within the self?<br/><br/>
 
-Here at Dreamly we are looking to change the model of social media. We are looking in a different direction. We are looking inward. We are seeking to lift the veil once and for all by bringing together the Collective Unconscious—the inner connection that us humans intimately share.
+Here at Dreamly we are looking to change the model of social media. We are looking in a different direction. We are looking inward. We are seeking to lift the veil once and for all by bringing together the Collective Unconscious—the inner connection that us humans intimately share.<br/><br/>
 
-Dreamly is in its alpha stages. We have a vision, but we are looking to better shape that vision using your input.
+Dreamly is in its alpha stages. We have a vision, but we are looking to better shape that vision using your input.<br/><br/>
 
-That’s why we need your voice.
+That’s why we need your voice.<br/><br/>
 
-We’re not asking for you to complete a hundred-question survey or to fill out a form with all of your demographical information. We want your feedback in your own words. We might throw one or two questions in to help guide us in our way, but what we really want is to hear exactly what you think of the site as is, and, any additional features that would improve your experience. Give us feedback by going to the <a href='http://community.dreamly.io'>Dreamly Community forums</a>.
+We’re not asking for you to complete a hundred-question survey or to fill out a form with all of your demographical information. We want your feedback in your own words. We might throw one or two questions in to help guide us in our way, but what we really want is to hear exactly what you think of the site as is, and, any additional features that would improve your experience. Give us feedback by going to the <a href='http://community.dreamly.io/session/sso?return_path=%2F'>Dreamly Community forums</a>.<br/><br/>
 
-We hope you enjoy your experience here at Dreamly.io. We look forward hearing from you.
+We hope you enjoy your experience here at Dreamly.io. We look forward hearing from you.<br/><br/>
 
-Pleasant Dreaming,
+Pleasant Dreaming,<br/><br/>
 
 The Dreamly Team", "Welcome message")
     self.notify('Message', 'You received a message')
