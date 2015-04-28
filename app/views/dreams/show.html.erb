@@ -195,7 +195,7 @@
 					<% if @dream.user == current_user %>
 						<span class="body"><%= simple_format(auto_link(@dream.body, hashtag_url_base: hashtags_path+"/", username_url_base: screennames_path+"/", username_include_symbol: true)) %></span>
 					<% else %>
-						<span class="body"><%= simple_format(auto_link_hashtags(@dream.body.gsub(/([@])\w+/, "@name"), hashtag_url_base: hashtags_path+"/")) %></span>
+						<span class="body"><%= simple_format(auto_link_hashtags(@dream.body.gsub(/([@])\w+/, "@censored"), hashtag_url_base: hashtags_path+"/")) %></span>
 					<% end %>
 					<% if current_user == @dream.user %>
 						<%= link_to(edit_dream_path(@dream.id), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-edit-dream', :class => 'edit-link'}) do %>

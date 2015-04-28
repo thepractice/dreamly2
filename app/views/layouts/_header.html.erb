@@ -18,12 +18,14 @@
       </ul>     
 
       <ul class="nav navbar-nav navbar-right">
+      	<!--
 				<%= form_tag search_path, class: "navbar-form search-form", id: "header-search", method: "get", role: "search" do %>					
 							<%= text_field_tag :query, params[:query], class: "form-control", id: "search-bar", placeholder: "Search" %>
 									<%= button_tag class: "btn", id: "search-button" do %>
 							<%= icon('search') %>
 						<% end %>				
-				<% end %>					
+				<% end %>		
+				-->			
 
 				<% if user_signed_in? %>
 					<%= link_to(new_dream_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', :class => 'btn btn-primary btn-square', :id => "add-dream-button"}) do %>

@@ -42,8 +42,8 @@ class Dream < ActiveRecord::Base
 	}
 
 	include PgSearch
-	multisearchable against: [:title, :body]
-	pg_search_scope :search, against: [:title, :body],
+	multisearchable against: [:public_title, :public_body]
+	pg_search_scope :search, against: [:public_title, :public_body],
 		using: {tsearch: {dictionary: "english", prefix: true}}	
 
 	filterrific(
@@ -181,6 +181,9 @@ class Dream < ActiveRecord::Base
 
 #			user_names = Hash[user_names.sort_by { |k, v| v }.reverse]
 #			self.user.update_columns(names: user_names)
+			
+
+
 		end
 
 
@@ -225,7 +228,9 @@ class Dream < ActiveRecord::Base
 			end
 
 			body = self.body
-			words = body.split(/\W+/)								# Split dream body into array of words
+			#words = body.split(/\W+/)								# Split dream body into array of words
+			words = body.split(/[ .#;:!?']/)
+
 
 			if self.title.blank?										# Sets title if no title.
 				self.title = sanitize(self.body, tags: []).truncate(75, separator: ' ', omission: '') + " ..."
@@ -236,7 +241,7 @@ class Dream < ActiveRecord::Base
 			words.each do |word|
 				word.downcase!
 
-				if ( stopwords.exclude? word ) && word.length > 1
+				if ( stopwords.exclude? word ) && (word.length > 1) && word.first != "@"
 					stem = Lingua.stemmer(word)
 
 					if happy_stems.include? stem
@@ -286,8 +291,10 @@ class Dream < ActiveRecord::Base
 
 			freqs = Hash[freqs.sort_by{ |k, v| v[1] }.reverse]	
 
+			self.public_body = self.body.gsub(/([@])\w+/, "@censored")
+			self.public_title = self.title.gsub(/([@])\w+/, "@censored")
 			self.word_freq = freqs
-			self.update_columns(word_freq: self.word_freq)		# save Dream word_freq hash
+			self.update_columns(word_freq: self.word_freq, public_body: self.public_body, public_title: self.public_title)		# save Dream word_freq hash
 		end
 
 		def update_graph
