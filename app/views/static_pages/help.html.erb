@@ -1,3 +1,11 @@
 <% provide(:title, 'Help') %>
 <h1>Help</h1>
-<p>This is the help page for justhadadream.com</p>
+<p>
+	Guided instructions coming soon. In the meantime, drop by the
+	<% if user_signed_in? %>
+		<a href="http://community.dreamly.io/session/sso?return_path=%2F">community forums</a>
+	<% else %>
+		<a href="http://community.dreamly.io/">community forums</a>
+	<% end %>
+
+	to ask for help.</p>

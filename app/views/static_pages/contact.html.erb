@@ -1,3 +1,11 @@
 <% provide(:title, 'Contact' ) %>
 <h1>Contact us</h1>
-<p>You can reach us at thepractice@rcn.com</p>
+<p>You can reach us at the
+
+	<% if user_signed_in? %>
+		<a href="http://community.dreamly.io/session/sso?return_path=%2F">community forums</a>
+	<% else %>
+		<a href="http://community.dreamly.io/">community forums</a>
+	<% end %>
+
+	 or email us at connectdreamly@gmail.com</p>

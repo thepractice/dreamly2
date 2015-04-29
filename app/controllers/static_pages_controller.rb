@@ -180,6 +180,12 @@ class StaticPagesController < ApplicationController
   def contact
   end
 
+  def blog
+  end
+
+  def faq
+  end
+
   def graph
   end
 
