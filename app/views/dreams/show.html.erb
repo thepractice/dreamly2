@@ -118,13 +118,15 @@
 				</div>
 
 				<div class="dream-left">
-					<% if @dream.user.avatar_file_name.nil? %>
-						<div class="dream-avatar-default">
-							<p><%= @dream.user.username.first.upcase %></p>
-						</div>						
-					<% else %>
-						<%= image_tag @dream.user.avatar.url(:thumb) %>
-					<% end %>					
+					<%= link_to @dream.user do %>
+						<% if @dream.user.avatar_file_name.nil? %>
+							<div class="dream-avatar-default">
+								<p><%= @dream.user.username.first.upcase %></p>
+							</div>						
+						<% else %>
+							<%= image_tag @dream.user.avatar.url(:thumb) %>
+						<% end %>
+					<% end %>
 					<span><%= @dream.dreamed_on.strftime("%^b") %></span><br />
 					<span><%= @dream.dreamed_on.strftime("%d") %></span><br/>
 					<% if @dream.dreamed_on.year != Time.now.year %>
@@ -146,11 +148,11 @@
 										<% end %>
 									<% else %>
 										<% if @dream.impression == 2 %>
-											<%= link_to @dream.title.gsub(/([@])\w+/, "@name"), @dream, :class => "big-dream-link" %>
+											<%= link_to @dream.title.gsub(/([@])\w+/, "@<span class='censored'>censored</span>").html_safe, @dream, :class => "big-dream-link" %>
 										<% elsif @dream.impression == 3 %>
-											<%= link_to @dream.title.gsub(/([@])\w+/, "@name"), @dream, :class => "huge-dream-link" %>
+											<%= link_to @dream.title.gsub(/([@])\w+/, "@<span class='censored'>censored</span>").html_safe, @dream, :class => "huge-dream-link" %>
 										<% else %>
-											<%= link_to @dream.title.gsub(/([@])\w+/, "@name"), @dream %>
+											<%= link_to @dream.title.gsub(/([@])\w+/, "@<span class='censored'>censored</span>").html_safe, @dream %>
 										<% end %>										
 										
 									<% end %>
@@ -195,7 +197,7 @@
 					<% if @dream.user == current_user %>
 						<span class="body"><%= simple_format(auto_link(@dream.body, hashtag_url_base: hashtags_path+"/", username_url_base: screennames_path+"/", username_include_symbol: true)) %></span>
 					<% else %>
-						<span class="body"><%= simple_format(auto_link_hashtags(@dream.body.gsub(/([@])\w+/, "@censored"), hashtag_url_base: hashtags_path+"/")) %></span>
+						<span class="body"><%= simple_format(auto_link_hashtags(@dream.body.gsub(/([@])\w+/, "@<span class='censored'>censored</span>").html_safe, hashtag_url_base: hashtags_path+"/")) %></span>
 					<% end %>
 					<% if current_user == @dream.user %>
 						<%= link_to(edit_dream_path(@dream.id), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-edit-dream', :class => 'edit-link'}) do %>

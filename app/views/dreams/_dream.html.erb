@@ -70,7 +70,7 @@
 								<% if dream.user == current_user %>
 									<%= link_to dream.title, dream %>
 								<% else %>
-									<%= link_to dream.title.gsub(/([@])\w+/, "@name"), dream %>
+									<%= link_to dream.title.gsub(/([@])\w+/, "@censored"), dream %>
 								<% end %>
 								<% dream.emotions.each do |emotion| %>
 									<% if emotion.id == 1 %>

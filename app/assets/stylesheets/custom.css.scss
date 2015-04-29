@@ -2070,3 +2070,8 @@ a:hover {
 #user-list {
   margin: auto;
 }
+
+.censored {
+  color: transparent;
+  text-shadow: 0 0 6px rgba(0,0,0,1);
+}
