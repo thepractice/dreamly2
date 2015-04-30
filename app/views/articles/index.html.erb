@@ -1,0 +1,14 @@
+<% provide(:title, 'Blog') %>
+
+
+<h3 class="content-title">Blog</h3>
+
+
+<div>
+	<%= render @articles %>
+</div>
+
+
+<%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+
+

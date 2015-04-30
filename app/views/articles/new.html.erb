@@ -1,0 +1,38 @@
+<div class="panel panel-default white-panel" id="first-dream">
+  <div class="panel-heading">
+    <h3 class="panel-title">Post an article</h3>
+  </div>
+  <div class="panel-body">
+
+        <%= simple_form_for(Article.new, html: {class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
+    
+        
+                                     
+
+ 
+        
+              <div class="btn-group btn-toggle" data-toggle="buttons">
+                <label class="btn btn-default active">
+                  <input type="radio" name="article[published]" value="false" checked> Not published
+                </label>
+                <label class="btn btn-default">
+                  <input type="radio" name="article[published]" value="true"> Published
+                </label>
+              </div>
+        
+            
+       
+
+
+
+          <%= f.input :title, input_html: { id: "dream-title-textarea" } %>
+          <%= f.input :body, placeholder: 'Mark up using html tags.', required: false, input_html: { id: "dream-body-textarea" } %>
+
+  </div>
+  <div class="panel-footer">
+    <button type="submit" class="btn btn-primary btn-square">
+      <%= icon('paper-plane') %>Post article
+    </button>
+  <% end %>
+  </div>
+</div>

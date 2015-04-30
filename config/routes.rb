@@ -47,9 +47,10 @@ Jhad::Application.routes.draw do
   resources :hashtags
   resources :screennames
   resources :relationships, only: [:create, :destroy]
+  resources :articles
 
   match '/feed',    to: 'static_pages#home',    via: 'get'
-  match '/blog',    to: 'static_pages#blog',    via: 'get'
+  match '/blog',    to: 'articles#index',    via: 'get'
   match '/faq',    to: 'static_pages#faq',    via: 'get'
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'
@@ -57,6 +58,8 @@ Jhad::Application.routes.draw do
   match '/graph', to: 'static_pages#graph', via: 'get'
   match '/test', to: 'static_pages#test', via: 'get'
   match '/search', to: 'static_pages#search', via: 'get'
+
+
   
 
 #  match "/users/:id/big", to: 'users#show', impression: 2, via: 'get'
