@@ -1,14 +1,18 @@
 <% provide(:title, 'Blog') %>
 
 
-<span class="content-title">Blog</h3>
-
-
-<div>
-	<%= render @articles %>
+<div class="row">
+	<div class="col-md-9">
+		<div class="article-container">
+			<%= render @articles %>
+			<%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+		</div>
+	</div>
+	<div class="col-md-3">
+	</div>
 </div>
 
 
-<%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+
 
 

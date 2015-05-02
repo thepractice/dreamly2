@@ -3,64 +3,45 @@
 	<div class="row">
 
 		<div class="col-md-9">
-			<div class="dream white-panel" id="indiv-dream">
+			<div class="article">
 
-		
-
-				<div class="dream-left">
-					<%= link_to @article.user do %>
-						<% if @article.user.avatar_file_name.nil? %>
-							<div class="dream-avatar-default">
-								<p><%= @article.user.username.first.upcase %></p>
-							</div>						
-						<% else %>
-							<%= image_tag @article.user.avatar.url(:thumb) %>
-						<% end %>
-					<% end %>
-					<span><%= @article.created_at.strftime("%^b") %></span><br />
-					<span><%= @article.created_at.strftime("%d") %></span><br/>
-					<% if @article.created_at.year != Time.now.year %>
-						<span class="year"><%= @article.created_at.strftime("%Y") %></span>
-					<% end %>
-				</div>
-				<div class="dream-right">
-					<div class="dream-right-top">
-						<div class="dream-right-top1">
-						
-
-	
-										<h1><%= link_to @article.title, @article %></h1>
-																		
-										
-				
-
-							<div class="dream-info-small dream-show-byline">
-								<span class="small-font">submitted <%= time_ago_in_words(@article.created_at) %> ago by</span>
-								<span class="dreamer1 small-font"><%= link_to @article.user.name, @article.user %></span>
-								<span class="dreamer2 small-font"><%= link_to "@#{@article.user.username}", @article.user %></span>	
-							</div>												
-
-						</div>
-	
-					</div>
-
-
-	
-						<span class="body"><%= simple_format(@article.body) %></span>
-					<% if current_user %>
-						<% if current_user.admin? %>
-							<%= link_to(edit_article_path(@article.id), class: 'edit-link') do %>
-								edit
-							<% end %>
-
-							<%= link_to(@article, method: :delete, data: { confirm: "Are you sure?" }, class: 'edit-link') do %>
-								delete
-							<% end %>
-
-						<% end %> 
-					<% end %>
-				</div>
-			</div>
+				<div>
 			
-		</div>
-	</div>
+						<h1>				
+							<%= @article.title %>
+						</h1>
+			
+					
+					<p class="article-byline">
+						<%= link_to @article do %>
+							<%= icon('clock-o') %>
+							<%= @article.created_at.strftime("%^B") %>
+							<%= @article.created_at.strftime("%d") %>,
+							<%= @article.created_at.strftime("%Y") %>
+						<% end %>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						
+						<%= link_to @article.user do %>
+							<%= icon('user') %>
+							<%= @article.user.name %>
+						<% end %>
+						
+					</span>			
+				</div>	
+				<%= simple_format(@article.body) %>	
+
+
+					<% if current_user && current_user.admin? %>
+						<%= link_to(edit_article_path(@article.id), class: 'edit-link') do %>
+							edit
+						<% end %>
+
+						<%= link_to(@article, method: :delete, data: { confirm: "Are you sure?" }, class: 'edit-link') do %>
+							delete
+						<% end %>
+
+					<% end %> 
+	
+</div>
+</div>
+</div>

@@ -121,6 +121,10 @@ body{
 
 
 .navbar-jhad {
+  display: block;
+  margin: 0 auto;
+  width: 540px;
+  float: none;
   li {
     height: 46px;
     overflow: hidden;
@@ -149,6 +153,10 @@ body{
       font-size: 20px;
     }
   }
+}
+
+.navbar-jhad-visitor {
+  width: 487px;
 }
 
 .navbar-nav {
@@ -182,6 +190,7 @@ body{
   }
 }
 
+/*
 .cloud_header {
   display: block;
   position: relative;
@@ -196,6 +205,12 @@ body{
     border-radius: 0;
     margin-top: -5px;
   }
+}
+*/
+
+.cloud_header2 {
+  float: left;
+  line-height: 46px;
 }
 
 .navbar-btn {
@@ -2074,4 +2089,35 @@ a:hover {
 .censored {
   color: transparent;
   text-shadow: 0 0 6px rgba(0,0,0,1);
+}
+
+.article {
+  margin-left: 20px;
+}
+
+.article-container {
+  margin-left: 20px;
+  color: rgb(75, 75, 75);
+  a {
+    color: rgb(75, 75, 75);
+  }
+  a:hover {
+    color: #428bca;
+  }
+  a.article-continue-link {
+    color: #428bca;
+  }
+
+}
+
+.article-byline {
+  font-size: 12px;
+  a {
+    color: rgb(126, 126, 126);
+  }
+  margin-bottom: 7px;
+}
+
+article-continue-link a {
+  color: #428bca;
 }

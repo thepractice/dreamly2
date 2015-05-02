@@ -1,11 +1,10 @@
 	
-	<div class="dream">
+	<div>
 
 
-		<div class="dream-right">
-			<div class="dream-right-top">
-				<div class="dream-right-top1">
-					<span>
+
+				<div>
+			
 						<h1>				
 							<%= link_to article.title, article %>
 							<% if current_user && current_user.admin? %>
@@ -14,19 +13,32 @@
 								<% end %>
 							<% end %>
 						</h1>
-					</span>
+			
 					
-					<span class="small-font">submitted <%= time_ago_in_words(article.created_at) %> ago by</span>
-					<span class="dreamer1 small-font"><%= link_to article.user.name, article.user %></span>
-					<span class="dreamer2 small-font"><%= link_to "@#{article.user.username}", article.user %></span>				
+					<p class="article-byline">
+						<%= link_to article do %>
+							<%= icon('clock-o') %>
+							<%= article.created_at.strftime("%^B") %>
+							<%= article.created_at.strftime("%d") %>,
+							<%= article.created_at.strftime("%Y") %>
+						<% end %>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						
+						<%= link_to article.user do %>
+							<%= icon('user') %>
+							<%= article.user.name %>
+						<% end %>
+						
+					</span>			
 				</div>
 
-			</div>
 
-			<%= truncate(article.body, length: 500) %>
-	
+
+			<%= simple_format(truncate(article.body, length: 500, escape: false)) %>
 			
-		</div>
+			<%= link_to "Continue reading...", article, class: "article-continue-link" %>
+			<hr>
+
 	</div>
 
 
