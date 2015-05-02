@@ -48,7 +48,7 @@
 	
 						<span class="body"><%= simple_format(@article.body) %></span>
 					<% if current_user %>
-						<% if [72, 68, 74].include?(current_user.id) %>
+						<% if current_user.admin? %>
 							<%= link_to(edit_article_path(@article.id), class: 'edit-link') do %>
 								edit
 							<% end %>

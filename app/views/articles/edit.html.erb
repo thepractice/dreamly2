@@ -1,38 +1,40 @@
 <div class="panel panel-default white-panel" id="first-dream">
   <div class="panel-heading">
-    <h3 class="panel-title">Post an article</h3>
+    <h3 class="panel-title">Edit article</h3>
   </div>
   <div class="panel-body">
 
-        <%= simple_form_for(@article, html: {class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
+    <%= simple_form_for(@article, html: {class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
+
+      <div class="btn-group btn-toggle" data-toggle="buttons">
+        <% if @article.published? %>
+          <label class="btn btn-default">
+            <input type="radio" name="article[published]" value="false"> Not published
+          </label>
+          <label class="btn btn-default active">
+            <input type="radio" name="article[published]" value="true" checked> Published
+          </label>
+        <% else %>
+          <label class="btn btn-default active">
+            <input type="radio" name="article[published]" value="false" checked> Not published
+          </label>
+          <label class="btn btn-default">
+            <input type="radio" name="article[published]" value="true"> Published
+          </label>        
+        <% end %>
+      </div>
+
+
+      <%= f.input :title, input_html: { id: "dream-title-textarea" } %>
+      <%= f.input :body, placeholder: 'Mark up using html tags.', required: false, input_html: { id: "dream-body-textarea" } %>
     
-        
-                                     
-
- 
-         
-              <div class="btn-group btn-toggle" data-toggle="buttons">
-                <label class="btn btn-default active">
-                  <input type="radio" name="article[published]" value="false" checked> Not published
-                </label>
-                <label class="btn btn-default">
-                  <input type="radio" name="article[published]" value="true"> Published
-                </label>
-              </div>
-    
-            
-     
-
-
-
-          <%= f.input :title, input_html: { id: "dream-title-textarea" } %>
-          <%= f.input :body, placeholder: 'Mark up using html tags.', required: false, input_html: { id: "dream-body-textarea" } %>
-
-  </div>
-  <div class="panel-footer">
     <button type="submit" class="btn btn-primary btn-square">
-      <%= icon('paper-plane') %>Save
+      Save
     </button>
-  <% end %>
+    <% end %>
   </div>
+
+
+  
+
 </div>

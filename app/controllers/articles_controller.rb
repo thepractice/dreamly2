@@ -2,7 +2,11 @@ class ArticlesController < ApplicationController
 	before_filter :admin_user, except: [:show, :index]
 
 	def index
-		@articles = Article.paginate(page: params[:page], per_page: 10).order('created_at DESC')
+		if current_user && current_user.admin?
+			@articles = Article.paginate(page: params[:page], per_page: 10).order('created_at DESC')
+		else
+			@articles = Article.where(published: true).paginate(page: params[:page], per_page: 10).order('created_at DESC')
+		end
 	end
 
 	def show
@@ -61,11 +65,11 @@ class ArticlesController < ApplicationController
 	private
 
 		def article_params
-			params.require(:article).permit(:title, :body,:published)
+			params.require(:article).permit(:title, :body, :published)
 		end
 
 		def admin_user
-			redirect_to root_url unless [72, 68, 74].include?(current_user.id)
+			redirect_to root_url unless current_user.admin?
 		end
 
 end

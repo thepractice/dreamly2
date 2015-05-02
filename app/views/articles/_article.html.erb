@@ -1,36 +1,32 @@
-		<div class="dream">
+	
+	<div class="dream">
 
-			<div class="dream-left">
-				<%= link_to article.user do %>
-					<% if article.user.avatar_file_name.nil? %>
-						<div class="dream-avatar-default">
-							<p><%= article.user.username.first.upcase %></p>
-						</div>						
-					<% else %>
-						<%= image_tag article.user.avatar.url(:thumb) %>
-					<% end %>
-				<% end %>
-			</div>
-			<div class="dream-right">
-				<div class="dream-right-top">
-					<div class="dream-right-top1">
-						<span>
-							<h1>				
-								<%= link_to article.title, article %>
-							</h1>
-						</span>
-						
-						<span class="small-font">submitted <%= time_ago_in_words(article.created_at) %> ago by</span>
-						<span class="dreamer1 small-font"><%= link_to article.user.name, article.user %></span>
-						<span class="dreamer2 small-font"><%= link_to "@#{article.user.username}", article.user %></span>				
-					</div>
 
+		<div class="dream-right">
+			<div class="dream-right-top">
+				<div class="dream-right-top1">
+					<span>
+						<h1>				
+							<%= link_to article.title, article %>
+							<% if current_user && current_user.admin? %>
+								<% unless article.published %>
+									(not published)
+								<% end %>
+							<% end %>
+						</h1>
+					</span>
+					
+					<span class="small-font">submitted <%= time_ago_in_words(article.created_at) %> ago by</span>
+					<span class="dreamer1 small-font"><%= link_to article.user.name, article.user %></span>
+					<span class="dreamer2 small-font"><%= link_to "@#{article.user.username}", article.user %></span>				
 				</div>
 
-				<%= truncate(article.body, length: 500) %>
-		
-				
 			</div>
+
+			<%= truncate(article.body, length: 500) %>
+	
+			
 		</div>
+	</div>
 
 
