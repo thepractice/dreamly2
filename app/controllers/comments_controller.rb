@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
 		@comment.user_id = current_user.id
 		respond_to do |format|
 			if @comment.save
-				flash[:success] = "Comment saved #{@commentable}"
+				flash[:success] = "Comment saved"
 				format.html { redirect_to @commentable }
 				format.json { render json: @commentable, location: @commentable }
 			else

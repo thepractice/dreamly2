@@ -11,13 +11,16 @@
 					<%= @article.created_at.strftime("%^B") %>
 					<%= @article.created_at.strftime("%d") %>,
 					<%= @article.created_at.strftime("%Y") %>
+				
+					&nbsp;&nbsp;&nbsp;&nbsp;
+				
+				
+					<%= icon('user') %>
+					<%= @article.author %>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<%= icon ('comments') %>
+					<%= pluralize(@article.comments.length, 'comment') %>
 				<% end %>
-				&nbsp;&nbsp;&nbsp;&nbsp;
-				
-				
-				<%= icon('user') %>
-				<%= @article.author %>
-				
 			</p>			
 			
 			<%= simple_format(@article.body) %>	
