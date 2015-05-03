@@ -11,10 +11,12 @@ class ArticlesController < ApplicationController
 
 	def show
 		@article = Article.find(params[:id])
+		@commentable = @article
 	end
 
 	def new
-		@article = current_user.articles.build
+		#@article = current_user.articles.build
+		@article = Article.new
 		respond_to do |format|
 			format.html
 			format.js
@@ -22,7 +24,8 @@ class ArticlesController < ApplicationController
 	end	
 
 	def create
-		@article = current_user.articles.build(article_params)
+		#@article = current_user.articles.build(article_params)
+		@article = Article.new(article_params)
 
 		respond_to do |format|
 			if @article.save
@@ -65,7 +68,7 @@ class ArticlesController < ApplicationController
 	private
 
 		def article_params
-			params.require(:article).permit(:title, :body, :published)
+			params.require(:article).permit(:title, :body, :published, :author)
 		end
 
 		def admin_user

@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   has_many :comments, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :screennames, dependent: :destroy
-  has_many :articles
 
   has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
@@ -180,7 +179,7 @@ class User < ActiveRecord::Base
 
   def send_welcome_message
 
-    User.find_by(username: 'dreamly').send_message(self, "Welcome to the Collective Unconscious. Welcome to Dreamly.<br/><br/>
+    User.find_by(username: 'Ed').send_message(self, "Welcome to the Collective Unconscious. Welcome to Dreamly.<br/><br/>
 
 We invite you to participate in our social experiment. We invite you to find yourself through others.<br/><br/>
 

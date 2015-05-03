@@ -243,6 +243,7 @@ class DreamsController < ApplicationController
 
 	def show
 		@dream = Dream.find(params[:id])
+		@commentable = @dream
 
 		# Mark as 'seen' all notifications on dream
 	#	if user_signed_in?

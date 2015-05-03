@@ -32,6 +32,10 @@ Jhad::Application.routes.draw do
       put "dislike", to: "dreams#downvote"
     end
   end
+
+  resources :articles do
+    resources :comments
+  end
   
   resources :conversations, only: [:index, :show, :destroy, :new] do
     member do
@@ -47,7 +51,7 @@ Jhad::Application.routes.draw do
   resources :hashtags
   resources :screennames
   resources :relationships, only: [:create, :destroy]
-  resources :articles
+  
 
   match '/feed',    to: 'static_pages#home',    via: 'get'
   match '/blog',    to: 'articles#index',    via: 'get'

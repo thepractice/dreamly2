@@ -28,16 +28,22 @@
 			</div>
 
 			<div class="dream-info-small">
-				<span class="small-font">submitted <%= time_ago_in_words(@dream.created_at) %> ago</span>		
+				<span class="small-font">submitted <%= time_ago_in_words(comment.created_at) %> ago</span>		
 			</div>			
 
 			<span class="comment-body"><%= simple_format(comment.body) %></span>
 			<% if current_user == comment.user %>
-				<%= link_to(edit_dream_comment_path(comment.dream.id, comment.id), { :class => 'edit-link' }) do %>
-					edit
+				<% if comment.commentable_type == "Dream" %>
+					<%= link_to(edit_dream_comment_path(comment.commentable.id, comment.id), { :class => 'edit-link' }) do %>
+						edit
+					<% end %>
+				<% elsif comment.commentable_type == "Article" %>
+					<%= link_to(edit_article_comment_path(comment.commentable.id, comment.id), { :class => 'edit-link' }) do %>
+						edit
+					<% end %>				
 				<% end %>
 
-				<%= link_to([comment.dream, comment], method: :delete, data: { confirm: "Are you sure?" }, class: 'edit-link') do %>
+				<%= link_to([comment.commentable, comment], method: :delete, data: { confirm: "Are you sure?" }, class: 'edit-link') do %>
 					delete
 				<% end %>
 

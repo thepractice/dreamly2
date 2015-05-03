@@ -1,47 +1,69 @@
-	<% provide(:title, @article.title) %>
+<% provide(:title, @article.title) %>
 
-	<div class="row">
-
-		<div class="col-md-9">
-			<div class="article">
-
-				<div>
-			
-						<h1>				
-							<%= @article.title %>
-						</h1>
-			
-					
-					<p class="article-byline">
-						<%= link_to @article do %>
-							<%= icon('clock-o') %>
-							<%= @article.created_at.strftime("%^B") %>
-							<%= @article.created_at.strftime("%d") %>,
-							<%= @article.created_at.strftime("%Y") %>
-						<% end %>
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						
-						<%= link_to @article.user do %>
-							<%= icon('user') %>
-							<%= @article.user.name %>
-						<% end %>
-						
-					</span>			
-				</div>	
-				<%= simple_format(@article.body) %>	
-
-
-					<% if current_user && current_user.admin? %>
-						<%= link_to(edit_article_path(@article.id), class: 'edit-link') do %>
-							edit
-						<% end %>
-
-						<%= link_to(@article, method: :delete, data: { confirm: "Are you sure?" }, class: 'edit-link') do %>
-							delete
-						<% end %>
-
-					<% end %> 
+<div class="row">
+	<div class="col-md-9">
+		<div class="article">
+			<h1><%= @article.title %></h1>
 	
-</div>
-</div>
+			<p class="article-byline">
+				<%= link_to @article do %>
+					<%= icon('clock-o') %>
+					<%= @article.created_at.strftime("%^B") %>
+					<%= @article.created_at.strftime("%d") %>,
+					<%= @article.created_at.strftime("%Y") %>
+				<% end %>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				
+				
+				<%= icon('user') %>
+				<%= @article.author %>
+				
+			</p>			
+			
+			<%= simple_format(@article.body) %>	
+			<% if current_user && current_user.admin? %>
+				<%= link_to(edit_article_path(@article.id), class: 'edit-link') do %>
+					edit
+				<% end %>
+
+				<%= link_to(@article, method: :delete, data: { confirm: "Are you sure?" }, class: 'edit-link') do %>
+					delete
+				<% end %>
+
+			<% end %>
+
+			<div id="comment-listing">
+				<%= pluralize(comment_count(@article), 'comment') %>
+			</div>			
+
+			<div class="comment-box">
+				<% if user_signed_in? %>
+				<!-- the simple_form_for call uses an array which builds a nested route, e.g. /dreams/1/comments' -->
+					<%= simple_form_for([@article, @article.comments.build], html: { "data-type" => :json, class: "comment-form" }) do |f| %>	
+
+	          <div class="comment_error_explanation_wrapper alert alert-danger" style="display:none;">
+	            <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	            <div class="comment_error_explanation"></div>
+	          </div>
+
+						<%= f.input :body, label: 'hey', placeholder: 'add your comment...' %>
+            
+    
+
+
+						<button type="submit" class="btn btn-primary btn-square">
+				      post
+				    </button>
+					<% end %>
+					
+				<% end %>
+			</div>
+			<div>
+				<%= render partial: "comments/comment", collection: @article.comments.regular %>
+			</div>
+
+
+		</div>
+
+	</div>
 </div>

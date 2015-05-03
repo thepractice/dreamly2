@@ -8,7 +8,7 @@ class Dream < ActiveRecord::Base
 #	html = auto_link("link @user, please #request")
 
 	belongs_to :user, counter_cache: :dream_count
-	has_many :comments, dependent: :destroy
+	has_many :comments, as: :commentable, dependent: :destroy
 	has_many :notifications, dependent: :destroy
 	has_many :dreamtags
 	has_many :hashtags, through: :dreamtags
@@ -189,6 +189,11 @@ class Dream < ActiveRecord::Base
 
 		def gather_words
 
+			if self.title.blank?										# Sets title if no title.
+				self.title = sanitize(self.body, tags: []).truncate(75, separator: ' ', omission: '') + " ..."
+				self.update_columns(title: self.title)
+			end
+
 			self.public_body = self.body.gsub(/([@])\w+/, "@censored")
 			self.public_title = self.title.gsub(/([@])\w+/, "@censored")
 			self.update_columns(public_body: self.public_body, public_title: self.public_title)
@@ -236,10 +241,7 @@ class Dream < ActiveRecord::Base
 			#words = body.split(/[ .#;:!?']/)
 
 
-			if self.title.blank?										# Sets title if no title.
-				self.title = sanitize(self.body, tags: []).truncate(75, separator: ' ', omission: '') + " ..."
-				self.update_columns(title: self.title)
-			end
+
 
 			freqs = Hash.new										# Instantiate new hash to hold unique word frequencies
 			words.each do |word|
