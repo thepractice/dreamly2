@@ -1,10 +1,23 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container-fluid">
+		<div class="navbar-header">
+
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>			
+
+    	<%= link_to(root_path, class: "cloud_header2") do %>
+				<%= image_tag("dream_journal_logo4.png") %>
+			<% end %>
+
+		</div>
+
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       
-      	<%= link_to(root_path, class: "cloud_header2") do %>
-					<%= image_tag("dream_journal_logo4.png") %>
-				<% end %>
+
 
    
 
@@ -46,6 +59,9 @@
 						Sign in
 					<% end %>				
 				<% end %>
+
+
+				
 
 				<div class="btn-group">
 					<button type="button" class="btn btn-default navbar-btn btn-lg btn-alt dropdown-toggle btn-bars" data-toggle="dropdown">

@@ -21,11 +21,30 @@ $offBlack: #2E2E2E;
     .affix {
         position: fixed;
     }
+    #profile-left-sidebar {
+      position: fixed;
+      width: inherit;
+      margin-right: -30px;
+      overflow-y: scroll;
+    }
+    .sign-in-modal {
+      width: 502px !important;
+    } 
 }
 
 @media (max-width: 768px) {
     .affix {
         position: static;
+    }
+    #profile-left-sidebar {
+      position: static;
+
+    }
+    .sign-in-modal {
+      width: 90% !important;
+    }
+    .modal-dream {
+      width: 94%! important;
     }
 }
 
@@ -123,7 +142,7 @@ body{
 .navbar-jhad {
   display: block;
   margin: 0 auto;
-  width: 540px;
+  width: 541px;
   float: none;
   li {
     height: 46px;
@@ -156,11 +175,12 @@ body{
 }
 
 .navbar-jhad-visitor {
-  width: 487px;
+  width: 488px;
+
 }
 
 .navbar-nav {
-  height: 46px;
+/*  height: 46px; */
 }
 
 .navbar-default {
@@ -417,9 +437,9 @@ body{
 
 #profile-left-sidebar {
 /*  width: 263px; */
-  position: fixed;
-  width: inherit;
-  overflow-y: scroll;
+/*  position: fixed; */
+/*  width: inherit; */
+/*  overflow-y: scroll; */
   overflow-x: hidden;
   height: -moz-calc(100% - 60px);
   height: -webkit-calc(100% - 60px);
@@ -2074,9 +2094,7 @@ a:hover {
   margin: auto;
 }
 
-.sign-in-modal {
-  width: 502px;
-}
+
 
 .sign-up-modal {
   width: 600px;
@@ -2120,4 +2138,14 @@ a:hover {
 
 article-continue-link a {
   color: #428bca;
+}
+
+/* Mobile */
+
+.navbar-collapse.in {
+  overflow-y: visible;
+}
+
+.navbar-collapse {
+  background: white;
 }
