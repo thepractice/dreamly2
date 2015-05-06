@@ -477,7 +477,7 @@ body{
   top: -26px;
   height: 76px;
   width: 76px;
-  background: $lightRed;
+  background: #000066;
   color: white;
   font-size: 60px;
   line-height: 40px;
@@ -490,6 +490,10 @@ body{
     position: relative;
     top: 12px;
   }
+}
+
+.user-index-avatar-default2 {
+  background: $lightRed;
 }
 
 .dashboard-avatar-default-thumb {
@@ -1230,7 +1234,7 @@ body {
   height: 48px;
   width: 48px;
   display: inline-block;
-  background: $lightRed;
+  background: #000066;
   font-size: 38px;
   line-height: 38px;
   text-align: center;

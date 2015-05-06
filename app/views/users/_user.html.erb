@@ -47,7 +47,7 @@
 					<% if current_user == user %>
 						<%= link_to user do %>
 							<% if user.avatar_file_name.nil? %>
-								<div class="dashboard-avatar-default">
+								<div class="dashboard-avatar-default user-index-avatar-default2">
 									<p><%= user.username.first.upcase %></p>
 								</div>
 							<% else %>
@@ -59,7 +59,7 @@
 					<% else %>
 						<%= link_to user do %>
 							<% if user.avatar_file_name.nil? %>
-								<div class="dashboard-avatar-default">
+								<div class="dashboard-avatar-default user-index-avatar-default2">
 									<p><%= user.username.first.upcase %></p>
 								</div>
 							<% else %>
