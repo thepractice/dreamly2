@@ -102,7 +102,7 @@ module ApplicationHelper
 		else
 			z = 1
 		end
-		@rating = Math.log10(z) + y * t / 45000
+		@rating = Math.log10(z) + y * t / 450000
 		return @rating
 	end		
 

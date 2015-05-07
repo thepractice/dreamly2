@@ -30,6 +30,9 @@ $offBlack: #2E2E2E;
     .sign-in-modal {
       width: 502px !important;
     } 
+    .sign-up-modal {
+      width: 600px !important;
+    }    
 }
 
 @media (max-width: 768px) {
@@ -43,6 +46,9 @@ $offBlack: #2E2E2E;
     .sign-in-modal {
       width: 90% !important;
     }
+    .sign-up-modal {
+      width: 90% !important;
+    }        
     .modal-dream {
       width: 94%! important;
     }
@@ -2100,9 +2106,7 @@ a:hover {
 
 
 
-.sign-up-modal {
-  width: 600px;
-}
+
 
 #user-list {
   margin: auto;
