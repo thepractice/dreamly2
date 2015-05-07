@@ -179,7 +179,7 @@ class User < ActiveRecord::Base
 
   def send_welcome_message
 
-    User.find_by(username: 'Ed').send_message(self, "Welcome to the Collective Unconscious. Welcome to Dreamly.<br/><br/>
+    User.find_by(username: 'dreamly').send_message(self, "Welcome to the Collective Unconscious. Welcome to Dreamly.<br/><br/>
 
 We invite you to participate in our social experiment. We invite you to find yourself through others.<br/><br/>
 
