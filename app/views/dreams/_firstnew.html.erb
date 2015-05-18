@@ -47,7 +47,16 @@
 
 
           <%= f.input :title, input_html: { id: "dream-title-textarea" } %>
-          <%= f.input :body, label: 'Dream', placeholder: 'Use #hashtags to automatically categorize your dreams. Put the "@" symbol before any @name or @word to make it always private.', required: false, input_html: { id: "dream-body-textarea" } %>
+          <%= f.input :body, label: 'Dream', placeholder: 'Use #hashtags to automatically categorize your dreams. Put the "@" symbol before any @name or @word to make it always private.', required: false, input_html: { id: "dream-body-textarea4" } %>
+
+     <script>
+      $(function() {
+          $('#dream-body-textarea4').editable({inlineMode: false})
+      });
+
+
+    </script>  
+
 
   </div>
   <div class="panel-footer">
