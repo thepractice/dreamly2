@@ -88,7 +88,7 @@ module ApplicationHelper
 	end
 
 	def update_rating(dream)
-		t = dream.created_at - 1001.days.ago
+		t = dream.created_at - Date.new(2012, 8, 20).to_time
 		x = dream.get_upvotes.size - dream.get_downvotes.size
 		if x > 0
 			y = 1
