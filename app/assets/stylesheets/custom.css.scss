@@ -1062,7 +1062,7 @@ label {
 /* Modals */
 
 .modal-dialog {
-  width: 712px;
+  width: 716px;
 }
 
 .modal-footer {
@@ -1116,7 +1116,7 @@ label {
 /* Modals */
 
 .modal-dialog {
-  width: 712px;
+  width: 716px;
 }
 
 .modal-footer {
@@ -1361,6 +1361,7 @@ body {
   padding: 5px 10px;
   color: rgb(34, 34, 34);
   max-width: 60em;
+  overflow: hidden;
 }
 
 .comment-body {
@@ -2118,14 +2119,14 @@ a:hover {
 }
 
 .article {
-  margin-left: 20px;
+  margin-left: 30px;
 }
 
 .article-container {
-  margin-left: 20px;
+  margin-left: 30px;
   color: rgb(75, 75, 75);
   a {
-    color: rgb(75, 75, 75);
+    color: #428bca;
   }
   a:hover {
     color: #428bca;
@@ -2134,6 +2135,16 @@ a:hover {
     color: #428bca;
   }
 
+  hr {
+    clear: both;
+  }
+
+}
+
+.article-title {
+  color: #428bca;
+  background: #FFFFB8;
+  padding: 0 5px 0 5px;
 }
 
 .article-byline {
@@ -2156,4 +2167,69 @@ article-continue-link a {
 
 .navbar-collapse {
   background: white;
+}
+
+#faq-body {
+  padding-left: 30px;
+  position: relative;
+}
+
+.content-header {
+  color: #428bca;
+  font-size: 66px;
+  font-weight: 700;
+  margin-bottom: -10px
+}
+
+.faq-scrollspy {
+  border-bottom: none;
+}
+
+.faq-scrollspy li a {
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-left: 3px solid transparent;
+  cursor: pointer !important;
+}
+
+.faq-scrollspy > li.active > a, .faq-scrollspy > li.active > a:hover, .faq-scrollspy > li.active > a:focus, .faq-scrollspy > li > a:hover {
+color: #555555;
+border-radius: 0;
+background-color: white;
+border-top: none;
+border-right: none;
+border-bottom: none;
+border-left: 3px solid #3071a9;
+cursor: default;
+}
+
+.share-box.sharer-0 {
+  height: 30px !important;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  clear: both;
+  label {
+    background: #6E9CC3 !important;
+    color: white !important;
+  }
+}
+
+h2 {
+  color: #767676;
+}
+
+h1 {
+  color: #767676;
+  font-size: 44px;
+}
+
+.froala-editor {
+  z-index: 2000;
+}
+
+.froala-wrapper.f-basic {
+  min-height: 65px;
 }

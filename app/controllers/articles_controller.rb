@@ -68,7 +68,7 @@ class ArticlesController < ApplicationController
 	private
 
 		def article_params
-			params.require(:article).permit(:title, :body, :published, :author)
+			params.require(:article).permit(:title, :body, :published, :author, :publish_date)
 		end
 
 		def admin_user

@@ -1,5 +1,22 @@
 jQuery(document).on "ready page:change", ->
 
+	new Share('.share-box')
+
+	$('#dream-body-textarea').editable inlineMode:false
+
+	$('#modal-window').on('shown.bs.modal', () ->
+		$(document).off('focusin.modal')
+	)
+	$('#modal-window-edit-dream').on('shown.bs.modal', () ->
+		$(document).off('focusin.modal')
+	)
+
+	$('faq-scrollspy').affix
+	$('.faq-scrollspy li a').click (event) ->
+		event.preventDefault()
+		$($(this).attr('href'))[0].scrollIntoView()
+		scrollBy 0, -50
+
 	# Load more JS
 
 	$('#load-more').unbind('click').on 'click', ->

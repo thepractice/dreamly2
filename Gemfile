@@ -34,6 +34,8 @@ gem 'filterrific'
 gem 'select2-rails'
 gem 'mailboxer'
 gem 'aws-sdk', '< 2.0'
+gem "wysiwyg-rails"
+gem 'nokogiri'
 
 
 group :development do

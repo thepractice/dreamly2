@@ -5,22 +5,26 @@
 
 				<div>
 			
-						<h1>				
-							<%= link_to article.title, article %>
-							<% if current_user && current_user.admin? %>
-								<% unless article.published %>
-									(not published)
+						<h1>
+							<span class="article-title">				
+								<%= link_to article do %>
+									<%= article.title %>
+									<% if current_user && current_user.admin? %>
+										<% unless article.published %>
+											(not published)
+										<% end %>
+									<% end %>
 								<% end %>
-							<% end %>
+							</span>
 						</h1>
 			
 					
 					<p class="article-byline">
 						<%= link_to article do %>
 							<%= icon('clock-o') %>
-							<%= article.created_at.strftime("%^B") %>
-							<%= article.created_at.strftime("%d") %>,
-							<%= article.created_at.strftime("%Y") %>
+							<%= article.publish_date.strftime("%^B") %>
+							<%= article.publish_date.strftime("%d") %>,
+							<%= article.publish_date.strftime("%Y") %>
 						
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							
@@ -41,8 +45,8 @@
 			<%= simple_format(truncate(article.body, length: 500, escape: false)) %>
 			
 			<%= link_to "Continue reading...", article, class: "article-continue-link" %>
-			<hr>
+		
 
 	</div>
 
-
+	<hr>

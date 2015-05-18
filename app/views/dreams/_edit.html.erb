@@ -77,7 +77,15 @@
 
 
           <%= f.input :title, placeholder: '(Optional)', input_html: { id: "dream-title-textarea" } %>
-          <%= f.input :body, label: 'Dream', placeholder: 'Tell your story.', required: false, input_html: { id: "dream-body-textarea" } %>
+          <%= f.input :body, label: 'Dream', placeholder: 'Tell your story.', required: false, input_html: { id: "dream-body-textarea3" } %>
+
+     <script>
+      $(function() {
+          $('#dream-body-textarea3').editable({inlineMode: false})
+      });
+
+
+    </script>          
 
         </div>
         <div class="modal-footer">

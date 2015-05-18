@@ -195,7 +195,7 @@
 
 
 					<% if @dream.user == current_user %>
-						<span class="body"><%= simple_format(auto_link(@dream.body, hashtag_url_base: hashtags_path+"/", username_url_base: screennames_path+"/", username_include_symbol: true)) %></span>
+						<span class="body"><%= simple_format(auto_link_usernames_or_lists(auto_link_hashtags(@dream.body, hashtag_url_base: hashtags_path+"/"), username_url_base: screennames_path+"/", username_include_symbol: true)) %></span>
 					<% else %>
 						<span class="body"><%= simple_format(auto_link_hashtags(@dream.body.gsub(/([@])\w+/, "@<span class='censored'>censored</span>").html_safe, hashtag_url_base: hashtags_path+"/")) %></span>
 					<% end %>
@@ -209,6 +209,10 @@
 						<% end %>
 
 					<% end %> 
+
+					<div class="share-box">
+					</div>	
+
 				</div>
 			</div>
 			<div id="comment-listing">

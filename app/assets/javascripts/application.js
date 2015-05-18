@@ -16,6 +16,7 @@
 //= require_tree .
 //= require bootstrap/dropdown
 //= require bootstrap/affix
+//= require bootstrap/scrollspy
 //= require bootstrap/modal
 //= require bootstrap/alert
 //= require bootstrap/button
@@ -25,10 +26,12 @@
 //= require bootstrap-sprockets
 //= require bootstrap-slider
 //= require d3.min
+//= require share.min
 //= require d3.layout.cloud.js
 //= require waitforimages.js
 //= require turbolinks
 //= require filterrific/filterrific-jquery
 //= require select2
+//= require froala_editor.min.js
 
 Turbolinks.enableProgressBar();

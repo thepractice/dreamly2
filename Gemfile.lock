@@ -87,6 +87,8 @@ GEM
     ffi (1.9.3)
     filterrific (2.0.3)
       rails (>= 3.1.0)
+    font-awesome-rails (4.3.0.0)
+      railties (>= 3.2, < 5.0)
     font-awesome-sass (4.1.0)
       sass (~> 3.2)
     foreigner (1.7.2)
@@ -251,6 +253,9 @@ GEM
     will_paginate (3.0.5)
     will_paginate-bootstrap (1.0.0)
       will_paginate (>= 3.0.3)
+    wysiwyg-rails (1.2.7)
+      font-awesome-rails (>= 4.2.0.0)
+      railties (>= 3.2, < 5.0)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -276,6 +281,7 @@ DEPENDENCIES
   jquery-rails (= 3.1.0)
   jquery-turbolinks
   mailboxer
+  nokogiri
   non-stupid-digest-assets
   omniauth-facebook
   omniauth-google-oauth2
@@ -299,3 +305,4 @@ DEPENDENCIES
   uglifier (= 2.5.0)
   will_paginate
   will_paginate-bootstrap
+  wysiwyg-rails

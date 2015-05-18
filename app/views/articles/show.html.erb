@@ -3,14 +3,14 @@
 <div class="row">
 	<div class="col-md-9">
 		<div class="article">
-			<h1><%= @article.title %></h1>
+			<h1><span class="article-title"><%= @article.title %><span></h1>
 	
 			<p class="article-byline">
 				<%= link_to @article do %>
 					<%= icon('clock-o') %>
-					<%= @article.created_at.strftime("%^B") %>
-					<%= @article.created_at.strftime("%d") %>,
-					<%= @article.created_at.strftime("%Y") %>
+					<%= @article.publish_date.strftime("%^B") %>
+					<%= @article.publish_date.strftime("%d") %>,
+					<%= @article.publish_date.strftime("%Y") %>
 				
 					&nbsp;&nbsp;&nbsp;&nbsp;
 				
@@ -24,16 +24,24 @@
 			</p>			
 			
 			<%= simple_format(@article.body) %>	
-			<% if current_user && current_user.admin? %>
-				<%= link_to(edit_article_path(@article.id), class: 'edit-link') do %>
-					edit
-				<% end %>
 
-				<%= link_to(@article, method: :delete, data: { confirm: "Are you sure?" }, class: 'edit-link') do %>
-					delete
-				<% end %>
 
-			<% end %>
+			<div>
+
+				<% if current_user && current_user.admin? %>
+					<%= link_to(edit_article_path(@article.id), class: 'edit-link') do %>
+						edit
+					<% end %>
+
+					<%= link_to(@article, method: :delete, data: { confirm: "Are you sure?" }, class: 'edit-link') do %>
+						delete
+					<% end %>
+
+				<% end %>
+			</div>
+
+			<div class="share-box">
+			</div>			
 
 			<div id="comment-listing">
 				<%= pluralize(comment_count(@article), 'comment') %>

@@ -25,8 +25,17 @@
 
 
           <%= f.input :author, input_html: { id: "dream-title-textarea" } %>
+          <%= f.input :publish_date %>
           <%= f.input :title, input_html: { id: "dream-title-textarea" } %>
-          <%= f.input :body, placeholder: 'Mark up using html tags.', required: false, input_html: { id: "dream-body-textarea" } %>
+          <%= f.input :body, placeholder: 'Mark up using html tags.', required: false, input_html: { id: "dream-body-textarea2" } %>
+
+    <script>
+      $(function() {
+          $('#dream-body-textarea2').editable({inlineMode: false})
+      });
+
+
+  </script>          
 
   </div>
   <div class="panel-footer">
