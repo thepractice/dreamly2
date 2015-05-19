@@ -56,6 +56,7 @@ Jhad::Application.routes.draw do
   match '/feed',    to: 'static_pages#home',    via: 'get'
   match '/blog',    to: 'articles#index',    via: 'get'
   match '/faq',    to: 'static_pages#faq',    via: 'get'
+  match '/resources',    to: 'static_pages#resources',    via: 'get'
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'

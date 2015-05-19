@@ -25,9 +25,9 @@ module ApplicationHelper
 	# Returns the impression param in text
 	def impression_status
 		if params[:impression] == '2'
-			'big'
+			'substantial'
 		elsif params[:impression] == '3'
-			'huge'
+			'epic'
 		else
 			''
 		end

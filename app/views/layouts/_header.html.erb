@@ -93,18 +93,21 @@
       	
 	        	<%= nav_link "Me", "user", current_user %>
 	        	<%= nav_link "Feed", "flash", feed_path %>
-	        	<%= nav_link "Hashtags", "slack", hashtags_path %>
 	        	<%= nav_link "Blog", "book", articles_path %>
+	        	<%= nav_link "Hashtags", "slack", hashtags_path %>
 	        	<%= nav_link "FAQ", "question-circle", faq_path %>
+	        	<%= nav_link "Resources", "university", resources_path %>
 	        	<%= nav_link "Community", "comments", "http://community.dreamly.io/session/sso?return_path=%2F" %>
         	</ul> 
        <% else %>
      			<ul class="nav navbar-nav navbar-jhad navbar-jhad-visitor">
+     				<%= nav_link "About", "rocket", about_path %>
+     				<%= nav_link "Blog", "book", articles_path %>
 	        	<%= nav_link "Hashtags", "slack", hashtags_path %>
-	        	<%= nav_link "Blog", "book", articles_path %>
 	        	<%= nav_link "FAQ", "question-circle", faq_path %>
-	        	<%= nav_link "About", "rocket", about_path %>
+	        	<%= nav_link "Resources", "university", resources_path %>
 	        	<%= nav_link "Community", "comments", "http://community.dreamly.io" %>
+	        	
 	        </ul>
       <% end %>
   <!--      <%= nav_link "All dreams", "rocket", dreams_path %>	-->

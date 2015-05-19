@@ -183,6 +183,9 @@ class StaticPagesController < ApplicationController
   def blog
   end
 
+  def resources
+  end
+
   def faq
   end
 

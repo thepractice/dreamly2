@@ -4,12 +4,17 @@ jQuery(document).on "ready page:change", ->
 
 	$('#dream-body-textarea').editable inlineMode:false
 
+	# to focus the wysiwig text fields within modal
 	$('#modal-window').on('shown.bs.modal', () ->
 		$(document).off('focusin.modal')
 	)
 	$('#modal-window-edit-dream').on('shown.bs.modal', () ->
 		$(document).off('focusin.modal')
 	)
+
+	$('body').scrollspy
+		target: '.scrollspy'
+		offset: 55
 
 	$('faq-scrollspy').affix
 	$('.faq-scrollspy li a').click (event) ->
@@ -211,9 +216,9 @@ jQuery(document).on "ready page:change", ->
 	$("#impression").on "slide", (slideEvt) ->
 		label = "Normal"
 		if slideEvt.value == 2
-			label = "Big"
+			label = "Substantial"
 		if slideEvt.value == 3
-			label = "Huge"
+			label = "Epic"
 		$("#impression-slider-value").text label
 
 
@@ -221,16 +226,16 @@ jQuery(document).on "ready page:change", ->
 	$("#impression2").on "slide", (slideEvt) ->
 		label = "Normal"
 		if slideEvt.value == 2
-			label = "Big"
+			label = "Substantial"
 		if slideEvt.value == 3
-			label = "Huge"
+			label = "Epic"
 		$("#impression-slider-value2").text label
 
 	$("#impression3").slider()
 	$("#impression3").on "slide", (slideEvt) ->
 		label = "Normal"
 		if slideEvt.value == 2
-			label = "Big"
+			label = "Substantial"
 		if slideEvt.value == 3
-			label = "Huge"
+			label = "Epic"
 		$("#impression-slider-value3").text label

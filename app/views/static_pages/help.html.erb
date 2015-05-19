@@ -1,11 +1,96 @@
 <% provide(:title, 'Help') %>
-<h1>Help</h1>
-<p>
-	Guided instructions coming soon. In the meantime, drop by the
-	<% if user_signed_in? %>
-		<a href="http://community.dreamly.io/session/sso?return_path=%2F">community forums</a>
-	<% else %>
-		<a href="http://community.dreamly.io/">community forums</a>
-	<% end %>
 
-	to ask for help.</p>
+<body data-spy="scroll" data-offset="55" data-target=".scrollspy">
+<div class="row">
+	<div class="col-md-9">
+		<div class="faq-body">
+
+			<div class="content-header">Features | Help</div>
+			<p>Drop by the
+				<% if user_signed_in? %>
+					<a href="http://community.dreamly.io/session/sso?return_path=%2F">community forums</a>
+				<% else %>
+					<a href="http://community.dreamly.io/">community forums</a>
+				<% end %>
+				to ask for help.
+			</p>
+			<div id="word-cloud">
+				<h2>Word cloud</h2>
+				<p>The word cloud is a map of the most frequently appearing words in a collection of dreams. The cloud maps the dreams that are currently displayed on the page. Words that appear together in the same dreams are linked together with gray lines. All of the words in the cloud are clickable links that take you to a page showing only dreams that contain the given word.</p>
+				<p>The word cloud is based on the psychological principle of <a href='http://en.wikipedia.org/wiki/Free_association_%28psychology%29'>free association</a>. The technique, employed by psychologists and creative thinkers alive, is to express anything and everything that pops into your head, no matter how ridiculous or inappropriate it may seem. While such a random <a href='http://en.wikipedia.org/wiki/Stream_of_consciousness_%28psychology%29'>stream of consciousness</a> may appear meaningless, it actually often harbors deep unconscious insights and connections. The German poet Schiller wrote a letter to Freud, explaining that "where there is a creative mind, Reason - so it seems to me - relaxes its watch upon the gates, and the ideas rush in pell-mell". Dreams are the perfect material for free association because their narrative is already partly outside of conscious control. Mapping the word associations in your dreams can reveal connections between ideas, hidden pearls of creative wisdom, and flashes of insight.</p>
+				<p>The technology behind the beautiful physics in the word cloud comes from the opensource <a href='http://d3js.org/'>D3 JavaScript library</a>.</p>	
+			</div>
+			<div id="emoticons">
+				<h2>Emoticons</h2>
+				<p>Dreamly uses a library of keywords to automatically tag dreams according to seven fundamental emotions (Happy, Sad, Afraid, Desiring, Angry, and Guilty). For example, if the word “crying” appears in your dream, it is tagged as a “Sad” dream. Emotions are displayed as yellow emoticons next to the title of a dream. (Did you know that scientists identify emotions based on facial expression? So emoticons are not just cutesy and fun -- they’re a scientific way to organize emotions!)</p>
+				<p>In the sidebar, the emotions of the dreams on the page are shown as emoticons of variable size below the word cloud. So, if there are many “happy” dreams and a few “sad” dreams, a big smiley face will appear next to a smaller sad face. These emoticons are clickable and will filter the dreams in view by emotion. </p>
+			</div>
+			<div id="hashtags">
+				<h2>#Hashtags</h2>
+				<p>Just like twitter, you can put a #hashtag before any word in a dream to categorize it. Hashtags of the dreams on the page display in the sidebar below the emoticons. You can see all the trending hashtags at the<a href='http://dreamly.io/hashtags'> hashtag page</a>.</p>
+				<p>This is the main method for categorizing and sorting your dreams. For example, dreams of flight you could tag as <a href='http://dreamly.io/hashtags/beauty'>#flying</a> and dreams of indescribable allure and glamor could be tagged under <a href='http://dreamly.io/hashtags/beauty'>#beauty</a>.</p>
+			</div>			
+			<div id="names">
+				<h2>@Names</h2>
+
+				<p>You can put the @ character before any word in your dream to 1) blur the word from public view and 2) track the word across multiple dreams. This is intended mainly to use to anonymyze and track the names of people, places, and things in your dreams. For example, in your dream you would write, “I saw @Ashley across the street from @thewhitehouse.” If the dream is public, other people will see this as “I saw @censored across the street from @censored.” Also, now @Ashley and @thewhitehouse are clickable objects that keep track of your mentions of them across your dreams. These @names appear in the sidebar of your user profile, corresponding to the dreams on the page.</p>
+			</div>
+			<div id="privacy">
+				<h2>Privacy</h2>
+				<p>Dreams can reveal your deepest secrets, so we take privacy very seriously at Dreamly. You can choose to make a dream public or private at any time. Information from private dreams will never be shown to anyone except you. You can also use the @ character to censor any word within a public dream.</p>
+			</div>
+			<div id="impact">
+				<h2>Impact</h2>
+				<p>Some dreams are trivial, but others are epic sagas revealing the depth and breadth of your soul with a cinematic storyline and vivid visuals. Dreamly lets you differentiate between the two by choosing an “Impact” level setting of “Normal”, “Big”, or “Huge”. Big dreams appear with titles highlighted in yellow. Huge dreams are highlighted in pink.</p>
+			</div>
+			<div id="voting">
+			<h2>Voting</h2>
+				<p>Users can upvote or downvote any public dream. The highest voted dreams will display at the top of the page.  For this reason, we encourage you to vote often so the most imaginative and inspiring dreams naturally rise to the top.</p>
+			</div>
+			<div id="comments">
+				<h2>Comments</h2>
+				<p>Users can comment on any public dream. The most valuable and comments will be useful dream interpretations. Dreamly will implement a reward system soon where users are rewarded for valuable and insightful interpretations.</p>
+			</div>
+			<div id="filter-sort">
+				<h2>Filter and sort</h2>
+				<p>You can sort dreams by “Trending”, “New”, or “Dreamed”. “Trending” uses an algorithm based on the dream’s voting score and time of submission, so that newer, top-voted dreams are displayed first. “New” sorts based on time of submission. “Dreamed” sorts based on the date of the dream.</p>
+				<p>You can filter dreams by search term, emotion, and impact level. Entering letters in the search box will automatically start to filter dreams to include only those which include words beginning with the search term. To filter by emotion, choose an emotion from the dropdown menu and the page will update to only show dreams tagged with that emotion. To filter by impact, choose either “Normal”, Substantial, or Epic from the dropdown menu. “Normal” will display all dreams. Substantial will filter to only display substantial and epic dreams. "Epic" will filter to only display epic dreams.</p>	
+			</div>
+			<div id="follow-other-dreamers">
+				<h2>Follow other dreamers</h2>
+				<p>Just like twitter, you can follow other users and they can follow you. To follow someone, click the “Follow” button beneath their name. Your <a href='http://dreamly.io/feed'>feed page</a> displays the dreams of people you’re following, as well as your own dreams.</p>
+			</div>			
+			<div id="notifications">
+				<h2>Notifications</h2>
+				<p>You are notified when someone comments on your dream or a dream you have commented on, when someone follows you, or when someone you are following posts a dream. Notifications appear with the number of new notifications in the navbar next to the bell icon. Clear your new notifications by clicking on the icon and viewing your <a href='http://dreamly.io/notifications'>notifications page</a>.</p>
+			</div>	
+			<div id="private-messages">
+				<h2>Private messages</h2>
+				<p>You can send a private message to any user by clicking the envelope button beneath their name. All of your conversations are shown in your <a href='http://dreamly.io/conversations'>inbox</a>. We encourage users to engage in social therapy via this messaging system. Dreams can act simultaneously as both therapist and patient, sharing their emotions and feelings, and drawing upon each others dreams for analysis.</p>
+			</div>							
+
+			<div class="share-box">
+			</div>	
+
+		</div>
+	</div>
+	<div class="col-md-3 scrollspy">
+	
+		<ul class="nav nav-stacked faq-scrollspy" data-spy="affix">
+			<li class="active"><a href="#word-cloud">Word cloud</a></li>
+			<li><a href="#emoticons">Emoticons</a></li>
+			<li><a href="#hashtags">#Hashtags</a></li>
+			<li><a href="#names">@Names</a></li>
+			<li><a href="#privacy">Privacy</a></li>
+			<li><a href="#impact">Impact</a></li>
+			<li><a href="#voting">Voting</a></li>
+			<li><a href="#comments">Comments</a></li>
+			<li><a href="#filter-sort">Filter and sort</a></li>
+			<li><a href="#follow-other-dreamers">Follow other dreamers</a></li>
+			<li><a href="#notifications">Notifications</a></li>
+			<li><a href="#private-messages">Private messages</a></li>
+		</ul>
+
+	</div>
+</div>
+<body>

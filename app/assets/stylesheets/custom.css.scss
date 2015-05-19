@@ -148,7 +148,7 @@ body{
 .navbar-jhad {
   display: block;
   margin: 0 auto;
-  width: 541px;
+  width: 662px;
   float: none;
   li {
     height: 46px;
@@ -181,7 +181,7 @@ body{
 }
 
 .navbar-jhad-visitor {
-  width: 488px;
+  width: 609px;
 
 }
 
@@ -346,7 +346,7 @@ body{
 #home-top-panel {
   background: $lightYellow;
   margin-top: -14px;
-  height: 259px;
+  height: 237px;
 }
 
 #home-header {
@@ -360,11 +360,12 @@ body{
   padding-top: 0;
   color: $darkGray;
   font-size: 28px;
+  margin-top: -20px;
 }
 
 #home-byline2 {
   padding-top: 0;
-  color: $lightGray;
+  color: #428bca;
   font-size: 21px;
   padding-bottom: 5px;
   a:hover {
@@ -391,13 +392,15 @@ body{
 
 
 
-#home-panel1 {
+.home-panel1 {
   background: white;
 
   margin-top: 0;
+  margin-left: 100px;
+  margin-right: 100px;
   padding-top: 50px;
   padding-bottom: 50px;
-  font-size: 70px;
+  font-size: 52px;
   text-align: center;
   color: $darkGray2;
 }
@@ -427,15 +430,25 @@ body{
   }
 }
 
-#home-panel3 {
-  background: $lightYellow;
-  height: 200px;
+.home-panel3 {
+  
+  min-height: 200px;
+  overflow: hidden;
+  padding-bottom: 25px;
   p {
     padding-left: 30px;
   }
 }
 
-#home-panel3-inner {
+.home-panel3:nth-child(odd) {
+  background: $lightYellow;
+}
+
+.home-panel3:nth-child(even) {
+  background: $lightRed;
+}
+
+.home-panel3-inner {
   padding-top: 40px;
 }
 
@@ -1992,6 +2005,10 @@ a:hover {
   width: 115px;
 }
 
+#s2id_filterrific_impression{
+  width: 115px;
+}
+
 .select2-results {
   max-height: 225px !important;
 }
@@ -2169,7 +2186,7 @@ article-continue-link a {
   background: white;
 }
 
-#faq-body {
+.faq-body {
   padding-left: 30px;
   position: relative;
 }

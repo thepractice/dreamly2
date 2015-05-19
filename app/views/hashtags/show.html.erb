@@ -52,12 +52,8 @@
 					) %>
 				</div>
 
-				<div id="links-panel" class="white-panel">
-					<%= link_to "Home", root_path %>
-					<%= link_to "About", about_path %>
-					<%= link_to "Contact", contact_path %>
-					<%= image_tag("footer_stripe.jpg", width: '243', height: '10', class: 'rainbow-bar') %>
-				</div>
+					<div class="share-box">
+					</div>	
 			</div>
 		</div>
 	</div>
@@ -113,7 +109,7 @@
 			
 					<%= f.select(
 						:impression,
-						[['Normal', 1], ['Big', 2], ['Huge', 3]],
+						[['Normal', 1], ['Substantial', 2], ['Epic', 3]],
 						{ include_blank: 'Impact' },
 						class: "select-js"
 					) %>
