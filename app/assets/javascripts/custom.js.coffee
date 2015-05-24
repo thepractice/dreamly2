@@ -2,7 +2,6 @@ jQuery(document).on "ready page:change", ->
 
 	new Share('.share-box')
 
-	$('#dream-body-textarea').editable inlineMode:false
 
 	# to focus the wysiwig text fields within modal
 	$('#modal-window').on('shown.bs.modal', () ->

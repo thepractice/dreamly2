@@ -33,5 +33,6 @@
 //= require filterrific/filterrific-jquery
 //= require select2
 //= require froala_editor.min.js
+//= require plugins/file_upload.min.js
 
 Turbolinks.enableProgressBar();
