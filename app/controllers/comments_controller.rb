@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-	before_filter :find_type
+	before_filter :find_type, except: :index
 
 	def create
 		#if params[:commentable_type] == "Dream"
@@ -57,6 +57,10 @@ class CommentsController < ApplicationController
 				format.json { render json: @comment.errors.full_messages, status: :unprocessable_entity }
 			end
 		end
+	end
+
+	def index
+		@comments = Comment.paginate(page: params[:page], per_page: 100).order('created_at DESC')
 	end
 
 
