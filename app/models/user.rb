@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   multisearchable against: [:username, :name, :email, :graph_public]  
 
   #before_save :check_if_new
-  after_create :send_welcome_message
+  #after_create :send_welcome_message
 
   alias :devise_valid_password? :valid_password?
 

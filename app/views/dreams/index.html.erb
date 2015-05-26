@@ -124,6 +124,14 @@
 		</div>
 	</div>
 	<div class="col-md-9">
+
+			<% flash.each do |type, msg| %>
+				<div class="alert <%= bootstrap_class_for(type) %> alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<%= msg %>
+				</div>
+			<% end %>
+		
 		<% unless user_signed_in? %>
 
 			<div id="welcome-flash" class="alert alert-info alert-dismissible fade in" role="alert">
