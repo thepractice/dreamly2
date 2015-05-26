@@ -21,8 +21,9 @@ class CommentsController < ApplicationController
 			end
 		end
 
-		if params[:commentable_type] == "Dream"
+		if @comment.commentable_type == "Dream"
 		# Create notifications
+		flash[:success] = "notifying"
 			@users = [@commentable.user]
 			@commentable.comments.each do |comment|
 				if comment.user != @comment.user

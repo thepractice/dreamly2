@@ -195,6 +195,9 @@ class StaticPagesController < ApplicationController
   def graph
   end
 
+  def tos
+  end
+
   def search
     @searchitems = PgSearch.multisearch(params[:query])
     @dreams = []

@@ -22,12 +22,12 @@
 	<!-- Section 2 -->
 	<section id="home" data-speed="4" data-type="background">
 	    <div class="container">
-				<h2 style="font-size: 36px; text-align: center;">Why should I keep a dream journal?</h2>
+				<h2 style="font-size: 40px; text-align: center; padding-bottom: 10px;">Why should I keep a dream journal?</h2>
 				<div>
 					<%= image_tag("http://upload.wikimedia.org/wikipedia/en/a/a8/The_Dress_%28viral_phenomenon%29.png", id: "dress-image") %>
 				</div>
 				<div style="font-size: 17px;">
-					<p>Both your dreams and your waking life are governed by the rule of perception: <span class="highlight-text">We don't see things as they are - we see them as we are."</span> Consider the case of <a href='http://en.wikipedia.org/wiki/The_dress_%28viral_phenomenon%29'>The Dress</a>. Looking at the exact same pixels on a screen, 57% of people see a black and blue dress, while 30% are convinced it is white and gold. What is happening is your <span class="highlight-text">perception is filling in the gaps</span>. Reality offers a stimulus and you construct an image "based on a true story."</p>
+					<p>Both your dreams and your waking life are governed by the same rule of perception: <span class="highlight-text">We don't see things as they are - we see them as we are."</span> Consider the case of <a href='http://en.wikipedia.org/wiki/The_dress_%28viral_phenomenon%29'>The Dress</a>. Looking at the exact same pixels on a screen, 57% of people see a black and blue dress, while 30% are convinced it is white and gold. What is happening is your <span class="highlight-text">perception is filling in the gaps</span>. Reality offers a stimulus and you construct an image "based on a true story."</p>
 					<p>The only difference between dreams and waking life is that with dreams the gaps are bigger. In both <span class="highlight-text">you are constructing your own reality</span>, like coloring in the spaces in a coloring book.<p>
 					<p>Reflecting on dreams allows you to take a closer look at this creative process. Everything is remembered in the unconscious. Exploring the unconscious brings you face to face with the keynotes behind the novel of your life: <span class="highlight-text">your inner desires, wishes, hopes and fears</span>.<p>
 					<p>Keeping a dream journal benefits you in the following ways...</p>
@@ -75,12 +75,22 @@
 				Map your mind
 			</h2>
 			<p>Dreamly automatically creates a dynamic word graph for each user based on the key ideas and themes that reappear in their dreams. By linking words that appear together in the same dreams, you can discover hidden trends, patterns and associations in your unconscious mind.</p>
+
+					<%= link_to(new_registration_path(resource_name), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-signup'}) do %>
+						<button type="button" id="signup-button" class="btn btn-primary btn-lg">
+							<span>Sign up!</span>
+						</button>
+					<% end %>
+			
 		</div>
 		<div id="graph-full" class="col-md-8">
 		</div>
 
 		<%= render 'shared/graph' %>
 	</section>
+
+
+
 </div>
 
 			<div class="share-box">

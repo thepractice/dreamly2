@@ -394,6 +394,21 @@ body{
 
 }
 
+#welcome-flash {
+background: -webkit-linear-gradient(left, #ff6666, #3071a9) !important;
+background: -webkit-gradient(linear, left top, right top, from(#ff6666), to(#3071a9)) !important;
+background: linear-gradient(to right, #ff6666, #3071a9) !important;
+  color: white;
+  font-size: 20px;
+  a {
+    color: white;
+    text-decoration: underline;
+  }
+  a:hover {
+    font-weight: 700;
+  }
+}
+
 #home2 { 
     background: url(images/home.jpg) 50% 0 fixed; 
     height: auto;  

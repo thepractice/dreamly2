@@ -122,6 +122,14 @@
 		</div>
 	</div>
 	<div class="col-md-9">
+		<% unless user_signed_in? %>
+
+			<div id="welcome-flash" class="alert alert-info alert-dismissible fade in" role="alert">
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: white; opacity: 1;"><span aria-hidden="true">×</span></button>
+	      <strong>Dreamly</strong> is a social dream journal for tapping into your unconscious mind.
+	      <%= link_to("Learn more.", about_path) %>
+	    </div>		
+	  <% end %>
 
 		<div class="dream-tabs">
 			<% if params[:sort] == "trending" %>
