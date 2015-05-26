@@ -41,6 +41,11 @@ $offBlack: #2E2E2E;
     #home-header {
       font-size: 108px !important;
     }
+    #dress-image{
+      float: left;
+      border-radius: 0;
+      padding-right: 20px;
+    }       
 }
 
 @media (max-width: 768px) {
@@ -66,8 +71,17 @@ $offBlack: #2E2E2E;
     }
     #home-header {
       font-size: 60px !important;
-    }    
+      padding-bottom: 7px !important;
+    } 
+    #dress-image{
+
+      border-radius: 0;
+
+    }   
 }
+
+
+
 
 .afraid, .angry, .desiring, .disgusted, .guilty, .happy, .sad, .down_arrow, .down_arrow_red, .up_arrow, .up_arrow_green{
   background: url(sprites.png) no-repeat;
