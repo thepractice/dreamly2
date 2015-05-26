@@ -177,6 +177,9 @@ class StaticPagesController < ApplicationController
   def about
   end
 
+  def about2
+  end
+
   def contact
   end
 

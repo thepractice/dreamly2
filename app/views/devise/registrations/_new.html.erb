@@ -11,6 +11,21 @@
       </div>
       <div class="modal-body">
 
+        <div id="oauth-links">
+          <%= link_to(omniauth_authorize_path(resource_name, :google_oauth2), :class => "btn btn-square btn-login", :id => "google-login") do %>
+            <%= icon('google') %>with Google
+          <% end %>
+          <%= link_to(user_omniauth_authorize_path(:facebook), :class => "btn btn-square btn-login", :id => "facebook-login") do %>
+            <%= icon('facebook') %>with Facebook
+          <% end %>         
+          <%= link_to(omniauth_authorize_path(resource_name, :twitter), :class => "btn btn-square btn-login", :id => "twitter-login") do %>
+            <%= icon('twitter') %>with Twitter
+          <% end %>
+          <%= link_to(omniauth_authorize_path(resource_name, :yahoo), :class => "btn btn-square btn-login", :id => "yahoo-login") do %>
+            <%= icon('yahoo') %>with Yahoo
+          <% end %>
+        </div>        
+        <h4 style="text-align:center; margin-bottom:20px; margin-top: 20px;">Or</h4>
     
           <div id="signup_error_explanation_wrapper" class="alert alert-danger" style="display:none;">
             <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>

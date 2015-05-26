@@ -61,16 +61,23 @@
 
 
 					<div class="dream-left">
+						<% html = Nokogiri::HTML.fragment(dream.body) %>
+						<% image = html.css('img').map{ |i| i['src'] } %>
 						<%= link_to dream.user do %>
-							<% if dream.user.avatar_file_name.nil? %>
-								<div class="dream-avatar-default">
-									<p><%= dream.user.username.first.upcase %></p>
-								</div>						
+							<% if image.empty? %>
+								<% if dream.user.avatar_file_name.nil? %>
+									<div class="dream-avatar-default">
+										<p><%= dream.user.username.first.upcase %></p>
+									</div>						
+								<% else %>
+									<%= image_tag dream.user.avatar.url(:thumb) %>
+								<% end %>
 							<% else %>
-								<%= image_tag dream.user.avatar.url(:thumb) %>
+								<%= image_tag(image[0], size: "48") %>
 							<% end %>
 						<% end %>
 					</div>
+
 					<div class="dream-right">
 						<div class="dream-right-top">
 							<div class="dream-right-top1">

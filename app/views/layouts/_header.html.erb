@@ -52,16 +52,18 @@
 					<% end %>
 					
 				<% else %>
+					<%= link_to(new_registration_path(resource_name), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-signup', :class => "btn btn-primary btn-square", :id => "signin-button"}) do %>
+
+						Sign up
+					<% end %>						
 					<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login', :class => "btn btn-primary btn-square", :id => "signin-button"}) do %>
 
 						<%= icon('user') %>
 
-						Sign in
+						Log in
 					<% end %>				
 				<% end %>
 
-
-				
 
 				<div class="btn-group">
 					<button type="button" class="btn btn-default navbar-btn btn-lg btn-alt dropdown-toggle btn-bars" data-toggle="dropdown">

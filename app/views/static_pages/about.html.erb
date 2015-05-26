@@ -1,132 +1,142 @@
-<% provide(:title, 'About' ) %>
-<div id="home-top-panel" class="text-center">
-	<div id="home-header">dreamly</div>	
-	<div id="home-byline">the social dream journal app</div>
-	<div id="home-byline2">
-		free | private | social
-	</div>
-	<%= link_to(new_user_session_path, { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-login'}) do %>
-		<button type="button" id="signup-button" class="btn btn-primary btn-lg">
-			<span>Sign up!</span>
-		</button>
-	<% end %>
-</div>
+<div id="about-container">
+	<!-- Section 1 -->
+	<section id="intro" data-speed="0" data-type="background">
+	 
+	       	<div id="home-top-panel" class="text-center">
+					<div id="home-header"><span style="font-weight: 700">dreamly</span></div>
+					<div id="home-byline">a social dream journal for tapping into your unconscious mind</div>
+			
+					<div id="home-byline2">
+						free | private | social
+					</div>
+					<%= link_to(new_registration_path(resource_name), { :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window-signup'}) do %>
+						<button type="button" id="signup-button" class="btn btn-primary btn-lg">
+							<span>Sign up!</span>
+						</button>
+					<% end %>
+				</div>
 
-<div class="home-panel1">
-	Dreamly is a free social dream journal that allows you to keep track of your dreams and map your unconscious thoughts.
-</div>
 
-<div id="home-panel2">
-	<div id="home-panel2-inner">
-		<div id="panel2-1" class="col-md-3 col-md-offset-2 white-panel">
-			<h3>Automatic word association</h3>
-			<p>Discover hidden trends, patterns and associations in your unconscious mind.</p>
-		</div>	
-		<div id="panel2-2" class="col-md-3 col-md-offset-2 white-panel">
-			<h3>Smartphone friendly</h3>
-			<p>Journal your dreams without getting up from your bed! Dreamly was designed to be used with your smartphone - no need to download an app.</p>
-			<%= image_tag("iphone.png", alt: "Mobile friendly") %>
+	
+	</section>
+	<!-- Section 2 -->
+	<section id="home" data-speed="4" data-type="background">
+	    <div class="container">
+				<h2 style="font-size: 36px; text-align: center;">Why should I keep a dream journal?</h2>
+				<div>
+					<%= image_tag("http://upload.wikimedia.org/wikipedia/en/a/a8/The_Dress_%28viral_phenomenon%29.png", style: "float: left; border-radius: 0; padding-right: 20px;") %>
+				</div>
+				<div style="font-size: 17px;">
+					<p>Both your dreams and your waking life are governed by the rule of perception: <span class="highlight-text">We don't see things as they are - we see them as we are."</span> Consider the case of <a href='http://en.wikipedia.org/wiki/The_dress_%28viral_phenomenon%29'>The Dress</a>. Looking at the exact same pixels on a screen, 57% of people see a black and blue dress, while 30% are convinced it is white and gold. What is happening is your <span class="highlight-text">perception is filling in the gaps</span>. Reality offers a stimulus and you construct an image "based on a true story."</p>
+					<p>The only difference between dreams and waking life is that with dreams the gaps are bigger. In both <span class="highlight-text">you are constructing your own reality</span>, like coloring in the spaces in a coloring book.<p>
+					<p>Reflecting on dreams allows you to take a closer look at this creative process. Everything is remembered in the unconscious. Exploring the unconscious brings you face to face with the keynotes behind the novel of your life: <span class="highlight-text">your inner desires, wishes, hopes and fears</span>.<p>
+					<p>Keeping a dream journal benefits you in the following ways...</p>
+				</div>
+	    </div>
+	</section>
+	<hr>
+	<!-- Section 3 -->
+	<section id="about" data-speed="2" data-type="background">
+	    <div class="container">
+	    	<div class="col-md-4 center-text">
+	    		<%= icon('rocket', '', class: 'big-icons', style: "color: #00CC66;") %>
+	    		<h3>
+	    			Creativity
+	    		</h3>
+	    		<p>
+	    			Dreams are a fountain of artistic strokes of genius. The central ideas for The Terminator, Twilight and Frankenstein sprang fully formed from the creative dreams of their authors.
+	    		</p>
+	    	</div>
+	    	<div class="col-md-4 center-text">
+	    		<%= icon('lightbulb-o', '', class: 'big-icons', style: "color: #3366FF;") %>
+	    		<h3>
+	    			Problem Solving
+	    		</h3>
+	    		<p>
+	    			Our brain works on solving problems while we sleep. The double-helix structure of DNA, the Theory of Relativity and the Periodic Table of Elements were all discovered from dreams.
+	    		</p>
+	    	</div>
+	    	<div class="col-md-4 center-text">
+	    		<%= icon('heart', '', class: 'big-icons', style: "color: #FF5050;") %>
+	    		<h3>
+	    			Therapeutic
+	    		</h3>
+	    		<p>
+	    			Dreams open the doorway to dealing with unresolved emotions.
+	    		</p>
+	    	</div>	    		    	
+	    </div>
+	</section>
+	<hr>
+	<section id="map-section" data-speed="4" data-type="background">
+		<div class="col-md-4" style="padding-left: 40px;">
+			<h2>
+				<%= icon('map-marker', '', class: 'big-icons', style: "color: #CC66FF;") %>
+				Map your mind
+			</h2>
+			<p>Dreamly automatically creates a dynamic word graph for each user based on the key ideas and themes that reappear in their dreams. By linking words that appear together in the same dreams, you can discover hidden trends, patterns and associations in your unconscious mind.</p>
 		</div>
+		<div id="graph-full" class="col-md-8">
+		</div>
+
 		<%= render 'shared/graph' %>
-	</div>
-
+	</section>
 </div>
 
-<div class="home-panel3">
-	<div class="home-panel3-inner">
-		<div id="panel3-1" class="col-md-3 col-md-offset-2 white-panel">
-			<h3><span class="glyphicon glyphicon-user"></span> Social</h3>
-			<p>Follow the dreams of your friends and favorite celebrities. Share comments and interpretations.</p>
-		</div>	
-		<div id="panel3-2" class="col-md-3 col-md-offset-2 white-panel">
-			<h3><span class="glyphicon glyphicon-eye-open"></span> Private</h3>
-			<p>Dreams can reveal your deepest secrets, so we take privacy very seriously at Dreamly. You can choose to make a dream public or private at any time. Information from private dreams will never be shown to anyone except you. You can also use the @ character to censor any word within a public dream.</p>
-		</div>
-	</div>	
-</div>
+			<div class="share-box">
+			</div>	
 
-<div class="home-panel1">
-	<p>Merrily, merrily, merrily, merrily;</p>
-	<p>life is but a dream.</p>
-</div>
+			<!--
+<%= icon('bed', '', class: 'big-icons') %>
+<%= icon('send', '', class: 'big-icons') %>
+<%= icon('smile-o', '', class: 'big-icons') %>
+<%= icon('road', '', class: 'big-icons') %>
+<%= icon('photo', '', class: 'big-icons') %>
+<%= icon('paper-plane', '', class: 'big-icons') %>
+<%= icon('paint-brush', '', class: 'big-icons') %>
+<%= icon('star', '', class: 'big-icons') %>
+<%= icon('plug', '', class: 'big-icons') %>
+<%= icon('music', '', class: 'big-icons') %>
+<%= icon('key', '', class: 'big-icons') %>
+<%= icon('heart', '', class: 'big-icons') %>
+<%= icon('flash', '', class: 'big-icons') %>
+<%= icon('flask', '', class: 'big-icons') %>
+<%= icon('eye', '', class: 'big-icons') %>
+<%= icon('cube', '', class: 'big-icons') %>
+<%= icon('cog', '', class: 'big-icons') %>
+<%= icon('child', '', class: 'big-icons') %>
+-->
 
-<div class="home-panel3">
-	<div class="home-panel3-inner">
-		<div class="col-md-3 col-md-offset-2 white-panel">
-			<h3><%= icon('smile-o') %></span> Emoticons</h3>
-			<p>Dreamly uses a library of keywords to automatically tag dreams according to seven fundamental emotions (Happy, Sad, Afraid, Desiring, Angry, and Guilty).</p>
-		</div>	
-		<div class="col-md-3 col-md-offset-2 white-panel">
-			<h3><%= icon('slack') %></span> Hashtags</h3>
-			<p>Just like twitter, you can put a #hashtag before any word in a dream to categorize it. </p>
-		</div>
-	</div>	
-</div>
 
-<div class="home-panel3">
-	<div class="home-panel3-inner">
-		<div class="col-md-3 col-md-offset-2 white-panel">
-			<h3><%= icon('ra') %></span> @Names</h3>
-			<p>You can put the @ character before any word in your dream to 1) blur the word from public view and 2) track the word across multiple dreams. This is intended mainly to use to anonymyze and track the names of people, places, and things in your dreams.</p>
-		</div>	
-		<div class="col-md-3 col-md-offset-2 white-panel">
-			<h3><%= icon('warning') %></span> Impact</h3>
-			<p>Some dreams are trivial, but others are epic sagas revealing the depth and breadth of your soul with a cinematic storyline and vivid visuals. Dreamly lets you differentiate between the two by choosing an Impact level setting of Normal, Substantial, or Epic.</p>
-		</div>
-	</div>	
-</div>
-
-<div class="home-panel1">
-	<p>Deep into that darkness peering, long I stood there, wondering, fearing, doubting, dreaming dreams no mortal ever dared to dream before.<p>
-	<p>- Edgar Allan Poe</p>
-</div>
-
-<div class="home-panel3">
-	<div class="home-panel3-inner">
-		<div class="col-md-3 col-md-offset-2 white-panel">
-			<h3><%= icon('ra') %></span> Voting</h3>
-			<p>Users can upvote or downvote any public dream. The highest voted dreams will display at the top of the page. </p>
-		</div>	
-		<div class="col-md-3 col-md-offset-2 white-panel">
-			<h3><%= icon('warning') %></span> Comments</h3>
-			<p>Users can comment on any public dream. The most valuable and comments will be useful dream interpretations. </p>
-		</div>
-	</div>	
-</div>
-
-<div class="home-panel3">
-	<div class="home-panel3-inner">
-		<div class="col-md-3 col-md-offset-2 white-panel">
-			<h3><%= icon('ra') %></span> Filter and Sort</h3>
-			<p>You can sort dreams by “Trending”, “New”, or “Dreamed”. “Trending” uses an algorithm based on the dream’s voting score and time of submission, so that newer, top-voted dreams are displayed first.</p>
-			<p>You can filter dreams by search term, emotion, and impact level.<p>
-		</div>	
-		<div class="col-md-3 col-md-offset-2 white-panel">
-			<h3><%= icon('warning') %></span> Following</h3>
-			<p>Just like twitter, you can follow other users and they can follow you.</p>
-		</div>
-	</div>	
-</div>
-
-<div class="home-panel1">
-	<p>The future belongs to those who believe in the beauty of their dreams.<p>
-	<p>- Eleanor Roosevelt</p>
-</div>
-
-<div class="home-panel3">
-	<div class="home-panel3-inner">
-		<div class="col-md-3 col-md-offset-2 white-panel">
-			<h3><%= icon('ra') %></span> Notifications</h3>
-			<p>You are notified when someone comments on your dream or a dream you have commented on, when someone follows you, or when someone you are following posts a dream. </p>
-		</div>	
-		<div class="col-md-3 col-md-offset-2 white-panel">
-			<h3><%= icon('warning') %></span> Private messages</h3>
-			<p>You can send a private message to any user by clicking the envelope button beneath their name. All of your conversations are shown in your <a href='http://dreamly.io/conversations'>inbox</a>. We encourage users to engage in social therapy via this messaging system. Dreams can act simultaneously as both therapist and patient, sharing their emotions and feelings, and drawing upon each others dreams for analysis.</p>
-		</div>
-	</div>	
-</div>
+<script>
+var h = window.innerHeight - 45;
+document.getElementById('intro').style.height = h + 'px';
+//document.getElementById('map-section').style.height = window.innerHeight - 96 + 'px';
 
 
 
-<%= render 'layouts/footer' %>
+//$(document).ready(function(){
+   // cache the window object
+ //  $window = $(window);
+ 
+//   $('section[data-type="background"]').each(function(){
+     // declare the variable to affect the defined data-type
+//     var $scroll = $(this);
+                     
+//      $(window).scroll(function() {
+        // HTML5 proves useful for helping with creating JS functions!
+        // also, negative value because we're scrolling upwards                             
+//        var yPos = -($window.scrollTop() / $scroll.data('speed')); 
+         
+        // background position
+//        var coords = '50% '+ yPos + 'px';
+ 
+        // move the background
+//        $scroll.css({ backgroundPosition: coords });    
+//      }); // end window scroll
+//   });  // end section function
+//}); // close out script
 
+
+
+</script>

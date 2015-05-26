@@ -59,6 +59,7 @@ Jhad::Application.routes.draw do
   match '/resources',    to: 'static_pages#resources',    via: 'get'
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'
+  match '/about2',   to: 'static_pages#about2',   via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
   match '/graph', to: 'static_pages#graph', via: 'get'
   match '/test', to: 'static_pages#test', via: 'get'
