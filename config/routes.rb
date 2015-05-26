@@ -64,6 +64,7 @@ Jhad::Application.routes.draw do
   match '/graph', to: 'static_pages#graph', via: 'get'
   match '/test', to: 'static_pages#test', via: 'get'
   match '/search', to: 'static_pages#search', via: 'get'
+  match '/sitemap.xml', to: 'static_pages#sitemap', format: 'xml', as: :sitemap, via: 'get'
 
 
   
