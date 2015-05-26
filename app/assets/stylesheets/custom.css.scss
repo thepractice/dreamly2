@@ -34,7 +34,13 @@ $offBlack: #2E2E2E;
     } 
     .sign-up-modal {
       width: 600px !important;
-    }    
+    }  
+    #intro { 
+      background-size: 100% !important;
+    }  
+    #home-header {
+      font-size: 108px !important;
+    }
 }
 
 @media (max-width: 768px) {
@@ -54,6 +60,13 @@ $offBlack: #2E2E2E;
     .modal-dream {
       width: 94%! important;
     }
+    #intro { 
+      background-size: auto 100% !important;
+      background-position: 40% !important;
+    }
+    #home-header {
+      font-size: 60px !important;
+    }    
 }
 
 .afraid, .angry, .desiring, .disgusted, .guilty, .happy, .sad, .down_arrow, .down_arrow_red, .up_arrow, .up_arrow_green{
@@ -351,13 +364,11 @@ body{
 
 #intro { 
     background: url(http://community.dreamly.io/uploads/default/24/675ddc1a6fba290c.png); 
-    background-size: 100%;
     background-attachment: fixed;
     height: auto;  
     margin: 0 auto; 
     width: 100%; 
     position: relative; 
-
    
 }
 
