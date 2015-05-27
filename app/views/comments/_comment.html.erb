@@ -32,7 +32,7 @@
 			</div>			
 
 			<span class="comment-body"><%= simple_format(comment.body) %></span>
-			<% if (current_user == comment.user) || current_user.admin? %>
+			<% if current_user && ((current_user == comment.user) || current_user.admin?) %>
 				<% if comment.commentable_type == "Dream" %>
 					<%= link_to(edit_dream_comment_path(comment.commentable.id, comment.id), { :class => 'edit-link' }) do %>
 						edit
