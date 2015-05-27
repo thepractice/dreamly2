@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+	# Gets rid of 'Unprocessable Entity' login error.
 	protect_from_forgery
 
 	def index

@@ -234,7 +234,7 @@
 	          <%= f.input :commentable_id, as: :hidden, value: @dream.id %>
 
 
-						<%= f.input :body, label: 'hey', placeholder: 'add your comment...' %>
+						<%= f.input :body, label: 'hey', placeholder: 'add your comment...', input_html: { id: 'dream-comment-textarea' } %>
             <div class="btn-group btn-toggle" data-toggle="buttons">
               <label class="btn btn-default active">
                 <input type="radio" name="comment[private]" value="false" checked> public
@@ -248,6 +248,16 @@
 				      post
 				    </button>
 					<% end %>
+
+		     <script>
+		      $(function() {
+		          $('#dream-comment-textarea').editable({
+		            inlineMode: false
+		          })
+		      });
+
+
+		    </script>  					
 					
 				<% end %>
 			</div>
