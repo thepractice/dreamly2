@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+	protect_from_forgery
 
 	def index
 		@users = User.paginate(page: params[:page], per_page: 100).order('dream_count DESC')
