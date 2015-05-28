@@ -315,8 +315,8 @@ class DreamsController < ApplicationController
 	def create
 		@dream = current_user.dreams.build(dream_params)
 
+		# Create notifications
 		unless @dream.private?
-			# Create notifications
 			@users = []
 			@dream.user.followers.each do |follower|
 				Notification.create(user: follower, dream: @dream, other_user_id: @dream.user.id, subject: 'dream')
@@ -334,9 +334,7 @@ class DreamsController < ApplicationController
 				format.json { render json: @dream, status: :created, location: @dream }
 				#format.json { render json: "window.location.pathname='#{help_path}'"}
 				#redirect_to @dream, format: 'json'
-				@dream.liked_by current_user
-				@rating = update_rating(@dream)
-				@dream.update_columns(rating: @rating) 
+
 			else
 				format.html { render 'dreams/new' }
 				format.json { render json: @dream.errors.full_messages, status: :unprocessable_entity }
