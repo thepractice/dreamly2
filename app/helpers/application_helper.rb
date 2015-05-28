@@ -77,7 +77,7 @@ module ApplicationHelper
 	def comment_count(dream)
 		@comment_counter = 0
 		dream.comments.each do |comment|
-			unless comment.private && ( (current_user != comment.user) && (current_user != comment.dream.user) )
+			unless comment.private && ( (current_user != comment.user) && (current_user != dream.user) )
 				@comment_counter = @comment_counter + 1
 			end
 		end
