@@ -315,12 +315,13 @@ class DreamsController < ApplicationController
 	def create
 		@dream = current_user.dreams.build(dream_params)
 
-		# Create notifications
-		@users = []
-		@dream.user.followers.each do |follower|
-			Notification.create(user: follower, dream: @dream, other_user_id: @dream.user.id, subject: 'dream')
+		unless @dream.private?
+			# Create notifications
+			@users = []
+			@dream.user.followers.each do |follower|
+				Notification.create(user: follower, dream: @dream, other_user_id: @dream.user.id, subject: 'dream')
+			end
 		end
-
 
 
 
