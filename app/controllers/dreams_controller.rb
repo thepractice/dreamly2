@@ -380,7 +380,9 @@ class DreamsController < ApplicationController
 		end
 
 		@rating = update_rating(@dream)
-		@dream.update_columns(rating: @rating) 
+		#@dream.update_columns(rating: @rating) 
+		@dream.rating = @rating
+		@dream.save
 
 		session[:return_to] ||= request.referer		#Store the requesting url in the session hash
 		respond_to do |format|
