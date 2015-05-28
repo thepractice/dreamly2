@@ -1,4 +1,7 @@
-<% unless comment.private && ( (current_user != comment.user) && (current_user != dream.user) ) %>
+<% unless comment.commentable_type == "Dream" && comment.private && ( (current_user != comment.user) && (current_user != Dream.find(comment.commentable.id).user) ) %>
+
+
+
 	<div class="dream white-panel indiv-comment">
 		<div class="dream-left">
 			<% if comment.user.avatar_file_name.nil? %>
