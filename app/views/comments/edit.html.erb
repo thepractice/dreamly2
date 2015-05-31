@@ -15,7 +15,17 @@
             <div class="comment_error_explanation"></div>
           </div>
 
-					<%= f.input :body %>
+					<%= f.input :body, input_html: { id: 'dream-comment-textarea' } %>
+      
+         <script>
+          $(function() {
+              $('#dream-comment-textarea').editable({
+                inlineMode: false
+              })
+          });
+
+
+        </script>            
 
             <div class="btn-group btn-toggle" data-toggle="buttons">
 
