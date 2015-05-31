@@ -15,11 +15,11 @@
             <div class="comment_error_explanation"></div>
           </div>
 
-					<%= f.input :body, input_html: { id: 'dream-comment-textarea' } %>
+					<%= f.input :body, input_html: { id: 'dream-comment-textarea-edit' } %>
       
          <script>
           $(function() {
-              $('#dream-comment-textarea').editable({
+              $('#dream-comment-textarea-edit').editable({
                 inlineMode: false
               })
           });
