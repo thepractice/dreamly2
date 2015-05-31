@@ -5,9 +5,16 @@
   -->
   <script>
 
-  var width = (window.innerWidth - 135) * 0.25,
-      height = (window.innerHeight - 135) * 0.5,
-      r = 2;
+  if(window.innerWidth >767) {
+
+    var width = (window.innerWidth - 135) * 0.25,
+        height = (window.innerHeight - 135) * 0.5,
+        r = 2;
+  } else {
+  var width = (window.innerWidth - 30) ,
+      height = (window.innerHeight) * 0.5,
+      r = 2;   
+  }
 
   //var svg = d3.select("body").append("svg")
   var svg = d3.select("#profile-graph2").append("svg")
